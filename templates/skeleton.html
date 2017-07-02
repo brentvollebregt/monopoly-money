@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Memes">
+		<meta name="author" content="Brent Vollebregt">
+        <meta name="viewport" content="width=device-width, initial-scale=0.5">
+        <meta name="theme-color" content="#2b2d34"/>
+        <link rel="icon" sizes="256x256" href="{{ url_for('static', filename='favicon.ico') }}">
+        <title>Monopoly Manager</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    </head>
+
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+</html>

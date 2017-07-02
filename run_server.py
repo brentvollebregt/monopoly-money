@@ -4,8 +4,8 @@ import json
 import socket
 import logging
 
-# Base definitions
 
+# Base definitions
 def loadData():
     try:
         with open("site_data.json", 'r') as data_file:
@@ -29,20 +29,46 @@ def saveData(data):
     with open('data.json', 'w') as outfile:
         json.dump(data, outfile, indent=4, sort_keys=True)
 
-# Server setup
 
+# Server setup
 data = loadData()
+game_data = {} # game_id : { players : { }, running : False, banker : "" }
 app = Flask(__name__, static_url_path='')
 app.secret_key = data['site_variables']['secret_key'] if 'secret_key' in data['site_variables'] else 'secretkey1568486123168'
 
-# App routes
 
+# App routes
 @app.route("/")
 def home_page():
-    return ("This is the main page")
+    # TODO Get name
+    # TODO Select whether player/banker
+    # TODO Player goes to pin
+    # TODO Banker goes to bank
+    return render_template('home.html')
+
+@app.route("/pin/")
+def pin_page():
+    # TODO Enter pin of game wanting to join
+    return render_template('pin.html')
+
+@app.route("/play/")
+def play_page():
+    # TODO Display items
+    # TODO Don't allow actions until game has started
+    return render_template('play.html')
+
+@app.route("/bank/")
+def bank_page():
+    # TODO Button to go back
+    # TODO Manage everyones balance
+    # TODO Past go
+    # TODO Edit names
+    # TODO Jail
+    # TODO Free parking
+    return render_template('bank.html')
+
 
 # Start Server
-
 if __name__ == '__main__':
     ip = data['site_variables']['ip'] if 'ip' in data['site_variables'] else socket.gethostbyname(socket.gethostname())
     port = data['site_variables']['port'] if 'port' in data['site_variables'] else 8080

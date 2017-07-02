@@ -8,7 +8,7 @@ import logging
 # Base definitions
 def loadData():
     try:
-        with open("site_data.json", 'r') as data_file:
+        with open("data.json", 'r') as data_file:
             data = json.load(data_file)
     except FileNotFoundError:
         print ("Cannot find data.json; creating a default")
@@ -35,6 +35,19 @@ data = loadData()
 game_data = {} # game_id : { players : { }, running : False, banker : "" }
 app = Flask(__name__, static_url_path='')
 app.secret_key = data['site_variables']['secret_key'] if 'secret_key' in data['site_variables'] else 'secretkey1568486123168'
+
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
+
+def dated_url_for(endpoint, **values):
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                     endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
 
 
 # App routes
@@ -66,6 +79,17 @@ def bank_page():
     # TODO Jail
     # TODO Free parking
     return render_template('bank.html')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return redirect(url_for('home_page'))
+
+@app.route("/admin/")
+def admin_page():
+    # TODO Mange running games
+    # TODO Manipulate data
+    # TODO Statistics (money flow and other cool stuff)
+    return "Not Implemented"
 
 
 # Start Server

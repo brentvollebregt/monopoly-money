@@ -1,4 +1,21 @@
 {% extends "SKELETON.html" %}
 {% block content %}
-<p>Home</p>
+    <body style="background: #424242;">
+        <div class="outer">
+            <form action="/login/" method = "POST" class="middle">
+                <div class="inner">
+                    <button href="/pin/" id="player_button" class="selection_button">Player</button>
+                </div>
+                <div class="inner" style="margin-top: 10%;">
+                    <button href="/bank/" id="banker_button" class="selection_button">Banker</button>
+                </div>
+                <div class="inner" style="margin-top: 10%;">
+                    <input type="text" name="name" placeholder="Name" id="name_field" class="name_input" onload="this.style.width = document.getElementById('player_button').offsetWidth">
+                </div>
+                <script>
+                    document.getElementById('name_field').offsetWidth = document.getElementById('player_button').offsetWidth;
+                </script>
+            </form>
+        </div>
+    </body>
 {% endblock %}

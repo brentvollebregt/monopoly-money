@@ -1,6 +1,6 @@
 {% extends "SKELETON.html" %}
 {% block content %}
-    <body style="background: #424242;">
+    <body style="background: #424242; margin: 0px;">
         <div class="outer">
             <form action="/login/" method = "POST" class="middle">
                 <div class="inner">
@@ -10,11 +10,8 @@
                     <button href="/bank/" id="banker_button" class="selection_button">Banker</button>
                 </div>
                 <div class="inner" style="margin-top: 10%;">
-                    <input type="text" name="name" placeholder="Name" id="name_field" class="name_input" onload="this.style.width = document.getElementById('player_button').offsetWidth">
+                    <input type="text" name="name" placeholder="Name" id="name_field" class="name_input">
                 </div>
-                <script>
-                    document.getElementById('name_field').offsetWidth = document.getElementById('player_button').offsetWidth;
-                </script>
             </form>
         </div>
     </body>

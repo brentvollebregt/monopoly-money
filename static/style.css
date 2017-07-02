@@ -7,6 +7,7 @@
 .inner {
     margin-left: auto;
     margin-right: auto;
+    width: 95%;
 }
 
 .middle {
@@ -18,7 +19,7 @@
 .outer {
     display: table;
     position: absolute;
-    height: 95%;
+    height: 100%;
     width: 100%;
 }
 
@@ -28,7 +29,7 @@
     font-size: 700%;
     border: solid 1px white;
     border-radius: 8px;
-    width: 90%;
+    width: 100%;
     padding: 0 20%;
     text-decoration: none;
     font-family: Quicksand;
@@ -40,7 +41,7 @@
 .name_input {
     font-size: 600%;
     font-family: Quicksand;
-    width: 85%;
+    width: 100%;
     text-align: center;
     background: transparent;
     border: 1px solid white;

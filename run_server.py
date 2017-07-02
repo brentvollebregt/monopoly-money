@@ -51,13 +51,19 @@ def dated_url_for(endpoint, **values):
 
 
 # App routes
-@app.route("/")
+@app.route("/", methods = ['POST', 'GET'])
 def home_page():
-    # TODO Get name
-    # TODO Select whether player/banker
-    # TODO Player goes to pin
-    # TODO Banker goes to bank
-    return render_template('home.html')
+    if request.method == 'GET':
+        return render_template('home.html')
+    else:
+        name = request.form['name']
+        # TODO Add name as a cookie? verify who's who. Give a hash most likely
+        if "player" in request.form:
+            player_type = "player"
+            return redirect(url_for('pin_page'))
+        elif "banker" in request.form:
+            player_type = "banker"
+            return redirect(url_for('bank_page'))
 
 @app.route("/pin/")
 def pin_page():

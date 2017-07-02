@@ -2,12 +2,12 @@
 {% block content %}
     <body style="background: #424242; margin: 0px;">
         <div class="outer">
-            <form action="/login/" method = "POST" class="middle">
+            <form action="/" method="POST" class="middle">
                 <div class="inner">
-                    <button href="/pin/" id="player_button" class="selection_button">Player</button>
+                    <button id="player_button" name="player" class="selection_button">Player</button>
                 </div>
                 <div class="inner" style="margin-top: 10%;">
-                    <button href="/bank/" id="banker_button" class="selection_button">Banker</button>
+                    <button id="banker_button" name="banker" class="selection_button">Banker</button>
                 </div>
                 <div class="inner" style="margin-top: 10%;">
                     <input type="text" name="name" placeholder="Name" id="name_field" class="name_input">

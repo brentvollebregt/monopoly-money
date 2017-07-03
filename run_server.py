@@ -3,6 +3,9 @@ import os
 import json
 import socket
 import logging
+import datetime
+import hashlib
+import random
 
 
 # Base definitions
@@ -19,8 +22,12 @@ def loadData():
                 "secret_key" : 'TT&,dy~49H`y)w}"Z0USRhZ(a$u0@hYK1Tvi41!LQ_Iz|6dnvpjpVI-4Ru"`P?=G'
             },
             "debug": {
-                "logging" : True
-            }
+                "logging" : True,
+                "cookie_expiration_days" : 356
+            },
+            "users" : {},
+            "games" : {},
+            "paused_games" : {}
         }
         saveData(data)
     return data
@@ -29,6 +36,33 @@ def saveData(data):
     with open('data.json', 'w') as outfile:
         json.dump(data, outfile, indent=4, sort_keys=True)
 
+def createUserHash(name):
+    hashed = hashlib.sha224((name + str(random.randint(1, 1000000000000000000))).encode('utf-8')).hexdigest()
+    while True:
+        if hashed in data['users']:
+            hashed = hashlib.sha224((hashed + str(random.randint(1, 1000000000000000000))).encode('utf-8')).hexdigest()
+        else:
+            break
+    return hashed
+
+def verifyUser(request):
+    pass
+
+def createGame(banker):
+    game_pin = str(random.randint(1, 1000000))
+    while True:
+        if game_data in data["games"]:
+            game_pin = str(random.randint(1, 1000000))
+        else:
+            break
+
+    data["games"][game_pin] = {
+        "users" : {},
+        "banker" : banker,
+        "open" : True
+    }
+
+    return game_pin
 
 # Server setup
 data = loadData()
@@ -57,13 +91,28 @@ def home_page():
         return render_template('home.html')
     else:
         name = request.form['name']
-        # TODO Add name as a cookie? verify who's who. Give a hash most likely
         if "player" in request.form:
             player_type = "player"
-            return redirect(url_for('pin_page'))
+            response = make_response(redirect(url_for('pin_page')))
         elif "banker" in request.form:
             player_type = "banker"
-            return redirect(url_for('bank_page'))
+            response = make_response(redirect(url_for('bank_page')))
+
+        userHash = createUserHash(name)
+        data['users'][userHash] = {
+            "name" : name,
+            "type" : player_type,
+            "game" : None
+        }
+
+        if player_type == 'banker':
+            data['users'][userHash]["game"] = createGame(userHash)
+
+        response = make_response(redirect(url_for('pin_page')))
+        response.set_cookie('id',
+                            userHash,
+                            expires=datetime.datetime.now() + datetime.timedelta(days=data["debug"]["cookie_expiration_days"]))
+        return response
 
 @app.route("/pin/")
 def pin_page():
@@ -74,16 +123,19 @@ def pin_page():
 def play_page():
     # TODO Display items
     # TODO Don't allow actions until game has started
+    # TODO Option to leave game (if they come back they will be sent back here as their cookie is still active)
     return render_template('play.html')
 
 @app.route("/bank/")
 def bank_page():
     # TODO Button to go back
+    # TODO Can restart saved game
     # TODO Manage everyones balance
     # TODO Past go
     # TODO Edit names
     # TODO Jail
     # TODO Free parking
+    # TODO Option to end game (if they come back they will be lead back to their play)
     return render_template('bank.html')
 
 @app.errorhandler(404)

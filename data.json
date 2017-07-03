@@ -1,9 +1,10 @@
 {
     "debug": {
+        "cookie_expiration_days": 356,
         "logging": true
     },
     "site_variables": {
-        "ip": "192.168.1.115",
+        "ip": "192.168.1.7",
         "port": 8080,
         "secret_key": "TT&,dy~49H`y)w}\"Z0USRhZ(a$u0@hYK1Tvi41!LQ_Iz|6dnvpjpVI-4Ru\"`P?=G"
     }

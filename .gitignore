@@ -103,3 +103,4 @@ ENV/
 # User specific
 .idea/
 tmp/
+data.json

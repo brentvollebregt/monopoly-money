@@ -45,13 +45,10 @@ def createUserHash(name):
             break
     return hashed
 
-def verifyUser(request):
-    pass
-
 def createGame(banker):
     game_pin = str(random.randint(1, 1000000))
     while True:
-        if game_data in data["games"]:
+        if game_pin in data["games"]:
             game_pin = str(random.randint(1, 1000000))
         else:
             break
@@ -66,6 +63,11 @@ def createGame(banker):
 
 def checkUserPlacement(request):
     if 'id' in request.cookies:
+        if request.cookies['id'] not in data['users']:
+            # Fake or old cookie (clears)
+            response = make_response(redirect(url_for('home_page')))
+            response.set_cookie('id', '', expires=0)
+            return [False, response]
         if data['users'][request.cookies['id']]['game'] is None:
             # No game pin
             if request.path == "/pin/":
@@ -96,7 +98,6 @@ def checkUserPlacement(request):
 
 # Server setup
 data = loadData()
-game_data = {} # game_id : { players : { }, running : False, banker : "" }
 app = Flask(__name__, static_url_path='')
 app.secret_key = data['site_variables']['secret_key'] if 'secret_key' in data['site_variables'] else 'secretkey1568486123168'
 
@@ -119,12 +120,14 @@ def dated_url_for(endpoint, **values):
 def home_page():
     if request.method == 'GET':
         if checkUserPlacement(request)[0] == True:
-            return render_template('home.html')
+            return render_template('home.html', message="This is a temprary example message") # TODO Add messages here
         else:
             return checkUserPlacement(request)[1]
     else:
-        # TODO No name issue
         name = request.form['name']
+        if name == "":
+            return render_template('home.html', message="Please provide a name")
+
         if "player" in request.form:
             player_type = "player"
             response = make_response(redirect(url_for('pin_page')))
@@ -207,10 +210,28 @@ def page_not_found(error):
 
 # Debugging routes
 @app.route("/clear/")
-def clear():
+def clear_cookie():
+    if 'id' in request.cookies:
+        if request.cookies['id'] in data['users']:
+            del data['users'][request.cookies['id']]
+
     response = make_response(redirect(url_for('home_page')))
     response.set_cookie('id', '', expires=0)
     return response
+
+@app.route("/data/")
+def data_view():
+    a = dictHTMLprint()
+    return a.format(data)
+
+class dictHTMLprint(object):
+    def format(self, obj, indent = 1):
+        if isinstance(obj, dict):
+            htmls = []
+            for k,v in obj.items():
+                htmls.append("<span style='font-style: italic; color: #921212'>%s</span>: %s" % (k,self.format(v,indent+1)))
+            return '{<div style="margin-left: %dem">%s</div>}' % (indent, ',<br>'.join(htmls))
+        return str(obj)
 
 
 # Start Server

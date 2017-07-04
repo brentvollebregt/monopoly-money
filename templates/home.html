@@ -1,18 +1,21 @@
 {% extends "SKELETON.html" %}
 {% block content %}
-    <body style="background: #424242; margin: 0px;">
+    <body>
         <div class="outer">
             <form action="/" method="POST" class="middle">
                 <div class="inner">
-                    <button id="player_button" name="player" class="selection_button">Player</button>
+                    <button name="player" class="selection_button">Player</button>
                 </div>
                 <div class="inner" style="margin-top: 10%;">
-                    <button id="banker_button" name="banker" class="selection_button">Banker</button>
+                    <button name="banker" class="selection_button">Banker</button>
                 </div>
                 <div class="inner" style="margin-top: 10%;">
-                    <input type="text" name="name" placeholder="Name" id="name_field" class="name_input">
+                    <input type="text" name="name" placeholder="Name" class="name_input">
                 </div>
             </form>
         </div>
+        {% if message %}
+        <a class="message">{{ message }}</a>
+        {% endif %}
     </body>
 {% endblock %}

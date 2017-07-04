@@ -4,7 +4,7 @@
         <div class="outer">
             <form action="/pin/" method="POST" class="middle">
                 <div class="inner">
-                    <input type="number" id="pin" name="pin" placeholder="Game Pin" class="pin_input" maxlength="6" style="background: rgba(224, 31, 31,0.35);">
+                    <input type="number" id="pin" name="pin" placeholder="Game Pin" class="pin_input" maxlength="6">
                 </div>
                 <div class="inner" style="margin-top: 3%;">
                     <button name="join" class="join_button">Join</button>
@@ -13,9 +13,13 @@
         </div>
     </body>
     <script>
-        $(document).ready(function() {
-            $("#pin").css("transition", "background 2s ease");
-            $("#pin").css("background", "rgba(255,255,255,0.05)");
-        });
+        var red_fade = true;
+        if (red_fade) {
+            $("#pin").css("background", "rgba(224, 31, 31,0.35)");
+            $('#pin').fadeTo('slow', 0.3, function()
+            {
+                $(this).css('background', 'rgba(255,255,255,0.05)');
+            }).delay(1000).fadeTo('slow', 1);
+        }
     </script>
 {% endblock %}

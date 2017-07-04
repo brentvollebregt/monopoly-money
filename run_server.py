@@ -64,11 +64,14 @@ def createGame(banker):
 
     return game_pin
 
-def checkUserPlacement(request): # TODO In development
+def checkUserPlacement(request):
     if 'id' in request.cookies:
         if data['users'][request.cookies['id']]['game'] is None:
             # No game pin
-            # TODO pin
+            if request.path == "/pin/":
+                return [True]
+            else:
+                return [False, redirect(url_for('pin_page'))]
             pass
         else:
             if data['users'][request.cookies['id']]['type'] == "player":
@@ -79,13 +82,17 @@ def checkUserPlacement(request): # TODO In development
                     return [False, redirect(url_for('play_page'))]
             else:
                 # banker
-                pass
+                if request.path == "/play/" or request.path == "/bank/":
+                    return [True]
+                else:
+                    return [False, redirect(url_for('play_page'))]
     else:
         # No cookie
         if request.path == "/":
             return [True]
         else:
             return [False, redirect(url_for('home_page'))]
+
 
 # Server setup
 data = loadData()
@@ -111,8 +118,12 @@ def dated_url_for(endpoint, **values):
 @app.route("/", methods = ['POST', 'GET'])
 def home_page():
     if request.method == 'GET':
-        return render_template('home.html')
+        if checkUserPlacement(request)[0] == True:
+            return render_template('home.html')
+        else:
+            return checkUserPlacement(request)[1]
     else:
+        # TODO No name issue
         name = request.form['name']
         if "player" in request.form:
             player_type = "player"
@@ -137,19 +148,31 @@ def home_page():
                             expires=datetime.datetime.now() + datetime.timedelta(days=data["debug"]["cookie_expiration_days"]))
         return response
 
-@app.route("/pin/")
+@app.route("/pin/", methods = ['POST', 'GET'])
 def pin_page():
     # TODO Enter pin of game wanting to join
-    return render_template('pin.html')
+    if request.method == 'GET':
+        if checkUserPlacement(request)[0] == True:
+            return render_template('pin.html')
+        else:
+            return checkUserPlacement(request)[1]
+    else:
+        pass
 
-@app.route("/play/")
+@app.route("/play/", methods = ['POST', 'GET'])
 def play_page():
     # TODO Display items
     # TODO Don't allow actions until game has started
     # TODO Option to leave game (if they come back they will be sent back here as their cookie is still active)
-    return render_template('play.html')
+    if request.method == 'GET':
+        if checkUserPlacement(request)[0] == True:
+            return render_template('play.html')
+        else:
+            return checkUserPlacement(request)[1]
+    else:
+        pass
 
-@app.route("/bank/")
+@app.route("/bank/", methods = ['POST', 'GET'])
 def bank_page():
     # TODO Button to go back
     # TODO Can restart saved game
@@ -159,19 +182,30 @@ def bank_page():
     # TODO Jail
     # TODO Free parking
     # TODO Option to end game (if they come back they will be lead back to their play)
-    return render_template('bank.html')
+    if request.method == 'GET':
+        if checkUserPlacement(request)[0] == True:
+            return render_template('bank.html')
+        else:
+            return checkUserPlacement(request)[1]
+    else:
+        pass
+
+@app.route("/admin/", methods = ['POST', 'GET']) # Will create towards later or when need testing buttons
+def admin_page():
+    # TODO Mange running games
+    # TODO Manipulate data
+    # TODO Statistics (money flow and other cool stuff)
+    if request.method == 'GET':
+        return "Not Implemented"
+    else:
+        pass
 
 @app.errorhandler(404)
 def page_not_found(error):
     return redirect(url_for('home_page'))
 
-@app.route("/admin/")
-def admin_page():
-    # TODO Mange running games
-    # TODO Manipulate data
-    # TODO Statistics (money flow and other cool stuff)
-    return "Not Implemented"
 
+# Debugging routes
 @app.route("/clear/")
 def clear():
     response = make_response(redirect(url_for('home_page')))

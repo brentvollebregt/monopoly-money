@@ -64,6 +64,29 @@ def createGame(banker):
 
     return game_pin
 
+def checkUserPlacement(request): # TODO In development
+    if 'id' in request.cookies:
+        if data['users'][request.cookies['id']]['game'] is None:
+            # No game pin
+            # TODO pin
+            pass
+        else:
+            if data['users'][request.cookies['id']]['type'] == "player":
+                # player
+                if request.path == "/play/":
+                    return [True]
+                else:
+                    return [False, redirect(url_for('play_page'))]
+            else:
+                # banker
+                pass
+    else:
+        # No cookie
+        if request.path == "/":
+            return [True]
+        else:
+            return [False, redirect(url_for('home_page'))]
+
 # Server setup
 data = loadData()
 game_data = {} # game_id : { players : { }, running : False, banker : "" }
@@ -148,6 +171,12 @@ def admin_page():
     # TODO Manipulate data
     # TODO Statistics (money flow and other cool stuff)
     return "Not Implemented"
+
+@app.route("/clear/")
+def clear():
+    response = make_response(redirect(url_for('home_page')))
+    response.set_cookie('id', '', expires=0)
+    return response
 
 
 # Start Server

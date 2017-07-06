@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, make_response, redirect, url_for, session, abort, send_from_directory
+from flask import Flask, request, render_template, make_response, redirect, url_for, session, abort, send_from_directory, jsonify
 import os
 import json
 import socket
@@ -17,7 +17,7 @@ def loadData():
         print ("Cannot find data.json; creating a default")
         data = {
             "site_variables" : {
-                "ip" : socket.gethostbyname(socket.gethostname()),
+                # "ip" : socket.gethostbyname(socket.gethostname()),
                 "port" : 8080,
                 "secret_key" : 'TT&,dy~49H`y)w}"Z0USRhZ(a$u0@hYK1Tvi41!LQ_Iz|6dnvpjpVI-4Ru"`P?=G'
             },
@@ -48,13 +48,13 @@ def createUserHash(name):
 def createGame(banker):
     game_pin = str(random.randint(1, 1000000))
     while True:
-        if game_pin in data["games"]:
+        if game_pin in data["games"] or game_pin in data["paused_games"]:
             game_pin = str(random.randint(1, 1000000))
         else:
             break
 
     data["games"][game_pin] = {
-        "users" : {},
+        "players" : {},
         "banker" : banker,
         "open" : True
     }
@@ -64,30 +64,46 @@ def createGame(banker):
 def checkUserPlacement(request):
     if 'id' in request.cookies:
         if request.cookies['id'] not in data['users']:
-            # Fake or old cookie (clears)
+            # Fake or old cookie
             response = make_response(redirect(url_for('home_page')))
             response.set_cookie('id', '', expires=0)
             return [False, response]
-        if data['users'][request.cookies['id']]['game'] is None:
-            # No game pin
-            if request.path == "/pin/":
-                return [True]
-            else:
-                return [False, redirect(url_for('pin_page'))]
-            pass
         else:
-            if data['users'][request.cookies['id']]['type'] == "player":
-                # player
-                if request.path == "/play/":
+            if data['users'][request.cookies['id']]['game'] is None:
+                # No game pin
+                if request.path == "/pin/":
                     return [True]
                 else:
-                    return [False, redirect(url_for('play_page'))]
+                    return [False, redirect(url_for('pin_page'))]
+                pass
             else:
-                # banker
-                if request.path == "/play/" or request.path == "/bank/":
-                    return [True]
-                else:
-                    return [False, redirect(url_for('play_page'))]
+                if data['users'][request.cookies['id']]['game'] in data['games']:
+                    # Game is running
+                    if data['users'][request.cookies['id']]['type'] == "player":
+                        # player
+                        if request.path == "/play/":
+                            return [True]
+                        else:
+                            return [False, redirect(url_for('play_page'))]
+                    else:
+                        # banker
+                        if request.path == "/play/" or request.path == "/bank/":
+                            return [True]
+                        else:
+                            return [False, redirect(url_for('play_page'))]
+                elif data['users'][request.cookies['id']]['game'] in data['paused_games']: # TODO Need to test this later as we can hopefully remove these users
+                    # Game is paused
+                    session['message'] = ("Your game is currently paused")
+                    response = make_response(redirect(url_for('home_page')))
+                    response.set_cookie('id', '', expires=0)
+                    return [False, response]
+                else:  # TODO Need to test this later as we can hopefully remove these users
+                    # Game is finished
+                    session['message'] = ("Your game is completed")
+                    response = make_response(redirect(url_for('home_page')))
+                    response.set_cookie('id', '', expires=0)
+                    return [False, response]
+
     else:
         # No cookie
         if request.path == "/":
@@ -120,7 +136,14 @@ def dated_url_for(endpoint, **values):
 def home_page():
     if request.method == 'GET':
         if checkUserPlacement(request)[0] == True:
-            return render_template('home.html', message="This is a temprary example message") # TODO Add messages here
+            if 'message' in session:
+                message = session['message']
+                del session['message']
+            else:
+                message = None
+            return render_template('home.html',
+                                   message=message
+                                   )
         else:
             return checkUserPlacement(request)[1]
     else:
@@ -139,7 +162,7 @@ def home_page():
         data['users'][userHash] = {
             "name" : name,
             "type" : player_type,
-            "game" : None
+            "game" : None,
         }
 
         if player_type == 'banker':
@@ -153,14 +176,23 @@ def home_page():
 
 @app.route("/pin/", methods = ['POST', 'GET'])
 def pin_page():
-    # TODO Enter pin of game wanting to join
     if request.method == 'GET':
         if checkUserPlacement(request)[0] == True:
             return render_template('pin.html')
         else:
             return checkUserPlacement(request)[1]
     else:
-        pass
+        if request.form['pin'] in data['games']:
+            if data['games'][request.form['pin']]['open']:
+                data['users'][request.cookies['id']]['game'] = request.form['pin']
+                data['games'][request.form['pin']]['players'][request.cookies['id']] = {}
+                return jsonify(response=1)
+            else:
+                return jsonify(response=4)
+        elif request.form['pin'] in data['paused_games']:
+            return jsonify(response=2)
+        else:
+            return jsonify(response=3)
 
 @app.route("/play/", methods = ['POST', 'GET'])
 def play_page():
@@ -169,7 +201,11 @@ def play_page():
     # TODO Option to leave game (if they come back they will be sent back here as their cookie is still active)
     if request.method == 'GET':
         if checkUserPlacement(request)[0] == True:
-            return render_template('play.html')
+            return render_template('play.html',
+                                   data=str({'id' : request.cookies['id'],
+                                             "user_data" : data['users'][request.cookies['id']]
+                                            })
+                                   )
         else:
             return checkUserPlacement(request)[1]
     else:
@@ -187,7 +223,11 @@ def bank_page():
     # TODO Option to end game (if they come back they will be lead back to their play)
     if request.method == 'GET':
         if checkUserPlacement(request)[0] == True:
-            return render_template('bank.html')
+            return render_template('bank.html',
+                                   data=str({'id' : request.cookies['id'],
+                                             "user_data" : data['users'][request.cookies['id']]
+                                            })
+                                   )
         else:
             return checkUserPlacement(request)[1]
     else:

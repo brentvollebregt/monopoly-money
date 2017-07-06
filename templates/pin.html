@@ -13,16 +13,12 @@
         </div>
     </body>
     <script>
-        var red_fade = true;
         flash_red = function() {
             $("#pin").css("background", "rgba(224, 31, 31,0.35)");
             $('#pin').fadeTo('slow', 0.3, function()
             {
                 $(this).css('background', 'rgba(255,255,255,0.05)');
             }).delay(1000).fadeTo('slow', 1);
-        }
-        if (red_fade) {
-            flash_red()
         }
     </script>
     <script>
@@ -32,7 +28,20 @@
                 $.post($SCRIPT_ROOT + '/pin/', {
                     pin: $('input[name="pin"]').val()
                 }, function(data) {
-                    alert(data['pin']);
+                    if (data['response'] == 1) {
+                        window.location.href = $SCRIPT_ROOT + '/game/';
+                    } else if (data['response'] == 2) {
+                        $('#pin').val('');
+                        alert("Game is currently paused");
+                        flash_red();
+                    } else if (data['response'] == 3) {
+                        $('#pin').val('');
+                        flash_red();
+                    } else if (data['response'] == 4) {
+                        $('#pin').val('');
+                        alert("Game is currently locked");
+                        flash_red();
+                    }
                 });
             return false;
             });

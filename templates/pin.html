@@ -2,24 +2,40 @@
 {% block content %}
     <body>
         <div class="outer">
-            <form action="/pin/" method="POST" class="middle">
+            <div class="middle">
                 <div class="inner">
                     <input type="number" id="pin" name="pin" placeholder="Game Pin" class="pin_input" maxlength="6">
                 </div>
                 <div class="inner" style="margin-top: 3%;">
-                    <button name="join" class="join_button">Join</button>
+                    <a id="join" class="join_button">Join</a>
                 </div>
-            </form>
+            </div>
         </div>
     </body>
     <script>
         var red_fade = true;
-        if (red_fade) {
+        flash_red = function() {
             $("#pin").css("background", "rgba(224, 31, 31,0.35)");
             $('#pin').fadeTo('slow', 0.3, function()
             {
                 $(this).css('background', 'rgba(255,255,255,0.05)');
             }).delay(1000).fadeTo('slow', 1);
         }
+        if (red_fade) {
+            flash_red()
+        }
+    </script>
+    <script>
+        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        $(function() {
+            $('#join').bind('click', function() {
+                $.post($SCRIPT_ROOT + '/pin/', {
+                    pin: $('input[name="pin"]').val()
+                }, function(data) {
+                    alert(data['pin']);
+                });
+            return false;
+            });
+        });
     </script>
 {% endblock %}

@@ -17,7 +17,7 @@ def loadData():
         print ("Cannot find data.json; creating a default")
         data = {
             "site_variables" : {
-                # "ip" : socket.gethostbyname(socket.gethostname()),
+                "ip" : socket.gethostbyname(socket.gethostname()),
                 "port" : 8080,
                 "secret_key" : 'TT&,dy~49H`y)w}"Z0USRhZ(a$u0@hYK1Tvi41!LQ_Iz|6dnvpjpVI-4Ru"`P?=G'
             },
@@ -54,7 +54,13 @@ def createGame(banker):
             break
 
     data["games"][game_pin] = {
-        "players" : {},
+        "players" : {
+            data['users'][banker]['name'] : {
+                "id" : banker,
+                "bal" : 0,
+                "name" : data['users'][banker]['name']
+            }
+        },
         "banker" : banker,
         "open" : True
     }
@@ -184,9 +190,15 @@ def pin_page():
     else:
         if request.form['pin'] in data['games']:
             if data['games'][request.form['pin']]['open']:
+                if data['users'][request.cookies['id']]['name'] in data['games'][request.form['pin']]['players']:
+                    return jsonify(response=5);
                 data['users'][request.cookies['id']]['game'] = request.form['pin']
-                data['games'][request.form['pin']]['players'][request.cookies['id']] = {}
-                return jsonify(response=1)
+                data['games'][request.form['pin']]['players'][data['users'][request.cookies['id']]['name']] = {
+                    "id" : request.cookies['id'],
+                    "bal" : 0,
+                    "name" : data['users'][request.cookies['id']]['name']
+                }
+                return jsonify(response=1);
             else:
                 return jsonify(response=4)
         elif request.form['pin'] in data['paused_games']:
@@ -233,7 +245,7 @@ def bank_page():
     else:
         pass
 
-@app.route("/admin/", methods = ['POST', 'GET']) # Will create towards later or when need testing buttons
+@app.route("/admin/", methods = ['POST', 'GET'])
 def admin_page():
     # TODO Mange running games
     # TODO Manipulate data

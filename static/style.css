@@ -91,6 +91,39 @@
 
 }
 
+.name_desc {
+    display: inline-block;
+    width: 65%;
+    color: white;
+    font-size: 250%;
+    font-family: Quicksand;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    background: rgba(255,255,255,0.05);
+    float: left;
+    margin-right: 3%;
+
+}
+
+.name_button {
+    display: inline-block;
+    width: 32%;
+    color: white;
+    font-size: 250%;
+    font-family: Quicksand;
+    text-decoration: none;
+    border: solid 1px white;
+    border-radius: 8px;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    background: rgba(255,255,255,0.15);
+    float: right;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+}
+
 /* Play Page */
 
 

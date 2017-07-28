@@ -27,5 +27,8 @@ Pretty much everything, but here is a checklist of what I want to add; will be r
  - [ ] Can select whether to show balances to others
  - [ ] User to bank and bank to user history is public
  - [ ] Quick transaction buttons for banker
- - [ ] Game preset selections (start amount, what go gives you, get out of jail amount)(customise own)
  - [ ] Administration panel; look at current and saved games, delete games
+
+ ## Sources
+ * [material.io](material.io) for bank.png and play.png
+ * [http://www.iconarchive.com](http://www.iconarchive.com) for favicon

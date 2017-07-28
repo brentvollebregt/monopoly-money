@@ -10,7 +10,7 @@
                     <a id="join" class="join_button">Join</a>
                 </div>
                 <div class="inner" style="margin-top: 3%;">
-                    <a class="name_desc">Name: Brent</a>
+                    <a class="name_desc">Name: {{ name }}</a>
                     <a id="chaneName" class="name_button">Change</a>
                 </div>
             </div>
@@ -54,8 +54,7 @@
             return false;
             });
             $('#chaneName').click(function() {
-                document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                window.location.href = $SCRIPT_ROOT + '/';
+                window.location.href = $SCRIPT_ROOT + '/clear';
             });
         });
     </script>

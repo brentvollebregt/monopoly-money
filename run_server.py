@@ -184,7 +184,7 @@ def home_page():
 def pin_page():
     if request.method == 'GET':
         if checkUserPlacement(request)[0] == True:
-            return render_template('pin.html')
+            return render_template('pin.html', name=data['users'][request.cookies['id']]['name'])
         else:
             return checkUserPlacement(request)[1]
     else:
@@ -208,16 +208,10 @@ def pin_page():
 
 @app.route("/play/", methods = ['POST', 'GET'])
 def play_page():
-    # TODO Display items
-    # TODO Don't allow actions until game has started
-    # TODO Option to leave game (if they come back they will be sent back here as their cookie is still active)
     if request.method == 'GET':
+        return render_template('play.html', name="TestName") # TODO Remove when colpleted design ==========
         if checkUserPlacement(request)[0] == True:
-            return render_template('play.html',
-                                   data=str({'id' : request.cookies['id'],
-                                             "user_data" : data['users'][request.cookies['id']]
-                                            })
-                                   )
+            return render_template('play.html', name=data['users'][request.cookies['id']]['name'])
         else:
             return checkUserPlacement(request)[1]
     else:
@@ -225,14 +219,6 @@ def play_page():
 
 @app.route("/bank/", methods = ['POST', 'GET'])
 def bank_page():
-    # TODO Button to go back
-    # TODO Can restart saved game
-    # TODO Manage everyones balance
-    # TODO Past go
-    # TODO Edit names
-    # TODO Jail
-    # TODO Free parking
-    # TODO Option to end game (if they come back they will be lead back to their play)
     if request.method == 'GET':
         if checkUserPlacement(request)[0] == True:
             return render_template('bank.html',
@@ -244,6 +230,10 @@ def bank_page():
             return checkUserPlacement(request)[1]
     else:
         pass
+
+@app.route("/rules/", methods = ['POST', 'GET'])
+def rules_page():
+    return render_template('rules.html')
 
 @app.route("/admin/", methods = ['POST', 'GET'])
 def admin_page():

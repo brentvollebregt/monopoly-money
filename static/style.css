@@ -29,7 +29,6 @@
     color: white;
     font-size: 700%;
     font-family: Quicksand;
-    text-decoration: none;
     border: solid 1px white;
     border-radius: 8px;
     padding-top: 2%;
@@ -82,7 +81,6 @@
     color: white;
     font-size: 600%;
     font-family: Quicksand;
-    text-decoration: none;
     border: solid 1px white;
     border-radius: 8px;
     padding-top: 2%;
@@ -111,7 +109,6 @@
     color: white;
     font-size: 250%;
     font-family: Quicksand;
-    text-decoration: none;
     border: solid 1px white;
     border-radius: 8px;
     padding-top: 1.5%;
@@ -125,6 +122,20 @@
 }
 
 /* Play Page */
+.play_name_title {
+    height: 100%;
+    display: block;
+    font-family: Quicksand;
+    font-size: 500%;
+    float: right;
+}
+
+.section_divider {
+    border-top: 3px black solid;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
 
 
 /* Bank Page */
@@ -134,4 +145,10 @@
 body {
     background: #424242;
     margin: 0px;
+}
+
+.border_in {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }

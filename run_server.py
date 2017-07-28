@@ -209,9 +209,9 @@ def pin_page():
 @app.route("/play/", methods = ['POST', 'GET'])
 def play_page():
     if request.method == 'GET':
-        return render_template('play.html', name="TestName") # TODO Remove when colpleted design ==========
         if checkUserPlacement(request)[0] == True:
-            return render_template('play.html', name=data['users'][request.cookies['id']]['name'])
+            return render_template('play.html',
+                                   name=data['users'][request.cookies['id']]['name'])
         else:
             return checkUserPlacement(request)[1]
     else:

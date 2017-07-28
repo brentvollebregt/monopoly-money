@@ -34,10 +34,6 @@
                 }, function(data) {
                     if (data['response'] == 1) {
                         window.location.href = $SCRIPT_ROOT + '/game/';
-                    } else if (data['response'] == 2) {
-                        $('#pin').val('');
-                        alert("Game is currently paused");
-                        flash_red();
                     } else if (data['response'] == 3) {
                         $('#pin').val('');
                         flash_red();

@@ -26,8 +26,7 @@ def loadData():
                 "cookie_expiration_days" : 356
             },
             "users" : {},
-            "games" : {},
-            "paused_games" : {}
+            "games" : {}
         }
         saveData(data)
     return data
@@ -48,7 +47,7 @@ def createUserHash(name):
 def createGame(banker):
     game_pin = str(random.randint(1, 1000000))
     while True:
-        if game_pin in data["games"] or game_pin in data["paused_games"]:
+        if game_pin in data["games"]:
             game_pin = str(random.randint(1, 1000000))
         else:
             break
@@ -97,15 +96,9 @@ def checkUserPlacement(request):
                             return [True]
                         else:
                             return [False, redirect(url_for('play_page'))]
-                elif data['users'][request.cookies['id']]['game'] in data['paused_games']: # TODO Need to test this later as we can hopefully remove these users
-                    # Game is paused
-                    session['message'] = ("Your game is currently paused")
-                    response = make_response(redirect(url_for('home_page')))
-                    response.set_cookie('id', '', expires=0)
-                    return [False, response]
                 else:  # TODO Need to test this later as we can hopefully remove these users
                     # Game is finished
-                    session['message'] = ("Your game is completed")
+                    session['message'] = ("Your game is complete")
                     response = make_response(redirect(url_for('home_page')))
                     response.set_cookie('id', '', expires=0)
                     return [False, response]
@@ -201,8 +194,6 @@ def pin_page():
                 return jsonify(response=1);
             else:
                 return jsonify(response=4)
-        elif request.form['pin'] in data['paused_games']:
-            return jsonify(response=2)
         else:
             return jsonify(response=3)
 

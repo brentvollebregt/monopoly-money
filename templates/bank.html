@@ -1,13 +1,108 @@
 {% extends "SKELETON.html" %}
 {% block content %}
-<p>Bank Page</p>
-{{ data }}
-<!--Button to go back-->
+<div style="display: inline-block; width: 100%; height: 10%; background: #4caf50;">
+    <div style="width: 20%; height; 100%; float: left;">
+        <a href="/play/">
+            <img src="{{ url_for('static', filename='./icons/play.png') }}" style="height: 90%; padding-left: 5%; padding-top: 5%;" >
+        </a>
+    </div>
+    <div class="outer" style="position: relative; width: 80%; float: right;">
+        <div class="middle">
+            <div class="inner">
+                <a class="play_name_title">Banker</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width: 100%; height: 90%; background: #424242;">
+    <div style="height: 28%; width: 100%;" class="section_divider">
+        <div style="height: 100%; width: 30%; float: right;">
+            <button id="go" style="height: 100%; width: 100%; font-size: 700%; font-family: Quicksand; background: rgba(0, 128, 0, 0.5); border: none;">Go</button>
+        </div>
+        <div style="height: 50%; width: 70%; float: left;">
+            <select style="height: 100%; width: 100%; font-size: 500%; background: none; color: white; border: none; direction: rtl; padding-right: 10%; font-family: Quicksand;">
+                <option value="user1">User1</option>
+                <option value="user2">User2</option>
+            </select>
+        </div>
+        <div style="height: 50%; width: 70%; float: left;">
+            <input type="number" style="width: 80%; height: 100%; font-size: 550%; background: none; text-align: right; padding: 2%; color: white; border: none" placeholder="Amount">
+            <a style="height; 100%; width: 20%; color: white; font-size: 650%; font-family: Quicksand; line-height: 100%;" onclick="switch_char(this)">K</a>
+        </div>
+    </div>
+
+    <div style="height: 15%; width: 100%;" class="section_divider">
+        <div class="outer" style="position: relative; width: 30%; float: left;">
+            <div class="middle">
+                <div class="inner">
+                    <a style="font-family: Quicksand; font-size: 300%; color: white; height: 100%; width: 100%; display: block; text-align: center;">Amount: 500K</a>
+                </div>
+            </div>
+        </div>
+        <div style="height; 100%; width: 70%; float: right;">
+            <div style="height: 100%; width: 57%; float: left;">
+                <select style="height: 100%; width: 100%; font-size: 300%; background: none; color: white; border: none; direction: rtl; padding-right: 10%; font-family: Quicksand;">
+                    <option value="user1">User1</option>
+                    <option value="user2">User2</option>
+                </select>
+            </div>
+            <button style="height: 100%; width: 43%; font-size: 500%; font-family: Quicksand; background: rgba(0, 128, 0, 0.5); border: none; float: right;">Go</button>
+        </div>
+    </div>
+
+    <div style="height: 19%; width: 100%;" class="section_divider">
+        <a>Players</a>
+    </div>
+
+    <div style="height: 18%; width: 100%;" class="section_divider">
+        <div style="height: 100%; width: 30%; float: right;">
+            <button style="height: 100%; width: 100%; font-size: 700%; font-family: Quicksand; background: rgba(0, 128, 0, 0.5); border: none;">Go</button>
+        </div>
+        <div style="height: 50%; width: 70%; float: left;">
+            <select style="height: 100%; width: 100%; font-size: 300%; background: none; color: white; border: none; direction: rtl; padding-right: 10%; font-family: Quicksand;">
+                <option value="user1">User1</option>
+                <option value="user2">User2</option>
+            </select>
+        </div>
+        <div style="height: 50%; width: 70%; float: left;">
+            <input type="number" style="width: 80%; height: 100%; font-size: 300%; background: none; text-align: right; padding: 2%; color: white; border: none" placeholder="Amount">
+            <a style="height; 100%; width: 20%; color: white; font-size: 400%; font-family: Quicksand; line-height: 100%;" onclick="switch_char(this)">K</a>
+        </div>
+    </div>
+
+    <div style="height: 8%; width: 100%;" class="section_divider">
+        <div class="outer" style="position: relative;">
+            <div class="middle">
+                <div class="inner">
+                    <a style="font-family: Quicksand; font-size: 300%; color: white; text-align: center; display: block;">Who starts first?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 12%; width: 100%;" class="section_divider">
+        <div style="width: 50%; height: 100%; background: rgba(0, 128, 0, 0.5); float: left;">
+            <div class="outer" style="position: relative;">
+                <div class="middle">
+                    <div class="inner">
+                        <a style="font-family: Quicksand; font-size: 500%;">Lock</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="width: 50%; height: 100%; background: rgba(255, 0, 0, 0.5); float: right;">
+            <div class="outer" style="position: relative;">
+                <div class="middle">
+                    <div class="inner">
+                        <a style="font-family: Quicksand; font-size: 500%; text-decoration: none; color: black;">End</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--Manage everyones balance-->
-<!--Past go-->
 <!--Free parking (issue out + view)-->
 <!--Edit names and remove people-->
 <!--Who starts first?-->
-<!--Lock game-->
-<!--Option to end/pause game-->
 {% endblock %}

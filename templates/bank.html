@@ -1,6 +1,10 @@
 {% extends "SKELETON.html" %}
 {% block content %}
 
+<script>
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
 <!--Top Display-->
 <div class="green_top">
     <div style="width: 20%; height; 100%; float: left;">
@@ -124,7 +128,7 @@
             <div class="outer_rel">
                 <div class="middle">
                     <div class="inner">
-                        <a class="play_bottom_btns">End</a>
+                        <a class="play_bottom_btns" onclick="javascript:leave_prep('end the game?');">End</a>
                     </div>
                 </div>
             </div>
@@ -132,9 +136,4 @@
     </div>
 </div>
 
-<script>
-    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-
-
-</script>
 {% endblock %}

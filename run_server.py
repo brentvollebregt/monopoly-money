@@ -96,9 +96,9 @@ def checkUserPlacement(request):
                             return [True]
                         else:
                             return [False, redirect(url_for('play_page'))]
-                else:  # TODO Need to test this later as we can hopefully remove these users
+                else:
                     # Game is finished
-                    session['message'] = ("Your game is complete")
+                    session['message'] = ("Your game has been ended")
                     response = make_response(redirect(url_for('home_page')))
                     response.set_cookie('id', '', expires=0)
                     return [False, response]
@@ -243,6 +243,8 @@ def page_not_found(error):
 def clear_cookie():
     if 'id' in request.cookies:
         if request.cookies['id'] in data['users']:
+            if data['users'][request.cookies['id']]['type'] == 'banker':
+                del data['games'][data['users'][request.cookies['id']]['game']]
             del data['users'][request.cookies['id']]
 
     response = make_response(redirect(url_for('home_page')))
@@ -252,10 +254,10 @@ def clear_cookie():
 @app.route("/play_data/")
 def getPlayData():
     cookie_id = request.cookies['id']
-    return jsonify(balance=0,
-                   users=[],
-                   free_parking=0,
-                   logs=[])
+    return jsonify(balance=10,
+                   users=["Player1", "Player2"],
+                   free_parking=0.5,
+                   logs=["Someone did this first", "The someone did this"])
 
 @app.route("/bank_data/")
 def getBankData():

@@ -1,3 +1,5 @@
+var background_check_delay = 4000
+
 switch_balance_format = function(obj){
         var MK = obj.text.slice(-1);
         if (MK == "M"){
@@ -25,8 +27,40 @@ flash_red = function() {
 }
 
 play_refresh = function(){
-    $.get($SCRIPT_ROOT + '/play_data/', function(data) {
+    $.getJSON($SCRIPT_ROOT + '/play_data/', function(data) {
 
+        if ($('#balance').text().slice(-1) == "K"){
+            $('#balance').text(String(data['balance']*1000) + "K");
+        } else {
+            $('#balance').text(String(data['balance']) + "M");
+        }
+
+        var current_names = [];
+        for (var i = 0; i < $('#send_money_player').children().length; i++) {
+            current_names.push($('#send_money_player').children()[i].text);
+        }
+        for (var i = 0; i < data['users'].length; i++) {
+            if (!(current_names.indexOf(data['users'][i]) >= 0)){
+                $('#send_money_player').append('<option value="user1">' + data['users'][i] + '</option>')
+            }
+        }
+
+        if ($('#free_parking').text().slice(-1) == "K"){
+            $('#free_parking').text(String(data['free_parking']*1000) + "K");
+        } else {
+            $('#free_parking').text(String(data['free_parking']) + "M");
+        }
+
+        var current_logs = [];
+        for (var i = 0; i < $('#logs').children().length; i++) {
+            current_logs.push($('#logs').children()[i].textContent );
+        }
+        data['logs'] = data['logs'].reverse();
+        for (var i = 0; i < data['logs'].length; i++) {
+            if (!(current_logs.indexOf(data['logs'][i]) >= 0)){
+                $('#logs').append('<div class="play_scroll_log">' + data['logs'][i] + '</div>');
+            }
+        }
     });
 }
 
@@ -38,6 +72,13 @@ bank_refresh = function(){
 
 leave = function(){
     window.location.href = $SCRIPT_ROOT + '/clear';
+
+}
+
+leave_prep = function(context){
+    if (window.confirm("Are you sure you want to " + context)){
+        leave();
+    }
 }
 
 check_pin_response = function(data){
@@ -61,4 +102,20 @@ who_starts_first = function(){
     $.get($SCRIPT_ROOT + '/who_starts/', function(data) {
         alert(data['user'] + " starts");
     });
+}
+
+play_background_checks = function(){
+    setInterval(function() {
+        play_refresh();
+    }, background_check_delay);
+}
+
+bank_background_checks = function(){
+    setInterval(function() {
+        bank_refresh();
+    }, background_check_delay);
+}
+
+send_money = function(){
+
 }

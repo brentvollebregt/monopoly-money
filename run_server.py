@@ -255,15 +255,15 @@ def clear_cookie():
 def getPlayData():
     cookie_id = request.cookies['id']
     return jsonify(balance=10,
-                   users=["Player1", "Player2"],
+                   users=["Player1", "Player2", "Player3"],
                    free_parking=0.5,
                    logs=["Someone did this first", "The someone did this"])
 
 @app.route("/bank_data/")
 def getBankData():
     cookie_id = request.cookies['id']
-    return jsonify(users=[],
-                   free_parking=0)
+    return jsonify(users=["Player1", "Player2", "Player3"],
+                   free_parking=0.5)
 
 @app.route("/who_starts/")
 def whoStarts():

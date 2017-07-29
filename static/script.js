@@ -15,3 +15,11 @@ switch_char = function(obj){
         obj.text = "M"
     }
 }
+
+flash_red = function() {
+    $("#pin").css("background", "rgba(224, 31, 31,0.35)");
+    $('#pin').fadeTo('slow', 0.3, function()
+    {
+        $(this).css('background', 'rgba(255,255,255,0.05)');
+    }).delay(1000).fadeTo('slow', 1);
+}

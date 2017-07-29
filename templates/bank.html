@@ -2,13 +2,13 @@
 {% block content %}
 
 <!--Top Display-->
-<div style="display: inline-block; width: 100%; height: 10%; background: #4caf50;">
+<div class="green_top">
     <div style="width: 20%; height; 100%; float: left;">
         <a href="/play/">
-            <img src="{{ url_for('static', filename='./icons/play.png') }}" style="height: 90%; padding-left: 5%; padding-top: 5%;" >
+            <img src="{{ url_for('static', filename='./icons/play.png') }}" class="banker_switch">
         </a>
     </div>
-    <div class="outer" style="position: relative; width: 80%; float: right;">
+    <div class="outer_rel" style="width: 80%; float: right;">
         <div class="middle">
             <div class="inner">
                 <a class="play_name_title">Banker 117458</a>
@@ -18,80 +18,63 @@
 </div>
 
 <!--Body-->
-<div style="width: 100%; height: 90%; background: #424242;">
+<div style="width: 100%; height: 90%;">
     <!--Transfer Money-->
     <div style="height: 28%; width: 100%;" class="section_divider">
         <div style="height: 100%; width: 30%; float: right;">
-            <button id="go" style="height: 100%; width: 100%; font-size: 700%; font-family: Quicksand; background: rgba(0, 128, 0, 0.5); border: none;">Go</button>
+            <button id="go" class="green_btn play_go">Go</button>
         </div>
         <div style="height: 50%; width: 70%; float: left;">
-            <select style="height: 100%; width: 100%; font-size: 500%; background: none; color: white; border: none; direction: rtl; padding-right: 10%; font-family: Quicksand;">
+            <select class="user_select white_text">
                 <option value="user1">User1</option>
                 <option value="user2">User2</option>
             </select>
         </div>
         <div style="height: 50%; width: 70%; float: left;">
-            <input type="number" style="width: 80%; height: 100%; font-size: 550%; background: none; text-align: right; padding: 2%; color: white; border: none" placeholder="Amount">
-            <a style="height; 100%; width: 20%; color: white; font-size: 650%; font-family: Quicksand; line-height: 100%;" onclick="switch_char(this)">K</a>
+            <input type="number" class="play_amount_entry" placeholder="Amount">
+            <a class="white_text" style="height; 100%; width: 20%; font-size: 650%;" onclick="switch_char(this)">K</a>
         </div>
     </div>
 
     <!--Send Free Parking-->
     <div style="height: 15%; width: 100%;" class="section_divider">
-        <div class="outer" style="position: relative; width: 30%; float: left;">
+        <div class="outer_rel" style="width: 30%; float: left;">
             <div class="middle">
                 <div class="inner">
-                    <a style="font-family: Quicksand; font-size: 300%; color: white; height: 100%; width: 100%; display: block; text-align: center;">Amount: 500K</a>
+                    <a class="white_text" style="font-size: 300%; height: 100%; width: 100%; display: block; text-align: center;">Amount: 500K</a>
                 </div>
             </div>
         </div>
         <div style="height; 100%; width: 70%; float: right;">
             <div style="height: 100%; width: 57%; float: left;">
-                <select style="height: 100%; width: 100%; font-size: 300%; background: none; color: white; border: none; direction: rtl; padding-right: 10%; font-family: Quicksand;">
+                <select class="user_select white_text" style="font-size: 300%;">
                     <option value="user1">User1</option>
                     <option value="user2">User2</option>
                 </select>
             </div>
-            <button style="height: 100%; width: 43%; font-size: 700%; font-family: Quicksand; background: rgba(0, 128, 0, 0.5); border: none; float: right;">Go</button>
+            <button class="green_btn play_go" style="width: 43%; float: right;">Go</button>
         </div>
     </div>
 
     <!--Manage Players (edit names and remove-->
     <div style="height: 19%; width: 100%;" class="section_divider">
-        <div style="width: 100%; height: 100%; overflow-y: scroll; overflow-x: hidden;">
+        <div class="in_scroll">
             <!--Individuals-->
             <div style="width: 100%; height: 30%; display: block;">
                 <div style="width: 50%; height: 100%; margin-left: 15%; margin-right: 0px; float: left;">
-                    <div class="outer" style="position: relative;">
+                    <div class="outer_rel">
                         <div class="middle">
                             <div class="inner">
-                                <a style="color: white; font-size: 350%; font-family: Quicksand; float: left;">Brent</a>
+                                <a class="white_text" style="font-size: 350%; float: left;">Brent</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div style="width: 10%; height: 100%; float: right; margin-right: 15%;">
-                    <img src="{{ url_for('static', filename='./icons/close.png') }}" style="height: 100%;" >
+                    <img src="{{ url_for('static', filename='./icons/close.png') }}" style="height: 100%;">
                 </div>
                 <div style="width: 10%; height: 100%; float: right;">
-                    <img src="{{ url_for('static', filename='./icons/edit.png') }}" style="height: 90%; padding-left: 5%; padding-top: 5%;" >
-                </div>
-            </div>
-            <div style="width: 100%; height: 30%; display: block;">
-                <div style="width: 50%; height: 100%; margin-left: 15%; margin-right: 0px; float: left;">
-                    <div class="outer" style="position: relative;">
-                        <div class="middle">
-                            <div class="inner">
-                                <a style="color: white; font-size: 350%; font-family: Quicksand; float: left;">Brent</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="width: 10%; height: 100%; float: right; margin-right: 15%;">
-                    <img src="{{ url_for('static', filename='./icons/close.png') }}" style="height: 100%;" >
-                </div>
-                <div style="width: 10%; height: 100%; float: right;">
-                    <img src="{{ url_for('static', filename='./icons/edit.png') }}" style="height: 90%; padding-left: 5%; padding-top: 5%;" >
+                    <img src="{{ url_for('static', filename='./icons/edit.png') }}" class="banker_switch">
                 </div>
             </div>
 
@@ -101,26 +84,26 @@
     <!--Edit Balance Of Player-->
     <div style="height: 18%; width: 100%;" class="section_divider">
         <div style="height: 100%; width: 30%; float: right;">
-            <button style="height: 100%; width: 100%; font-size: 700%; font-family: Quicksand; background: rgba(0, 128, 0, 0.5); border: none;">Go</button>
+            <button class="green_btn" style="height: 100%; width: 100%; font-size: 700%; font-family: Quicksand; border: none;">Go</button>
         </div>
         <div style="height: 50%; width: 70%; float: left;">
-            <select style="height: 100%; width: 100%; font-size: 300%; background: none; color: white; border: none; direction: rtl; padding-right: 10%; font-family: Quicksand;">
+            <select class="user_select white_text" style="font-size: 300%;">
                 <option value="user1">User1</option>
                 <option value="user2">User2</option>
             </select>
         </div>
         <div style="height: 50%; width: 70%; float: left;">
-            <input type="number" style="width: 80%; height: 100%; font-size: 300%; background: none; text-align: right; padding: 2%; color: white; border: none" placeholder="Amount">
-            <a style="height; 100%; width: 20%; color: white; font-size: 400%; font-family: Quicksand; line-height: 100%;" onclick="switch_char(this)">K</a>
+            <input type="number" class="play_amount_entry" style="font-size: 300%;" placeholder="Amount">
+            <a class="white_text" style="height; 100%; width: 20%; font-size: 400%;" onclick="switch_char(this)">K</a>
         </div>
     </div>
 
     <!--Who Starts First-->
     <div style="height: 8%; width: 100%;" class="section_divider">
-        <div class="outer" style="position: relative;">
+        <div class="outer_rel">
             <div class="middle">
                 <div class="inner">
-                    <a style="font-family: Quicksand; font-size: 300%; color: white; text-align: center; display: block;">Who starts first?</a>
+                    <a class="white_text" style="font-size: 300%; text-align: center; display: block;">Who starts first?</a>
                 </div>
             </div>
         </div>
@@ -128,20 +111,20 @@
 
     <!--Lock and End-->
     <div style="height: 12%; width: 100%;" class="section_divider">
-        <div style="width: 50%; height: 100%; background: rgba(0, 128, 0, 0.5); float: left;">
-            <div class="outer" style="position: relative;">
+        <div class="green_btn" style="width: 50%; height: 100%; float: left;">
+            <div class="outer_rel">
                 <div class="middle">
                     <div class="inner">
-                        <a style="font-family: Quicksand; font-size: 500%;">Lock</a>
+                        <a class="play_bottom_btns">Lock</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div style="width: 50%; height: 100%; background: rgba(255, 0, 0, 0.5); float: right;">
-            <div class="outer" style="position: relative;">
+        <div class="red_btn" style="width: 50%; height: 100%; float: right;">
+            <div class="outer_rel">
                 <div class="middle">
                     <div class="inner">
-                        <a style="font-family: Quicksand; font-size: 500%; text-decoration: none; color: black;">End</a>
+                        <a class="play_bottom_btns">End</a>
                     </div>
                 </div>
             </div>

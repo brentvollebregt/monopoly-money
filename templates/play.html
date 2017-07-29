@@ -1,13 +1,14 @@
 {% extends "SKELETON.html" %}
 {% block content %}
 
-<div style="display: inline-block; width: 100%; height: 10%; background: #4caf50;">
+<!--Top Display-->
+<div class="green_top">
     <div style="width: 20%; height; 100%; float: left;">
         <a href="/bank/">
-            <img src="{{ url_for('static', filename='./icons/bank.png') }}" style="height: 90%; padding-left: 5%; padding-top: 5%;" >
+            <img src="{{ url_for('static', filename='./icons/bank.png') }}" class="banker_switch">
         </a>
     </div>
-    <div class="outer" style="position: relative; width: 80%; float: right;">
+    <div class="outer_rel" style="width: 80%; float: right;">
         <div class="middle">
             <div class="inner">
                 <a class="play_name_title">{{ name }}</a>
@@ -16,76 +17,82 @@
     </div>
 </div>
 
-<div style="width: 100%; height: 90%; background: #424242;">
+<!--Body-->
+<div style="width: 100%; height: 90%;">
+    <!--Balance-->
     <div style="height: 17%; width: 100%;" class="section_divider">
-        <div class="outer" style="position: relative;">
+        <div class="outer_rel">
             <div class="middle">
                 <div class="inner">
-                    <a id="balance" style="font-family: Quicksand; font-size: 800%; color: white;" onclick="switch_balance_format(this);">4.354M</a>
+                    <a id="balance" class="bal" onclick="switch_balance_format(this);">4.354M</a>
                 </div>
             </div>
         </div>
     </div>
 
+    <!--Transfer Money-->
     <div style="height: 28%; width: 100%;" class="section_divider">
         <div style="height: 100%; width: 30%; float: right;">
-            <button id="go" style="height: 100%; width: 100%; font-size: 700%; font-family: Quicksand; background: rgba(0, 128, 0, 0.5); border: none;">Go</button>
+            <button id="go" class="play_go green_btn">Go</button>
         </div>
         <div style="height: 50%; width: 70%; float: left;">
-            <select style="height: 100%; width: 100%; font-size: 500%; background: none; color: white; border: none; direction: rtl; padding-right: 10%; font-family: Quicksand;">
+            <select class="white_text user_select">
                 <option value="user1">User1</option>
                 <option value="user2">User2</option>
             </select>
         </div>
         <div style="height: 50%; width: 70%; float: left;">
-            <input type="number" style="width: 80%; height: 100%; font-size: 550%; background: none; text-align: right; padding: 2%; color: white; border: none" placeholder="Amount">
-            <a style="height; 100%; width: 20%; color: white; font-size: 650%; font-family: Quicksand; line-height: 100%;" onclick="switch_char(this)">K</a>
+            <input type="number" class="play_amount_entry" placeholder="Amount">
+            <a class="white_text" style="height; 100%; width: 20%; font-size: 650%;" onclick="switch_char(this)">K</a>
         </div>
     </div>
 
+    <!--Free Parking-->
     <div style="height: 12%; width: 100%;" class="section_divider">
-        <div class="outer" style="position: relative;">
+        <div class="outer_rel">
             <div class="middle">
                 <div class="inner">
-                    <a style="font-family: Quicksand; font-size: 400%; color: white; margin-right: 3%;">Free Parking:</a>
-                    <a id="fp" style="font-family: Quicksand; font-size: 400%; color: white;" onclick="switch_balance_format(this);">600K</a>
+                    <a class="white_text" style="font-size: 400%; margin-right: 3%;">Free Parking:</a>
+                    <a id="fp" class="white_text" style="font-size: 400%;" onclick="switch_balance_format(this);">600K</a>
                 </div>
             </div>
         </div>
     </div>
 
+    <!--Logs-->
     <div style="height: 30%; width: 100%;" class="section_divider">
-        <div style="width: 100%; height: 100%; overflow-y: scroll; overflow-x: hidden;">
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
-            <div style="width: 100%; height: 10%; display: block; margin: 1px; margin-left: 2%; color: white; font-size: 180%; font-family: Quicksand;">21:27:30 Brent transferred 300K to x</div>
+        <div class="in_scroll">
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
+            <div class="play_scroll_log">21:27:30 Brent transferred 300K to x</div>
         </div>
     </div>
 
+    <!--Bottom Buttons-->
     <div style="height: 13%; width: 100%;" class="section_divider">
-        <div style="width: 50%; height: 100%; background: rgba(0, 128, 0, 0.5); float: left;">
-            <div class="outer" style="position: relative;">
+        <div class="green_btn" style="width: 50%; height: 100%; float: left;">
+            <div class="outer_rel">
                 <div class="middle">
                     <div class="inner">
-                        <a style="font-family: Quicksand; font-size: 500%;" onclick="javascript:window.location.reload(true)">Refresh</a>
+                        <a class="play_bottom_btns" onclick="javascript:window.location.reload(true)">Refresh</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div style="width: 50%; height: 100%; background: rgba(255, 0, 0, 0.5); float: right;">
-            <div class="outer" style="position: relative;">
+        <div class="red_btn" style="width: 50%; height: 100%; float: right;">
+            <div class="outer_rel">
                 <div class="middle">
                     <div class="inner">
-                        <a style="font-family: Quicksand; font-size: 500%; text-decoration: none; color: black;" href="/clear/">Leave</a>
+                        <a class="play_bottom_btns" href="/clear/">Leave</a>
                     </div>
                 </div>
             </div>

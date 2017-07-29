@@ -17,15 +17,6 @@
         </div>
     </body>
     <script>
-        flash_red = function() {
-            $("#pin").css("background", "rgba(224, 31, 31,0.35)");
-            $('#pin').fadeTo('slow', 0.3, function()
-            {
-                $(this).css('background', 'rgba(255,255,255,0.05)');
-            }).delay(1000).fadeTo('slow', 1);
-        }
-    </script>
-    <script>
         var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
         $(function() {
             $('#join').bind('click', function() {

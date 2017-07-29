@@ -18,17 +18,9 @@ Will add some when more development is made
 
 ## Development
 Pretty much everything, but here is a checklist of what I want to add; will be removing them once they get old
- - [x] Banker/Player selection
- - [x] Host multiple games from server: banker creates new gave and gives token to new players (means this could be hosted somewhere)
- - [ ] Banker can switch to being a player with a button
  - [ ] Banker can remove people (only when unlocked)
- - [ ] History of transfers to banker
- - [ ] Private history of transfers between users
- - [ ] Can select whether to show balances to others
- - [ ] User to bank and bank to user history is public
- - [ ] Quick transaction buttons for banker
  - [ ] Administration panel; look at current and saved games, delete games
 
  ## Sources
- * [material.io](material.io) for bank.png and play.png
+ * [material.io](material.io) for bank.png, play.png, close.png and edit.png
  * [http://www.iconarchive.com](http://www.iconarchive.com) for favicon

@@ -147,6 +147,10 @@ body {
     margin: 0px;
 }
 
+select {
+    -webkit-appearance: none;
+}
+
 .border_in {
     box-sizing: border-box;
     -moz-box-sizing: border-box;

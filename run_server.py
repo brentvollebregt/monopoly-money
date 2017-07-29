@@ -202,7 +202,8 @@ def play_page():
     if request.method == 'GET':
         if checkUserPlacement(request)[0] == True:
             return render_template('play.html',
-                                   name=data['users'][request.cookies['id']]['name'])
+                                   name=data['users'][request.cookies['id']]['name'],
+                                   type=data['users'][request.cookies['id']]['type'])
         else:
             return checkUserPlacement(request)[1]
     else:
@@ -212,11 +213,7 @@ def play_page():
 def bank_page():
     if request.method == 'GET':
         if checkUserPlacement(request)[0] == True:
-            return render_template('bank.html',
-                                   data=str({'id' : request.cookies['id'],
-                                             "user_data" : data['users'][request.cookies['id']]
-                                            })
-                                   )
+            return render_template('bank.html', game_pin=data['users'][request.cookies['id']]['game'])
         else:
             return checkUserPlacement(request)[1]
     else:
@@ -241,7 +238,7 @@ def page_not_found(error):
     return redirect(url_for('home_page'))
 
 
-# Debugging routes
+# Data Routes
 @app.route("/clear/")
 def clear_cookie():
     if 'id' in request.cookies:
@@ -252,6 +249,29 @@ def clear_cookie():
     response.set_cookie('id', '', expires=0)
     return response
 
+@app.route("/play_data/")
+def getPlayData():
+    cookie_id = request.cookies['id']
+    return jsonify(balance=0,
+                   users=[],
+                   free_parking=0,
+                   logs=[])
+
+@app.route("/bank_data/")
+def getBankData():
+    cookie_id = request.cookies['id']
+    return jsonify(users=[],
+                   free_parking=0)
+
+@app.route("/who_starts/")
+def whoStarts():
+    cookie_id = request.cookies['id']
+    game = data['users'][cookie_id]['game']
+    players = [i for i in data['games'][game]['players']]
+    return jsonify(user=random.choice(players))
+
+
+# Debugging routes
 @app.route("/data/")
 def data_view():
     a = dictHTMLprint()

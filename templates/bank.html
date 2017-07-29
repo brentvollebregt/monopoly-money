@@ -11,7 +11,7 @@
     <div class="outer_rel" style="width: 80%; float: right;">
         <div class="middle">
             <div class="inner">
-                <a class="play_name_title">Banker 117458</a>
+                <a class="play_name_title">Banker {{ game_pin }}</a>
             </div>
         </div>
     </div>
@@ -103,7 +103,7 @@
         <div class="outer_rel">
             <div class="middle">
                 <div class="inner">
-                    <a class="white_text" style="font-size: 300%; text-align: center; display: block;">Who starts first?</a>
+                    <a class="white_text" style="font-size: 300%; text-align: center; display: block;" onclick="javascript:who_starts_first();">Who starts first?</a>
                 </div>
             </div>
         </div>
@@ -131,4 +131,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+
+</script>
 {% endblock %}

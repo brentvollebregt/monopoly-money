@@ -3,11 +3,13 @@
 
 <!--Top Display-->
 <div class="green_top">
+    {% if type == 'banker' %}
     <div style="width: 20%; height; 100%; float: left;">
         <a href="/bank/">
             <img src="{{ url_for('static', filename='./icons/bank.png') }}" class="banker_switch">
         </a>
     </div>
+    {% endif %}
     <div class="outer_rel" style="width: 80%; float: right;">
         <div class="middle">
             <div class="inner">
@@ -33,7 +35,7 @@
     <!--Transfer Money-->
     <div style="height: 28%; width: 100%;" class="section_divider">
         <div style="height: 100%; width: 30%; float: right;">
-            <button id="go" class="play_go green_btn">Go</button>
+            <button id="send_money" class="play_go green_btn">Go</button>
         </div>
         <div style="height: 50%; width: 70%; float: left;">
             <select class="white_text user_select">
@@ -53,7 +55,7 @@
             <div class="middle">
                 <div class="inner">
                     <a class="white_text" style="font-size: 400%; margin-right: 3%;">Free Parking:</a>
-                    <a id="fp" class="white_text" style="font-size: 400%;" onclick="switch_balance_format(this);">600K</a>
+                    <a id="free_parking" class="white_text" style="font-size: 400%;" onclick="switch_balance_format(this);">600K</a>
                 </div>
             </div>
         </div>
@@ -92,7 +94,7 @@
             <div class="outer_rel">
                 <div class="middle">
                     <div class="inner">
-                        <a class="play_bottom_btns" href="/clear/">Leave</a>
+                        <a class="play_bottom_btns" onclick="javascript:leave_prep();">Leave</a>
                     </div>
                 </div>
             </div>
@@ -101,8 +103,18 @@
 </div>
 
 <script>
-    $('#go').click(function(){
+    $('#send_money').click(function(){
         alert("tmp");
     });
+
+    leave_prep = function(){
+        if (window.confirm("Are you sure you want to leave?")){
+            leave();
+        }
+    }
+</script>
+
+<script>
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
 {% endblock %}

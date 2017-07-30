@@ -330,8 +330,25 @@ def editPlayerName():
 
 @app.route("/remove_player/", methods = ['POST'])
 def removePlayer():
-    # TODO Check if banker
-    pass
+    if request.cookies['id'] not in data['users']:
+        return jsonify()
+    if data['users'][request.cookies['id']]['game'] == None:
+        return jsonify()
+
+    game = data['users'][request.cookies['id']]['game']
+    name = data['users'][request.cookies['id']]['name']
+
+    # Check if banker
+    if data['users'][request.cookies['id']]['type'] != "banker":
+        return jsonify()
+
+    player_name = request.form['player_name_to_remove']
+    player_id = data['games'][game]['players'][player_name]['id']
+
+    del data['games'][game]['players'][player_name]
+    del data['users'][player_id]
+
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route("/send_money/", methods = ['POST'])
 def sendMoney():

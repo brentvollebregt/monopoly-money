@@ -188,7 +188,9 @@ edit_player_name = function(obj){
 
 remove_player = function(obj){
     if (window.confirm("Are you sure you want to remove " + $(obj).attr('value') + "?")){
-
+        $.post($SCRIPT_ROOT + '/remove_player/', {
+            player_name_to_remove: $(obj).attr('value')
+        });
     }
 }
 

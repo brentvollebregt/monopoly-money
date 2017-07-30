@@ -16,10 +16,9 @@ Will add some when more development is made
 5. If you are a player, enter the pin supplied by your banker
 6. Have fun
 
-## Development
-Pretty much everything, but here is a checklist of what I want to add; will be removing them once they get old
- - [ ] Banker can remove people (only when unlocked)
- - [ ] Administration panel; look at current and saved games, delete games
+## Currently in Development
+* Floating point numbers issue (try 1.38 - 1 in python)
+* Setting balances
 
  ## Sources
  * [material.io](material.io) for bank.png, play.png, close.png and edit.png

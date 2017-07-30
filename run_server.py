@@ -412,6 +412,28 @@ def sendFreeParking():
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
+@app.route("/set_balance/", methods = ['POST'])
+def setBalance():
+    if request.cookies['id'] not in data['users']:
+        return jsonify()
+    if data['users'][request.cookies['id']]['game'] == None:
+        return jsonify()
+
+    game = data['users'][request.cookies['id']]['game']
+    name = data['users'][request.cookies['id']]['name']
+
+    # Check if banker
+    if data['users'][request.cookies['id']]['type'] != "banker":
+        return jsonify()
+
+    player_name = request.form['player_to_set']
+    balance = request.form['set_amount']
+
+    data['games'][game]['players'][name]['bal'] = balance
+    data['games'][game]['logs'].append("Bank set balance of " + name + " to " + str(balance) + "M")
+
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
 
 # Debugging routes
 @app.route("/data/")

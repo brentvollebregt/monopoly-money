@@ -225,5 +225,24 @@ send_free_parking = function(){
 }
 
 set_balance = function(){
+    if($('#set_player_bal_amount').val() == ""){
+        alert("No amount entered");
+        return;
+    }
+    if($('#set_player_bal_player').val() == null){
+        alert("No player selected");
+        return;
+    }
 
+    if ($('#set_player_bal_MK').text() == "K"){
+        var amount = Number($('#set_player_bal_amount').val()) / 1000
+    } else {
+        var amount = Number($('#set_player_bal_amount').val())
+    }
+    var player = $('#set_player_bal_player').val()
+
+    $.post($SCRIPT_ROOT + '/set_balance/', {
+        set_amount: amount,
+        player_to_set: player,
+    });
 }

@@ -68,10 +68,10 @@ play_refresh = function(){
         for (var i = 0; i < $('#logs').children().length; i++) {
             current_logs.push($('#logs').children()[i].textContent );
         }
-        data['logs'] = data['logs'].reverse();
+        data['logs'] = data['logs'];
         for (var i = 0; i < data['logs'].length; i++) {
             if (!(current_logs.indexOf(data['logs'][i]) >= 0)){
-                $('#logs').append('<div class="play_scroll_log">' + data['logs'][i] + '</div>');
+                $('#logs').prepend('<div class="play_scroll_log">' + data['logs'][i] + '</div>');
             }
         }
     });
@@ -194,9 +194,27 @@ remove_player = function(obj){
     }
 }
 
-send_money = function(){
-    $.post($SCRIPT_ROOT + '/send_money/', {
+send_money = function(isBank){
+    if($('#send_money_amount').val() == ""){
+        alert("No amount entered");
+        return;
+    }
+    if($('#send_money_player').val() == null){
+        alert("No player selected");
+        return;
+    }
 
+    if ($('#send_money_MK').text() == "K"){
+        var amount = Number($('#send_money_amount').val()) / 1000
+    } else {
+        var amount = Number($('#send_money_amount').val())
+    }
+    var player = $('#send_money_player').val()
+
+    $.post($SCRIPT_ROOT + '/send_money/', {
+        transfer_amount: amount,
+        player_receiving: player,
+        banker: isBank
     });
 }
 
@@ -204,4 +222,8 @@ send_free_parking = function(){
     $.post($SCRIPT_ROOT + '/send_free_parking/', {
         player: $('#send_free_parking_player').val()
     });
+}
+
+set_balance = function(){
+
 }

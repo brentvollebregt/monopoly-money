@@ -62,7 +62,7 @@ def createGame(banker):
         },
         "banker" : banker,
         "open" : True,
-        "free_parking" : 0.5,
+        "free_parking" : 0.0,
         "logs" : []
     }
 
@@ -362,6 +362,31 @@ def sendMoney():
 
     game = data['users'][request.cookies['id']]['game']
     name = data['users'][request.cookies['id']]['name']
+
+    transfer_amount = float(request.form['transfer_amount'])
+    player_receiving = request.form['player_receiving']
+    banker = request.form['banker']
+    banker = [request.form['banker'] == "true"][0]
+
+    if banker:
+        if not data['users'][request.cookies['id']]['type'] == 'banker':
+            return json.dumps({'success':False}), 200, {'ContentType':'application/json'}
+
+    if player_receiving == "Bank":
+        data['games'][game]['players'][name]['bal'] -= transfer_amount
+        data['games'][game]['logs'].append(name + " paid " + str(transfer_amount) + "M to the Bank")
+    elif player_receiving == "Free Parking":
+        data['games'][game]['players'][name]['bal'] -= transfer_amount
+        data['games'][game]['free_parking'] += transfer_amount
+        data['games'][game]['logs'].append(name + " put " + str(transfer_amount) + "M in Free Parking")
+    else:
+        if banker:
+            data['games'][game]['players'][player_receiving]['bal'] += transfer_amount
+            data['games'][game]['logs'].append("The Bank gave " + str(transfer_amount) + "M to " + player_receiving)
+        else:
+            data['games'][game]['players'][name]['bal'] -= transfer_amount
+            data['games'][game]['players'][player_receiving]['bal'] += transfer_amount
+            data['games'][game]['logs'].append(name + " sent " + str(transfer_amount) + "M to " + player_receiving)
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 

@@ -18,7 +18,6 @@ Will add some when more development is made
 
 ## Currently in Development
 * Floating point numbers issue (try 1.38 - 1 in python)
-* Setting balances
 
  ## Sources
  * [material.io](material.io) for bank.png, play.png, close.png and edit.png

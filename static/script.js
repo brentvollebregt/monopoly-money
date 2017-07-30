@@ -35,9 +35,9 @@ play_refresh = function(){
         }
 
         if ($('#balance').text().slice(-1) == "K"){
-            $('#balance').text(String(data['balance']*1000) + "K");
+            $('#balance').text(String(data['balance']) + "K");
         } else {
-            $('#balance').text(String(data['balance']) + "M");
+            $('#balance').text(String(data['balance']/1000) + "M");
         }
 
         var current_names = [];
@@ -59,9 +59,9 @@ play_refresh = function(){
         }
 
         if ($('#free_parking').text().slice(-1) == "K"){
-            $('#free_parking').text(String(data['free_parking']*1000) + "K");
+            $('#free_parking').text(String(data['free_parking']) + "K");
         } else {
-            $('#free_parking').text(String(data['free_parking']) + "M");
+            $('#free_parking').text(String(data['free_parking']/1000) + "M");
         }
 
         var current_logs = [];
@@ -86,9 +86,9 @@ bank_refresh = function(){
         }
 
         if ($('#free_parking').text().slice(-1) == "K"){
-            $('#free_parking').text("Amount: " + String(data['free_parking']*1000) + "K");
+            $('#free_parking').text("Amount: " + String(data['free_parking']) + "K");
         } else {
-            $('#free_parking').text("Amount: " + String(data['free_parking']) + "M");
+            $('#free_parking').text("Amount: " + String(data['free_parking']/1000) + "M");
         }
 
         var current_names = [];
@@ -132,7 +132,6 @@ bank_refresh = function(){
 
 leave = function(){
     window.location.href = $SCRIPT_ROOT + '/clear';
-
 }
 
 leave_prep = function(context){
@@ -205,9 +204,9 @@ send_money = function(isBank){
     }
 
     if ($('#send_money_MK').text() == "K"){
-        var amount = Number($('#send_money_amount').val()) / 1000
-    } else {
         var amount = Number($('#send_money_amount').val())
+    } else {
+        var amount = Number($('#send_money_amount').val()*1000)
     }
     var player = $('#send_money_player').val()
 
@@ -235,9 +234,9 @@ set_balance = function(){
     }
 
     if ($('#set_player_bal_MK').text() == "K"){
-        var amount = Number($('#set_player_bal_amount').val()) / 1000
-    } else {
         var amount = Number($('#set_player_bal_amount').val())
+    } else {
+        var amount = Number($('#set_player_bal_amount').val())*1000
     }
     var player = $('#set_player_bal_player').val()
 

@@ -1,3 +1,6 @@
+# TODO refresh page when request is sent
+# TODO Clear values when a request has been sent
+
 from flask import Flask, request, render_template, make_response, redirect, url_for, session, abort, send_from_directory, jsonify
 import os
 import json
@@ -56,13 +59,13 @@ def createGame(banker):
         "players" : {
             data['users'][banker]['name'] : {
                 "id" : banker,
-                "bal" : 0.0,
+                "bal" : 0,
                 "name" : data['users'][banker]['name']
             }
         },
         "banker" : banker,
         "open" : True,
-        "free_parking" : 0.0,
+        "free_parking" : 0,
         "logs" : []
     }
 
@@ -355,6 +358,7 @@ def removePlayer():
 
 @app.route("/send_money/", methods = ['POST'])
 def sendMoney():
+    # TODO Check if they actually have it
     if request.cookies['id'] not in data['users']:
         return jsonify()
     if data['users'][request.cookies['id']]['game'] == None:
@@ -363,7 +367,7 @@ def sendMoney():
     game = data['users'][request.cookies['id']]['game']
     name = data['users'][request.cookies['id']]['name']
 
-    transfer_amount = float(request.form['transfer_amount'])
+    transfer_amount = int(request.form['transfer_amount'])
     player_receiving = request.form['player_receiving']
     banker = request.form['banker']
     banker = [request.form['banker'] == "true"][0]
@@ -374,19 +378,19 @@ def sendMoney():
 
     if player_receiving == "Bank":
         data['games'][game]['players'][name]['bal'] -= transfer_amount
-        data['games'][game]['logs'].append(name + " paid " + str(transfer_amount) + "M to the Bank")
+        data['games'][game]['logs'].append(name + " paid " + str(transfer_amount) + "K to the Bank")
     elif player_receiving == "Free Parking":
         data['games'][game]['players'][name]['bal'] -= transfer_amount
         data['games'][game]['free_parking'] += transfer_amount
-        data['games'][game]['logs'].append(name + " put " + str(transfer_amount) + "M in Free Parking")
+        data['games'][game]['logs'].append(name + " put " + str(transfer_amount) + "K in Free Parking")
     else:
         if banker:
             data['games'][game]['players'][player_receiving]['bal'] += transfer_amount
-            data['games'][game]['logs'].append("The Bank gave " + str(transfer_amount) + "M to " + player_receiving)
+            data['games'][game]['logs'].append("The Bank gave " + str(transfer_amount) + "K to " + player_receiving)
         else:
             data['games'][game]['players'][name]['bal'] -= transfer_amount
             data['games'][game]['players'][player_receiving]['bal'] += transfer_amount
-            data['games'][game]['logs'].append(name + " sent " + str(transfer_amount) + "M to " + player_receiving)
+            data['games'][game]['logs'].append(name + " sent " + str(transfer_amount) + "K to " + player_receiving)
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
@@ -407,7 +411,7 @@ def sendFreeParking():
     player_name = request.form['player']
 
     data['games'][game]['players'][name]['bal'] += data['games'][game]['free_parking']
-    data['games'][game]['logs'].append("Free Parking (" + str(data['games'][game]['free_parking']) + "M) given to " + name)
+    data['games'][game]['logs'].append("Free Parking (" + str(data['games'][game]['free_parking']) + "K) given to " + name)
     data['games'][game]['free_parking'] = 0
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
@@ -427,10 +431,10 @@ def setBalance():
         return jsonify()
 
     player_name = request.form['player_to_set']
-    balance = request.form['set_amount']
+    balance = int(request.form['set_amount'])
 
     data['games'][game]['players'][name]['bal'] = balance
-    data['games'][game]['logs'].append("Bank set balance of " + name + " to " + str(balance) + "M")
+    data['games'][game]['logs'].append("Bank set balance of " + name + " to " + str(balance) + "K")
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 

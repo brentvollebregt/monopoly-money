@@ -17,8 +17,9 @@ Will add some when more development is made
 6. Have fun
 
 ## Currently in Development
-* Floating point numbers issue (try 1.38 - 1 in python)
+* Check if bal has enough
+* Lock function in /bank/
 
- ## Sources
- * [material.io](material.io) for bank.png, play.png, close.png and edit.png
- * [http://www.iconarchive.com](http://www.iconarchive.com) for favicon
+## Sources
+* [material.io](material.io) for bank.png, play.png, close.png and edit.png
+* [http://www.iconarchive.com](http://www.iconarchive.com) for favicon

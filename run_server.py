@@ -1,6 +1,3 @@
-# TODO refresh page when request is sent
-# TODO Clear values when a request has been sent
-
 from flask import Flask, request, render_template, make_response, redirect, url_for, session, abort, send_from_directory, jsonify
 import os
 import json
@@ -225,15 +222,14 @@ def bank_page():
     else:
         pass
 
-@app.route("/rules/", methods = ['POST', 'GET'])
-def rules_page():
-    return render_template('rules.html')
-
 @app.route("/admin/", methods = ['POST', 'GET'])
 def admin_page():
+    """
+    Maybe:
     # TODO Mange running games
     # TODO Manipulate data
     # TODO Statistics (money flow and other cool stuff)
+    """
     if request.method == 'GET':
         return "Not Implemented"
     else:

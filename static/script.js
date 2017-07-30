@@ -215,12 +215,17 @@ send_money = function(isBank){
         player_receiving: player,
         banker: isBank
     });
+
+    $('#send_money_player').val("")
+    $('#send_money_amount').val("")
 }
 
 send_free_parking = function(){
     $.post($SCRIPT_ROOT + '/send_free_parking/', {
         player: $('#send_free_parking_player').val()
     });
+
+    $('#send_free_parking_player').val("")
 }
 
 set_balance = function(){
@@ -244,4 +249,7 @@ set_balance = function(){
         set_amount: amount,
         player_to_set: player,
     });
+
+    $('#set_player_bal_player').val("")
+    $('#set_player_bal_amount').val("")
 }

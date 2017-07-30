@@ -150,9 +150,7 @@ def home_page():
         name = request.form['name']
         if name == "":
             return render_template('home.html', message="Please provide a name")
-        if name == "Bank":
-            return render_template('home.html', message="Invalid name")
-        if name == "Free Parking":
+        if name in ["Bank", "Free Parking", "Player"]:
             return render_template('home.html', message="Invalid name")
 
         if "player" in request.form:
@@ -248,9 +246,12 @@ def page_not_found(error):
 def clear_cookie():
     if 'id' in request.cookies:
         if request.cookies['id'] in data['users']:
+            if data['users'][request.cookies['id']]['game'] != None:
+                del data['games'][data['users'][request.cookies['id']]['game']]['players'][data['users'][request.cookies['id']]['name']]
             if data['users'][request.cookies['id']]['type'] == 'banker':
                 del data['games'][data['users'][request.cookies['id']]['game']]
             del data['users'][request.cookies['id']]
+
 
     response = make_response(redirect(url_for('home_page')))
     response.set_cookie('id', '', expires=0)
@@ -267,7 +268,8 @@ def getPlayData():
     name = data['users'][request.cookies['id']]['name']
 
     balance = data['games'][game]['players'][name]['bal']
-    users = [i for i in data['games'][game]['players'] if not name] + ["Bank", "Free Parking"]
+    users = [i for i in data['games'][game]['players']] + ["Bank", "Free Parking"]
+    users.remove(name)
     free_parking = data['games'][game]['free_parking']
     logs = data['games'][game]['logs']
 
@@ -298,15 +300,40 @@ def whoStarts():
     players = [i for i in data['games'][game]['players']]
     return jsonify(user=random.choice(players))
 
-@app.route("/edit_player_name/")
+@app.route("/edit_player_name/", methods = ['POST'])
 def editPlayerName():
-    pass
+    if request.cookies['id'] not in data['users']:
+        return jsonify()
+    if data['users'][request.cookies['id']]['game'] == None:
+        return jsonify()
 
-@app.route("/remove_player/")
+    game = data['users'][request.cookies['id']]['game']
+    name = data['users'][request.cookies['id']]['name']
+
+    # Check if banker
+    if data['users'][request.cookies['id']]['type'] != "banker":
+        return jsonify()
+
+    player_name = request.form['player_name_to_change']
+    new_name = request.form['new_name']
+    player_id = data['games'][game]['players'][player_name]['id']
+
+    if new_name in ["Bank", "Free Parking", "Player"]:
+        return json.dumps({'success':False}), 200, {'ContentType':'application/json'}
+
+    data['users'][player_id]['name'] = new_name
+    data['games'][game]['players'][new_name] = data['games'][game]['players'][player_name]
+    del data['games'][game]['players'][player_name]
+    data['games'][game]['players'][new_name]['name'] = new_name
+
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route("/remove_player/", methods = ['POST'])
 def removePlayer():
+    # TODO Check if banker
     pass
 
-@app.route("/send_money/")
+@app.route("/send_money/", methods = ['POST'])
 def sendMoney():
     pass
 

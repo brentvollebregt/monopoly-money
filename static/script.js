@@ -49,6 +49,14 @@ play_refresh = function(){
                 $('#send_money_player').append('<option value="' + data['users'][i] + '">' + data['users'][i] + '</option>')
             }
         }
+        for (var i = 0; i < $('#send_money_player').children().length; i++) {
+            if (["Bank", "Free Parking", "Player"].indexOf($('#send_money_player').children()[i].text) !== -1){
+                continue;
+            }
+            if (data['users'].indexOf($('#send_money_player').children()[i].text) == -1){
+                $('#send_money_player').children()[i].remove();
+            }
+        }
 
         if ($('#free_parking').text().slice(-1) == "K"){
             $('#free_parking').text(String(data['free_parking']*1000) + "K");
@@ -93,6 +101,30 @@ bank_refresh = function(){
                 $('#send_free_parking_player').append('<option value="' + data['users'][i] + '">' + data['users'][i] + '</option>')
                 $('#set_player_bal_player').append('<option value="' + data['users'][i] + '">' + data['users'][i] + '</option>')
                 $('#active_players').append('<div style="width: 100%; height: 30%; display: block;"><div style="width: 50%; height: 100%; margin-left: 15%; margin-right: 0px; float: left;"><div class="outer_rel"><div class="middle"><div class="inner"><a class="white_text" style="font-size: 350%; float: left;">' + data['users'][i] + '</a></div></div></div></div><div style="width: 10%; height: 100%; float: right; margin-right: 15%;"><img onclick="javascript:remove_player(this);" value="' + data['users'][i] + '" src="' + close_png_src +'" style="height: 100%;"></div><div style="width: 10%; height: 100%; float: right;"><img onclick="javascript:edit_player_name(this);" value="' + data['users'][i] + '" src="' + edit_png_src +'" class="banker_switch"></div></div>')
+            }
+        }
+        for (var i = 0; i < $('#send_money_player').children().length; i++) {
+            if (["Bank", "Free Parking", "Player"].indexOf($('#send_money_player').children()[i].text) !== -1){
+                continue;
+            }
+            var name = $('#send_money_player').children()[i].text
+            if (data['users'].indexOf(name) == -1){
+                $('#send_money_player').children()[i].remove();
+                for (var i = 0; i < $('#send_free_parking_player').children().length; i++){
+                    if ($('#send_free_parking_player').children()[i].text == name){
+                        $('#send_free_parking_player').children()[i].remove()
+                    }
+                }
+                for (var i = 0; i < $('#set_player_bal_player').children().length; i++){
+                    if ($('#set_player_bal_player').children()[i].text == name){
+                        $('#set_player_bal_player').children()[i].remove()
+                    }
+                }
+                for (var i = 0; i < $('#active_players').children().length; i++){
+                    if ($($('#active_players').children()[i]).find('a').text() == name){
+                        $('#active_players').children()[i].remove()
+                    }
+                }
             }
         }
     });
@@ -147,7 +179,10 @@ bank_background_checks = function(){
 edit_player_name = function(obj){
     var new_name = prompt("New name for " + $(obj).attr('value') + "?");
     if (!(new_name == "" || new_name == null)){
-        alert("Done");
+        $.post($SCRIPT_ROOT + '/edit_player_name/', {
+            player_name_to_change: $(obj).attr('value'),
+            new_name: new_name
+        });
     }
 }
 

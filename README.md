@@ -18,7 +18,6 @@ Will add some when more development is made
 
 ## Currently in Development
 * Check if bal has enough
-* Lock function in /bank/
 
 ## Sources
 * [material.io](material.io) for bank.png, play.png, close.png and edit.png

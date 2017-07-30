@@ -193,6 +193,8 @@ edit_player_name = function(obj){
             new_name: new_name
         });
     }
+
+    bank_refresh();
 }
 
 remove_player = function(obj){
@@ -201,6 +203,8 @@ remove_player = function(obj){
             player_name_to_remove: $(obj).attr('value')
         });
     }
+
+    bank_refresh();
 }
 
 send_money = function(isBank){
@@ -228,6 +232,12 @@ send_money = function(isBank){
 
     $('#send_money_player').val("")
     $('#send_money_amount').val("")
+
+    if (window.location['pathname'] == "/bank/"){
+        bank_refresh();
+    } else {
+        play_refresh();
+    }
 }
 
 send_free_parking = function(){
@@ -236,6 +246,8 @@ send_free_parking = function(){
     });
 
     $('#send_free_parking_player').val("")
+
+    bank_refresh();
 }
 
 set_balance = function(){
@@ -262,8 +274,12 @@ set_balance = function(){
 
     $('#set_player_bal_player').val("")
     $('#set_player_bal_amount').val("")
+
+    bank_refresh();
 }
 
 switch_lock = function(){
     $.post($SCRIPT_ROOT + '/switch_lock/');
+
+    bank_refresh();
 }

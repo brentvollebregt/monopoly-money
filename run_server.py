@@ -56,13 +56,13 @@ def createGame(banker):
         "players" : {
             data['users'][banker]['name'] : {
                 "id" : banker,
-                "bal" : 0,
+                "bal" : 0.0,
                 "name" : data['users'][banker]['name']
             }
         },
         "banker" : banker,
         "open" : True,
-        "free_parking" : 0,
+        "free_parking" : 0.5,
         "logs" : []
     }
 
@@ -345,14 +345,47 @@ def removePlayer():
     player_name = request.form['player_name_to_remove']
     player_id = data['games'][game]['players'][player_name]['id']
 
-    del data['games'][game]['players'][player_name]
+    if data['users'][player_id]['type'] == "banker":
+        del data['games'][game]
+    else:
+        del data['games'][game]['players'][player_name]
     del data['users'][player_id]
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route("/send_money/", methods = ['POST'])
 def sendMoney():
-    pass
+    if request.cookies['id'] not in data['users']:
+        return jsonify()
+    if data['users'][request.cookies['id']]['game'] == None:
+        return jsonify()
+
+    game = data['users'][request.cookies['id']]['game']
+    name = data['users'][request.cookies['id']]['name']
+
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route("/send_free_parking/", methods = ['POST'])
+def sendFreeParking():
+    if request.cookies['id'] not in data['users']:
+        return jsonify()
+    if data['users'][request.cookies['id']]['game'] == None:
+        return jsonify()
+
+    game = data['users'][request.cookies['id']]['game']
+    name = data['users'][request.cookies['id']]['name']
+
+    # Check if banker
+    if data['users'][request.cookies['id']]['type'] != "banker":
+        return jsonify()
+
+    player_name = request.form['player']
+
+    data['games'][game]['players'][name]['bal'] += data['games'][game]['free_parking']
+    data['games'][game]['logs'].append("Free Parking (" + str(data['games'][game]['free_parking']) + "M) given to " + name)
+    data['games'][game]['free_parking'] = 0
+
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 
 # Debugging routes

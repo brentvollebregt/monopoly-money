@@ -195,5 +195,13 @@ remove_player = function(obj){
 }
 
 send_money = function(){
+    $.post($SCRIPT_ROOT + '/send_money/', {
 
+    });
+}
+
+send_free_parking = function(){
+    $.post($SCRIPT_ROOT + '/send_free_parking/', {
+        player: $('#send_free_parking_player').val()
+    });
 }

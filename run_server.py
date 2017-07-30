@@ -288,9 +288,11 @@ def getBankData():
 
     users = [i for i in data['games'][game]['players']]
     free_parking = data['games'][game]['free_parking']
+    open_status = data['games'][game]['open']
 
     return jsonify(users=users,
-                   free_parking=free_parking)
+                   free_parking=free_parking,
+                   open=open_status)
 
 @app.route("/who_starts/")
 def whoStarts():
@@ -431,6 +433,23 @@ def setBalance():
 
     data['games'][game]['players'][name]['bal'] = balance
     data['games'][game]['logs'].append("Bank set balance of " + name + " to " + str(balance) + "K")
+
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route("/switch_lock/", methods = ['POST'])
+def switchLock():
+    if request.cookies['id'] not in data['users']:
+        return jsonify()
+    if data['users'][request.cookies['id']]['game'] == None:
+        return jsonify()
+
+    game = data['users'][request.cookies['id']]['game']
+
+    # Check if banker
+    if data['users'][request.cookies['id']]['type'] != "banker":
+        return jsonify()
+
+    data['games'][game]['open'] = not data['games'][game]['open']
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 

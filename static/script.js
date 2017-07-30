@@ -127,6 +127,16 @@ bank_refresh = function(){
                 }
             }
         }
+
+        if (data['open']){
+            if($('#lock_button').text() == "Closed"){
+                $('#lock_button').text("Open");
+            }
+        } else {
+            if($('#lock_button').text() == "Open"){
+                $('#lock_button').text("Closed");
+            }
+        }
     });
 }
 
@@ -252,4 +262,8 @@ set_balance = function(){
 
     $('#set_player_bal_player').val("")
     $('#set_player_bal_amount').val("")
+}
+
+switch_lock = function(){
+    $.post($SCRIPT_ROOT + '/switch_lock/');
 }

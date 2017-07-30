@@ -61,7 +61,9 @@ def createGame(banker):
             }
         },
         "banker" : banker,
-        "open" : True
+        "open" : True,
+        "free_parking" : 0,
+        "logs" : []
     }
 
     return game_pin
@@ -102,7 +104,6 @@ def checkUserPlacement(request):
                     response = make_response(redirect(url_for('home_page')))
                     response.set_cookie('id', '', expires=0)
                     return [False, response]
-
     else:
         # No cookie
         if request.path == "/":
@@ -149,6 +150,10 @@ def home_page():
         name = request.form['name']
         if name == "":
             return render_template('home.html', message="Please provide a name")
+        if name == "Bank":
+            return render_template('home.html', message="Invalid name")
+        if name == "Free Parking":
+            return render_template('home.html', message="Invalid name")
 
         if "player" in request.form:
             player_type = "player"
@@ -253,17 +258,38 @@ def clear_cookie():
 
 @app.route("/play_data/")
 def getPlayData():
-    cookie_id = request.cookies['id']
-    return jsonify(balance=10,
-                   users=["Player1", "Player2", "Player3"],
-                   free_parking=0.5,
-                   logs=["Someone did this first", "The someone did this"])
+    if request.cookies['id'] not in data['users']:
+        return jsonify()
+    if data['users'][request.cookies['id']]['game'] == None:
+        return jsonify()
+
+    game = data['users'][request.cookies['id']]['game']
+    name = data['users'][request.cookies['id']]['name']
+
+    balance = data['games'][game]['players'][name]['bal']
+    users = [i for i in data['games'][game]['players'] if not name] + ["Bank", "Free Parking"]
+    free_parking = data['games'][game]['free_parking']
+    logs = data['games'][game]['logs']
+
+    return jsonify(balance=balance,
+                   users=users,
+                   free_parking=free_parking,
+                   logs=logs)
 
 @app.route("/bank_data/")
 def getBankData():
-    cookie_id = request.cookies['id']
-    return jsonify(users=["Player1", "Player2", "Player3"],
-                   free_parking=0.5)
+    if request.cookies['id'] not in data['users']:
+        return jsonify()
+    if data['users'][request.cookies['id']]['game'] == None:
+        return jsonify()
+
+    game = data['users'][request.cookies['id']]['game']
+
+    users = [i for i in data['games'][game]['players']]
+    free_parking = data['games'][game]['free_parking']
+
+    return jsonify(users=users,
+                   free_parking=free_parking)
 
 @app.route("/who_starts/")
 def whoStarts():
@@ -271,6 +297,18 @@ def whoStarts():
     game = data['users'][cookie_id]['game']
     players = [i for i in data['games'][game]['players']]
     return jsonify(user=random.choice(players))
+
+@app.route("/edit_player_name/")
+def editPlayerName():
+    pass
+
+@app.route("/remove_player/")
+def removePlayer():
+    pass
+
+@app.route("/send_money/")
+def sendMoney():
+    pass
 
 
 # Debugging routes

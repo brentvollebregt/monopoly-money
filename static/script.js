@@ -29,6 +29,11 @@ flash_red = function() {
 play_refresh = function(){
     $.getJSON($SCRIPT_ROOT + '/play_data/', function(data) {
 
+        if (jQuery.isEmptyObject(data)){
+            window.location.reload(true);
+            return;
+        }
+
         if ($('#balance').text().slice(-1) == "K"){
             $('#balance').text(String(data['balance']*1000) + "K");
         } else {
@@ -66,6 +71,11 @@ play_refresh = function(){
 
 bank_refresh = function(){
     $.get($SCRIPT_ROOT + '/bank_data/', function(data) {
+
+        if (jQuery.isEmptyObject(data)){
+            window.location.reload(true);
+            return;
+        }
 
         if ($('#free_parking').text().slice(-1) == "K"){
             $('#free_parking').text("Amount: " + String(data['free_parking']*1000) + "K");
@@ -135,11 +145,16 @@ bank_background_checks = function(){
 }
 
 edit_player_name = function(obj){
-    alert($(obj).attr('value'));
+    var new_name = prompt("New name for " + $(obj).attr('value') + "?");
+    if (!(new_name == "" || new_name == null)){
+        alert("Done");
+    }
 }
 
 remove_player = function(obj){
-    alert($(obj).attr('value'));
+    if (window.confirm("Are you sure you want to remove " + $(obj).attr('value') + "?")){
+
+    }
 }
 
 send_money = function(){

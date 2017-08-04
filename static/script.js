@@ -224,11 +224,22 @@ send_money = function(isBank){
     }
     var player = $('#send_money_player').val()
 
+    var success = true;
     $.post($SCRIPT_ROOT + '/send_money/', {
         transfer_amount: amount,
         player_receiving: player,
         banker: isBank
+    }, function(data){
+        var response = jQuery.parseJSON(data);
+        if (!(response['success'])){
+            alert(response['reason']);
+            success = false;
+        }
     });
+
+    if (!success){
+        return;
+    }
 
     $('#send_money_player').val("")
     $('#send_money_amount').val("")

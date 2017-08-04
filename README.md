@@ -2,7 +2,7 @@
 A simple flask server that allows for a banker and multiple players
 
 ## Screenshots
-Will add some when more development is made
+Currently no screenshots
 
 ## Requirements
 * Python 3.6 (basically anything that will run Flask)
@@ -15,9 +15,6 @@ Will add some when more development is made
 4. Choose if you are the banker or another player and supply your name
 5. If you are a player, enter the pin supplied by your banker
 6. Have fun
-
-## Currently in Development
-* Check if bal has enough
 
 ## Sources
 * [material.io](material.io) for bank.png, play.png, close.png and edit.png

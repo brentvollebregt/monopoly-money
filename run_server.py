@@ -356,7 +356,6 @@ def removePlayer():
 
 @app.route("/send_money/", methods = ['POST'])
 def sendMoney():
-    # TODO Check if they actually have it
     if request.cookies['id'] not in data['users']:
         return jsonify()
     if data['users'][request.cookies['id']]['game'] == None:
@@ -373,6 +372,10 @@ def sendMoney():
     if banker:
         if not data['users'][request.cookies['id']]['type'] == 'banker':
             return json.dumps({'success':False}), 200, {'ContentType':'application/json'}
+
+    if not banker:
+        if transfer_amount > data['games'][game]['players'][name]['bal']:
+            return json.dumps({'success':False, 'reason':"Insufficient Funds"}), 200, {'ContentType':'application/json'}
 
     if player_receiving == "Bank":
         data['games'][game]['players'][name]['bal'] -= transfer_amount

@@ -140,7 +140,7 @@
     display: inline-block;
     width: 100%;
     height: 10%;
-    background: #4caf50;
+    background: rgb(60, 126, 216);
 }
 
 .play_name_title {
@@ -235,11 +235,11 @@ select {
 }
 
 .green_btn {
-    background: rgba(0, 128, 0, 0.5);
+    background: rgba(76,175,80, 1);
 }
 
 .red_btn {
-    background: rgba(255, 0, 0, 0.5);
+    background: rgba(244,67,54, 1);
 }
 
 .white_text {

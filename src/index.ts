@@ -2,12 +2,14 @@ import dotenv from "dotenv";
 dotenv.config(); // Setup .env
 
 import express from "express";
-import expressWs from "express-ws";
+import * as http from "http";
+import * as websocket from "ws";
 import path from "path";
 import Config from "./config";
 
-const expressApp = express();
-const { app } = expressWs(expressApp);
+const app = express();
+const server = http.createServer(app);
+const wss = new websocket.Server({ server, path: "/" });
 
 // CORS
 app.use((req, res, next) => {
@@ -28,15 +30,14 @@ Config.client.routes.forEach(route =>
   app.use(route, express.static(path.join(clientBuildDirectory, "index.html")))
 );
 
-app.ws("/", function(ws, req) {
-  ws.send("Connected");
-
-  ws.on("message", function(msg) {
+wss.on("connection", (ws: websocket) => {
+  console.log("new!");
+  ws.on("message", msg => {
     console.log(msg);
     ws.send(`Got: ${msg}`);
   });
 });
 
-app.listen(Config.server.port, () => {
+server.listen(Config.server.port, () => {
   console.log(`Listening on ${Config.server.port}`);
 });

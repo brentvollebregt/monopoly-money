@@ -10,7 +10,8 @@ interface ICreateGameMessage {
 }
 
 const createGame = (ws: websocket, { bankerName }: ICreateGameMessage) => {
-  gameStore.createGame(ws, bankerName);
+  const userData = gameStore.createGame(ws, bankerName);
+  return userData;
 };
 
 interface IDoesGameExistMessage {
@@ -47,7 +48,9 @@ const handleMessage = (ws: websocket, userData: IUserData, messageString: string
 
   switch (message.type) {
     case "createGame":
-      createGame(ws, message);
+      const newUserData = createGame(ws, message);
+      userData.gameId = newUserData.gameId;
+      userData.playerId = newUserData.playerId;
       return;
     case "doesGameExist":
       const response = doesGameExist(message);

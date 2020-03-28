@@ -39,3 +39,4 @@ _TODO_
 _TODO_
 
 - Who is on my network page wrapper
+- Frontend auto approve

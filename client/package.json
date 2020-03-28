@@ -1,0 +1,43 @@
+{
+  "name": "monopoly-money-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.5.1",
+    "@material-ui/icons": "^4.5.1",
+    "@types/hookrouter": "^2.2.1",
+    "@types/node": "12.7.5",
+    "@types/react": "16.9.2",
+    "@types/react-dom": "16.9.0",
+    "cogo-toast": "^4.1.1",
+    "hookrouter": "^1.2.3",
+    "react": "^16.9.0",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-dom": "^16.9.0",
+    "react-metatags-hook": "^1.1.2",
+    "react-scripts": "^3.4.0",
+    "typescript": "3.6.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "postbuild": "node postbuild.js",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

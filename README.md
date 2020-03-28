@@ -1,36 +1,41 @@
-# monopoly-money
-A simple flask server that allows for a banker and multiple players
+<div style="text-align: center">
+    <a href="https://monopoly-money.nitratine.net/"><img src="./client/src/img/banner.png" alt="Monopoly Money Banner" style="background: white;"></a>
+</div>
+<p align="center">Manage your finances in a game of monopoly from the browser.</p>
+<p align="center"><a href="https://monopoly-money.nitratine.net/">🌐: monopoly-money.nitratine.net</a></p>
 
-## Screenshots
-![Player Type and Name Select](http://i.imgur.com/0zerq2pm.png "Player Type and Name Select")
-![Player Game Select](http://i.imgur.com/LYiuJWym.png "Player Game Select")
-![Player View](http://i.imgur.com/ECPmDU3m.png "Player View")
-![Banker View](http://i.imgur.com/h1cJ5X2m.png "Banker View")
+## 🛠️ Setup
 
-## Requirements
-* Python 3.6 (basically anything that will run Flask)
-* Flask (pip install Flask)
+1. Clone the repo.
+2. Setup the server
+   - Execute `npm install` to install dependencies
+   - Execute `cp .env.example .env` (or `copy` for Windows) and populate `.env` by replacing XXXXXX's
+3. Setup the client
+   - `cd client` to change directories to the client project
+   - Execute `npm install` to install dependencies
+   - Execute `cp .env.example .env` (or `copy` for Windows)
+   - Execute `npm run build` to build the client (the server will host these built files)
+   - Go back to the project root: `cd ..`
+4. Execute `npm start` to start the server
 
-## Usage
-1. Optional: delete data.json on first run or use the one supplied
-2. Run run_server.py
-3. Visit address displayed
-4. Choose if you are the banker or another player and supply your name
-5. If you are a player, enter the pin supplied by your banker
-6. Have fun
+### 🧪 Development Setup
 
-## Features
-* Games that generate when a player makes themself a banker
-* Easily join a game using a pin
-* Transfer money easily
-* Auto refresh in the background (still manual button in /play/ if its too slow)
-* Banker can edit player names and remove people
-* Free parking
-* Ask who starts first (random selection of current players)
-* Log that says what has happened (Shows all money values in K)
-* Can set players balances
-* Lock the game so no one else can come in while you are in the middle of a game
+When running the client in development mode using `npm start`, the client will use the `REACT_APP_API_ROOT` environment variable value to decide where to send requests. If this is not provided, the current hosted URL will be used.
 
-## Sources
-* [material.io](material.io) for bank.png, play.png, close.png and edit.png
-* [http://www.iconarchive.com](http://www.iconarchive.com) for favicon
+`npm run dev` can also be used for development of the server; this allows for hot-reloading. Running the client using `npm start` and setting `REACT_APP_API_ROOT` to where the server is running will allow for a development setup with hot-reloading.
+
+> `launch.json` also offers the ability to connect and debug the the server when running `npm run dev`.
+
+## 📝 Features
+
+_TODO_
+
+## ❓ Why?
+
+_TODO_
+
+## 🚧 TODO
+
+_TODO_
+
+- Who is on my network page wrapper

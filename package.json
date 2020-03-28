@@ -1,0 +1,42 @@
+{
+  "name": "monopoly-money",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --inspect --respawn --transpileOnly src/index.ts",
+    "build": "tsc",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "prestart": "npm run build",
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brentvollebregt/monopoly-money.git"
+  },
+  "keywords": [],
+  "author": "Brent Vollebregt",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/brentvollebregt/monopoly-money/issues"
+  },
+  "homepage": "https://github.com/brentvollebregt/monopoly-money#readme",
+  "dependencies": {
+    "@types/express": "^4.17.1",
+    "@types/express-ws": "^3.0.0",
+    "@types/node": "^12.11.1",
+    "@types/ws": "^7.2.3",
+    "bufferutil": "^4.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
+    "typescript": "^3.6.4",
+    "utf-8-validate": "^5.0.2",
+    "ws": "^7.2.3"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^1.0.0-pre.43",
+    "tslint": "^5.20.0"
+  }
+}

@@ -10,6 +10,10 @@ import { setupWebsocketAPI, GameRoutes, gameSubRoute, RestoreRoutes, restoreSubR
 const app = express();
 const server = http.createServer(app);
 
+app.set("trust proxy", 1); // Trust first proxy
+
+app.use(express.json());
+
 // Setup CORS as per server.allowed_origins
 app.use((req, res, next) => {
   const origin = req.get("origin") || req.get("referrer");

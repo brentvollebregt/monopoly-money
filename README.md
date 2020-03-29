@@ -83,19 +83,23 @@ _TODO_
 #### REST
 
 - Create new game
+  - POST /api/game
   - Provide: name
   - Returns: gameId, userId
 - Join game (or try to)
+  - POST /api/game/:gameId/join
   - Provide: name, gameId
   - Returns:
     - Success: userId
     - Failed: 404
 - Check if a game still exists
+  - GET /api/game/:gameId
   - Provide: gameId, userId
   - Returns:
     - Success: Created time / players + totals
     - Failed: 404
 - Restore game
+  - POST /api/restore-game
   - Provide: whole game
   - Returns: gameId
 

@@ -45,7 +45,7 @@ interface IQueuedPlayer {
   websocket: websocket | null; // Message handling for this player
 }
 
-export default class GameStore {
+class GameStore {
   private games: Record<string, IGame> = {};
 
   public createGame = (ws: websocket, bankerName: string) => {
@@ -99,3 +99,5 @@ export default class GameStore {
     });
   };
 }
+
+export default new GameStore();

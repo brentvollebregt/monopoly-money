@@ -1,11 +1,9 @@
 import * as websocket from "ws";
-import { IUserData } from "./index";
-import GameStore from "../gameStore";
-import { IncomingMessage, IDoesGameExistResponseMessage } from "./dto";
+import gameStore from "../../gameStore";
+import { IncomingMessage, IDoesGameExistResponseMessage } from "../dto";
+import { IUserData } from "../types";
 
 export type MessageHandler = (ws: websocket, userData: IUserData, message: IncomingMessage) => void;
-
-const gameStore = new GameStore();
 
 export const createGame: MessageHandler = (ws, userData, message) => {
   if (message.type === "createGame") {

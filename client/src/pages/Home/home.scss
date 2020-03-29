@@ -1,0 +1,12 @@
+.home {
+  .banner {
+    max-width: 80%;
+    margin: auto;
+    display: block;
+  }
+  .new-join-button-wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+  }
+}

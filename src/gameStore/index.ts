@@ -1,6 +1,5 @@
 import * as websocket from "ws";
 import { createUniqueGameId, generatePlayerId } from "./utils";
-import { IUserData } from "src/api";
 
 type Event = IPlayerJoinEvent | IPlayerDeleteEvent | IPlayerNameChangeEvent | ITransactionEvent;
 
@@ -49,7 +48,7 @@ interface IQueuedPlayer {
 export default class GameStore {
   private games: Record<string, IGame> = {};
 
-  public createGame = (ws: websocket, bankerName: string): IUserData => {
+  public createGame = (ws: websocket, bankerName: string) => {
     // Generate a game id
     const gameId = createUniqueGameId(Object.keys(this.games));
     // Create the game
@@ -61,17 +60,17 @@ export default class GameStore {
       bankers: []
     };
     // Add the banker
-    const bankerId = this.addPlayer(ws, gameId, bankerName);
-    this.games[gameId].bankers.push(bankerId);
+    const playerId = this.addPlayer(ws, gameId, bankerName);
+    this.games[gameId].bankers.push(playerId);
 
-    return { gameId, bankerId };
+    return { gameId, playerId };
   };
 
   public doesGameExist = (gameId: string) => this.games.hasOwnProperty(gameId);
 
   public getGameEvents = (gameId: string) => this.games[gameId].events;
 
-  public addPlayer = (ws: websocket, gameId: string, name: string): string => {
+  private addPlayer = (ws: websocket, gameId: string, name: string): string => {
     // Identify id
     const playerId = generatePlayerId();
 

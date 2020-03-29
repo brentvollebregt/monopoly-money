@@ -40,3 +40,71 @@ _TODO_
 
 - Who is on my network page wrapper
 - Frontend auto approve
+
+### First Page Actions
+
+- New game
+- Join game
+- Resume game (might still be on the server)
+  - Request for games the device has known about
+  - In local storage
+- Restore game
+  - - delete saved game
+
+### Pages
+
+- Funds
+  - View everyone's balances
+  - Pay to other players
+  - Pay to free parking
+  - Pay to bank
+- Bank
+  - Bankers tools (only visible by bankers)
+  - Give / take money from players
+  - Move money between players (banker forced)
+  - Pay out free parking
+- History
+  - Visual logs of events
+- Game
+  - Game settings (only visible by admins)
+  - Warning: If everyone leaves, there is a chance the game could be deleted
+  - Make someone else banker / admin
+  - Remove someone as banker / admin
+  - Lock/Unlock people able to join
+  - Remove people
+  - Modify names
+  - Save game (to restore later)
+  - Warning: If everyone leaves, there is a chance the game could be deleted
+  - Use this to restore later
+  - Delete game
+
+### Commands To (for API)
+
+#### REST
+
+- Create new game
+  - Provide: name
+  - Returns: gameId, userId
+- Join game (or try to)
+  - Provide: name, gameId
+  - Returns:
+    - Success: userId
+    - Failed: 404
+- Check if a game still exists
+  - Provide: gameId, userId
+  - Returns:
+    - Success: Created time / players + totals
+    - Failed: 404
+- Restore game
+  - Provide: whole game
+  - Returns: gameId
+
+#### WS
+
+- Create an event
+
+### Commands From (for API)
+
+- Events (as a stream)
+  - Provide: gameId, userId
+  - Returns: events

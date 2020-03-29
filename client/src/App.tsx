@@ -1,38 +1,47 @@
-import React from "react";
-import { useRoutes, useRedirect } from "hookrouter";
+import React, { useState } from "react";
 import Navigation from "./components/Navigation";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import NotFound from "./pages/NotFound";
+import { GameState } from "./types";
 import MetaTags from "./components/MetaTags";
 import PageSizeWrapper from "./components/PageSizeWrapper";
+import Home from "./pages/Home";
+import { useRoutes, navigate } from "hookrouter";
+import NotFound from "./pages/NotFound";
+import Config from "./config";
+import Funds from "./pages/Funds";
+import Bank from "./pages/Bank";
+import Transactions from "./pages/Transactions";
+import Game from "./pages/Game";
+import Join from "./pages/Join";
+
+const wrapRoute = (route: string, child: JSX.Element) => (
+  <MetaTags route={route} description={Config.routeDescriptions[route]}>
+    <PageSizeWrapper>{child}</PageSizeWrapper>
+  </MetaTags>
+);
 
 const App: React.FC = () => {
+  const [gameState, setGameState] = useState(GameState.NOT_IN_GAME);
+  const [isBanker, setIsBanker] = useState(false);
+
+  const inGame = gameState === GameState.IN_GAME;
+
+  const goToGame = () => {};
+
   const routes = {
-    "/": () => (
-      <MetaTags
-        route="/"
-        description="Monopoly Money helps you manage your finances in a game of monopoly from the browser."
-      >
-        <PageSizeWrapper>
-          <Home />
-        </PageSizeWrapper>
-      </MetaTags>
-    ),
-    "/about": () => (
-      <MetaTags route="/about" titlePrefix="About - " description="About Monopoly Money.">
-        <PageSizeWrapper>
-          <About />
-        </PageSizeWrapper>
-      </MetaTags>
-    )
+    "/": () => wrapRoute("/", <Home />),
+    "/join": () => wrapRoute("/join", <Join newGame={false} />),
+    "/new-game": () => wrapRoute("/new-game", <Join newGame={true} />),
+    "/funds": inGame ? () => wrapRoute("/", <Funds />) : () => <NotFound />,
+    "/bank": inGame && isBanker ? () => wrapRoute("/", <Bank />) : () => <NotFound />,
+    "/transactions": inGame ? () => wrapRoute("/", <Transactions />) : () => <NotFound />,
+    "/game": inGame && isBanker ? () => wrapRoute("/", <Game />) : () => <NotFound />
   };
+
   const routeResult = useRoutes(routes);
-  useRedirect("/about/", "/about");
 
   return (
     <>
-      <Navigation />
+      <Navigation inGame={inGame} isBanker={isBanker} />
       <div className="my-3">{routeResult || <NotFound />}</div>
     </>
   );

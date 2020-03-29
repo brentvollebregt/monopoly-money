@@ -21,6 +21,12 @@ const MetaTags: React.FC<React.PropsWithChildren<IProps>> = ({
     description,
     charset: "utf-8",
     lang: "en",
+    metas: [
+      {
+        name: "robots",
+        content: config.noIndexRoutes.indexOf(route) === -1 ? "noindex, nofollow" : "index"
+      }
+    ],
     links: [
       { rel: "canonical", href: config.siteUrl + route },
       { rel: "icon", type: "image/ico", href: "/favicon.ico" },

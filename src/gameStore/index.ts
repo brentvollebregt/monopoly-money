@@ -1,78 +1,45 @@
 import * as websocket from "ws";
-import { createUniqueGameId, generatePlayerId } from "./utils";
-
-type Event = IPlayerJoinEvent | IPlayerDeleteEvent | IPlayerNameChangeEvent | ITransactionEvent;
-
-interface IGame {
-  code: string; // The code associated with the game instance
-  events: Event[];
-  playerWebsockets: Record<string, websocket | null>; // Players in this game
-  queuedPlayers: IQueuedPlayer[]; // Players waiting to join
-  bankers: string[]; // Ids of those who have banker privileges
-}
-
-interface IEvent {
-  time: Date;
-  actionedBy: "system" | "banker" | string;
-}
-
-interface IPlayerJoinEvent extends IEvent {
-  type: "playerJoin";
-  id: string;
-  name: string;
-}
-
-interface IPlayerDeleteEvent extends IEvent {
-  type: "playerDelete";
-  id: string;
-}
-
-interface IPlayerNameChangeEvent extends IEvent {
-  type: "playerNameChange";
-  id: string;
-  name: string;
-}
-
-interface ITransactionEvent extends IEvent {
-  type: "transaction";
-  from: "banker" | "freeParking" | string;
-  to: "banker" | "freeParking" | string;
-  amount: number;
-}
-
-interface IQueuedPlayer {
-  name: string; // The name of this player
-  websocket: websocket | null; // Message handling for this player
-}
+import { createUniqueGameId, generateTimeBasedId } from "./utils";
+import { IGame, IPlayerJoinEvent, Event } from "./types";
 
 class GameStore {
   private games: Record<string, IGame> = {};
 
-  public createGame = (ws: websocket, bankerName: string) => {
+  public createGame = (bankerName: string) => {
     // Generate a game id
     const gameId = createUniqueGameId(Object.keys(this.games));
+
     // Create the game
     this.games[gameId] = {
       code: gameId,
+      open: true,
       events: [],
-      playerWebsockets: {},
-      queuedPlayers: [],
-      bankers: []
+      subscribedWebsockets: [],
+      bankers: [],
+      userTokenToPlayers: {}
     };
-    // Add the banker
-    const playerId = this.addPlayer(ws, gameId, bankerName);
+
+    // Add the banker as a player and make them a banker
+    const userToken = this.addPlayer(gameId, bankerName);
+    const playerId = this.games[gameId].userTokenToPlayers[userToken];
     this.games[gameId].bankers.push(playerId);
 
-    return { gameId, playerId };
+    return { gameId, userToken };
   };
+
+  public isUserInGame = (gameId: string, userToken: string) =>
+    this.games[gameId].userTokenToPlayers.hasOwnProperty(userToken);
 
   public doesGameExist = (gameId: string) => this.games.hasOwnProperty(gameId);
 
+  public isGameOpen = (gameId: string) => this.games[gameId].open;
+
   public getGameEvents = (gameId: string) => this.games[gameId].events;
 
-  private addPlayer = (ws: websocket, gameId: string, name: string): string => {
+  public addPlayer = (gameId: string, name: string): string => {
     // Identify id
-    const playerId = generatePlayerId();
+    const playerId = generateTimeBasedId();
+    const userToken = generateTimeBasedId();
 
     // Add the player
     const event: IPlayerJoinEvent = {
@@ -82,19 +49,22 @@ class GameStore {
       id: playerId,
       name
     };
-    this.games[gameId].events.push(event);
-
-    // Add the players websocket
-    this.games[gameId].playerWebsockets[playerId] = ws;
-
     this.pushEvent(gameId, event);
 
-    console.log(this.games);
-    return playerId;
+    // Map the user token to the player id
+    this.games[gameId].userTokenToPlayers[userToken] = playerId;
+
+    return userToken;
   };
 
-  private pushEvent = (gameId: string, event: IEvent) => {
-    Object.values(this.games[gameId].playerWebsockets).forEach(ws => {
+  public gameStatus = (gameId: string) => {
+    // TODO
+  };
+
+  private pushEvent = (gameId: string, event: Event) => {
+    this.games[gameId].events.push(event);
+
+    Object.values(this.games[gameId].subscribedWebsockets).forEach(ws => {
       ws.send(JSON.stringify(event));
     });
   };

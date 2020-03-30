@@ -8,8 +8,6 @@ import { IUserData } from "../types";
 // Function that take a message and decide whether to act on it
 const messageHandlers: MessageHandler[] = [createGame, doesGameExist];
 
-// TODO Some identifier so connections can be re-established to a player
-
 // Setup the websocket API
 const setupWebsocketAPI = (server: http.Server | https.Server) => {
   const wss = new websocket.Server({ server, path: "/api/events" });

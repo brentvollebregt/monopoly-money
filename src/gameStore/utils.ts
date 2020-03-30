@@ -19,4 +19,4 @@ export const createUniqueGameId = (existingGameIds: string[]) => {
   }
 };
 
-export const generatePlayerId = () => uuidv1();
+export const generateTimeBasedId = () => uuidv1();

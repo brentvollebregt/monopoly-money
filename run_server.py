@@ -411,8 +411,8 @@ def sendFreeParking():
 
     player_name = request.form['player']
 
-    data['games'][game]['players'][name]['bal'] += data['games'][game]['free_parking']
-    data['games'][game]['logs'].append("Free Parking (" + str(data['games'][game]['free_parking']) + "K) given to " + name)
+    data['games'][game]['players'][player_name]['bal'] += data['games'][game]['free_parking']
+    data['games'][game]['logs'].append("Free Parking (" + str(data['games'][game]['free_parking']) + "K) given to " + player_name)
     data['games'][game]['free_parking'] = 0
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
@@ -434,8 +434,8 @@ def setBalance():
     player_name = request.form['player_to_set']
     balance = int(request.form['set_amount'])
 
-    data['games'][game]['players'][name]['bal'] = balance
-    data['games'][game]['logs'].append("Bank set balance of " + name + " to " + str(balance) + "K")
+    data['games'][game]['players'][player_name]['bal'] = balance
+    data['games'][game]['logs'].append("Bank set balance of " + player_name + " to " + str(balance) + "K")
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 

@@ -1,12 +1,12 @@
 import * as http from "http";
 import * as https from "https";
 import * as websocket from "ws";
-import { MessageHandler, createGame, doesGameExist } from "./messageHandlers";
+import { MessageHandler, bankerGiveToPlayer, bankerTakeFromPlayer } from "./messageHandlers";
 import { IncomingMessage } from "../dto";
 import { IUserData } from "../types";
 
 // Function that take a message and decide whether to act on it
-const messageHandlers: MessageHandler[] = [createGame, doesGameExist];
+const messageHandlers: MessageHandler[] = [bankerGiveToPlayer, bankerTakeFromPlayer];
 
 // Setup the websocket API
 const setupWebsocketAPI = (server: http.Server | https.Server) => {

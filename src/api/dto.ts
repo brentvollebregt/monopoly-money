@@ -26,30 +26,20 @@ export interface IDoesGameExistResponse {
 
 // Websocket Incoming Message Types
 
-export type IncomingMessage = ICreateGameMessage | IDoesGameExistMessage | IJoinGameMessage;
+export type IncomingMessage = IBankerGiveToPlayerMessage | IBankerTakeFromPlayerMessage;
 
-export interface ICreateGameMessage {
-  type: "createGame";
-  bankerName: string;
+export interface IBankerGiveToPlayerMessage {
+  type: "bankerGiveToPlayer";
 }
 
-export interface IDoesGameExistMessage {
-  type: "doesGameExist";
-  gameId: string;
-}
-
-export interface IJoinGameMessage {
-  type: "joinGame";
-  gameId: string;
-  name: string;
+export interface IBankerTakeFromPlayerMessage {
+  type: "bankerTakeFromPlayer";
 }
 
 // Websocket Outgoing Message Types
 
-export type OutgoingMessage = IDoesGameExistResponseMessage;
+export type OutgoingMessage = ITemp1;
 
-export interface IDoesGameExistResponseMessage {
-  type: "doesGameExistResponse";
-  gameId: string;
-  exists: boolean;
+export interface ITemp1 {
+  type: "ITemp1";
 }

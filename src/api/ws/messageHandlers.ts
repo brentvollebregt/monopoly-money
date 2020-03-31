@@ -1,28 +1,16 @@
 import * as websocket from "ws";
 import gameStore from "../../gameStore";
-import { IncomingMessage, IDoesGameExistResponseMessage } from "../dto";
+import { IncomingMessage } from "../dto";
 import { IUserData } from "../types";
 
 export type MessageHandler = (ws: websocket, userData: IUserData, message: IncomingMessage) => void;
 
-export const createGame: MessageHandler = (ws, userData, message) => {
-  if (message.type === "createGame") {
-    const { gameId, playerId } = gameStore.createGame(ws, message.bankerName);
-    userData.gameId = gameId;
-    userData.playerId = playerId;
+export const bankerGiveToPlayer: MessageHandler = (ws, userData, message) => {
+  if (message.type === "bankerGiveToPlayer") {
   }
 };
 
-export const doesGameExist: MessageHandler = (ws, userData, message) => {
-  if (message.type === "doesGameExist") {
-    const exists = gameStore.doesGameExist(message.gameId);
-    const outgoingMessage: IDoesGameExistResponseMessage = {
-      type: "doesGameExistResponse",
-      gameId: message.gameId,
-      exists
-    };
-    ws.send(JSON.stringify(outgoingMessage));
+export const bankerTakeFromPlayer: MessageHandler = (ws, userData, message) => {
+  if (message.type === "bankerTakeFromPlayer") {
   }
 };
-
-const joinGame: MessageHandler = (ws, userData, message) => {};

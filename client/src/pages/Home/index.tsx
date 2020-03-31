@@ -2,10 +2,13 @@ import React from "react";
 import bannerImage from "../../img/banner.png";
 import "./home.scss";
 import { Button } from "react-bootstrap";
+import { navigate, useTitle } from "hookrouter";
 
 const Home: React.FC = () => {
-  const newGame = () => {};
-  const joinGame = () => {};
+  useTitle("Monopoly Money");
+
+  const newGame = () => navigate("/new-game");
+  const joinGame = () => navigate("/join");
 
   return (
     <div className="home text-center">

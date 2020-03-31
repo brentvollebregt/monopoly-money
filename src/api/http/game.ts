@@ -5,7 +5,7 @@ import {
   IDoesGameExistRequest,
   IJoinGameRequest,
   IJoinGameResponse,
-  IDoesGameExistResponse
+  IGameStatus
 } from "../dto";
 
 export const subRoute = "/api/game";
@@ -24,8 +24,9 @@ router.post("/", (req, res) => {
 });
 
 // Join a game
-router.get("/:gameId", (req, res) => {
-  const { gameId, name } = req.body as IJoinGameRequest;
+router.post("/:gameId", (req, res) => {
+  const { gameId } = req.params;
+  const { name } = req.body as IJoinGameRequest;
 
   if (!gameStore.doesGameExist(gameId)) {
     res.status(404).send("Game does not exist");
@@ -41,9 +42,13 @@ router.get("/:gameId", (req, res) => {
   res.end();
 });
 
-// Check if a game still exists
-router.post("/:gameId", (req, res) => {
-  const { gameId, userToken } = req.body as IDoesGameExistRequest;
+// Get game status
+router.get("/:gameId", (req, res) => {
+  const { gameId } = req.params;
+  const authorizationHeader = req.get("Authorization");
+  const userToken = authorizationHeader.startsWith("UserToken ")
+    ? authorizationHeader.replace("UserToken ", "")
+    : null;
 
   if (!gameStore.doesGameExist(gameId)) {
     res.status(404).send("Game does not exist");
@@ -52,7 +57,7 @@ router.post("/:gameId", (req, res) => {
   } else {
     const state = gameStore.gameStatus(gameId); // TODO
 
-    const response: IDoesGameExistResponse = {
+    const response: IGameStatus = {
       createdTime: new Date(),
       players: {}
     };

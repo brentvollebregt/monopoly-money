@@ -5,7 +5,6 @@ export interface ICreateGameRequest {
 }
 
 export interface IJoinGameRequest {
-  gameId: string;
   name: string;
 }
 
@@ -19,7 +18,7 @@ export interface IDoesGameExistRequest {
   userToken: string;
 }
 
-export interface IDoesGameExistResponse {
+export interface IGameStatus {
   createdTime: Date;
   players: Record<string, number>; // Players and balances
 }

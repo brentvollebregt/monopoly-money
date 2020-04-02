@@ -76,9 +76,9 @@ const Navigation: React.FC<INavigationProps> = ({ inGame, isBanker }) => {
                   active={currentPath === link.path}
                   className="p-0"
                 >
-                  <Button variant="light" title={link.title} className="ml-1">
+                  <Button variant="light" title={link.title} className="d-flex ml-1">
                     <Icon style={{ height: 25, width: 25 }} />
-                    <span className="d-none d-sm-inline">{link.title}</span>
+                    <span className="ml-1 d-none d-sm-inline">{link.title}</span>
                   </Button>
                 </Nav.Link>
               );

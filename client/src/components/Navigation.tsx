@@ -7,6 +7,7 @@ import { ReactComponent as FundsIcon } from "../img/funds.svg";
 import { ReactComponent as ListIcon } from "../img/list.svg";
 import { ReactComponent as SettingsIcon } from "../img/settings.svg";
 import { routePaths } from "../constants";
+import "./Navigation.scss";
 
 interface INavigationProps {
   inGame: boolean;
@@ -53,7 +54,7 @@ const Navigation: React.FC<INavigationProps> = ({ inGame, isBanker }) => {
   const goTo = (location: string) => () => navigate(location);
 
   return (
-    <Navbar bg="light" variant="light" sticky="top">
+    <Navbar bg="light" variant="light" sticky="top" className="navigation">
       <Container>
         <Navbar.Brand onClick={goTo("/")} className="mr-1">
           <img
@@ -77,7 +78,7 @@ const Navigation: React.FC<INavigationProps> = ({ inGame, isBanker }) => {
                   active={currentPath === link.path}
                   className="p-0"
                 >
-                  <Button variant="light" title={link.title} className="d-flex ml-1">
+                  <Button variant="light" title={link.title} className="d-flex ml-1 icon-button">
                     <Icon style={{ height: 25, width: 25 }} />
                     <span className="ml-1 d-none d-sm-inline">{link.title}</span>
                   </Button>

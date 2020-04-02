@@ -1,0 +1,10 @@
+@import "~bootstrap/scss/bootstrap";
+
+.navigation {
+  .icon-button {
+    @media (max-width: map-get($grid-breakpoints, sm)) {
+      padding-left: ($spacer * 0.5) !important;
+      padding-right: ($spacer * 0.5) !important;
+    }
+  }
+}

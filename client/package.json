@@ -9,6 +9,7 @@
     "@types/node": "12.7.5",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
+    "bootstrap": "^4.4.1",
     "cogo-toast": "^4.1.1",
     "hookrouter": "^1.2.3",
     "node-sass": "^4.13.1",

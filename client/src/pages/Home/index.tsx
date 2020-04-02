@@ -1,8 +1,8 @@
 import React from "react";
 import bannerImage from "../../img/banner.png";
-import "./home.scss";
 import { Button } from "react-bootstrap";
 import { navigate, useTitle } from "hookrouter";
+import "./Home.scss";
 
 const Home: React.FC = () => {
   useTitle("Monopoly Money");

@@ -49,11 +49,11 @@ export const gameStatus = async (
   gameId: string,
   userToken: string
 ): Promise<IGameStatus | "DoesNotExist"> => {
-  const response = await fetch(`${config.api.root}/api/game`, {
+  const response = await fetch(`${config.api.root}/api/game/${gameId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `UserToken ${userToken}`
+      Authorization: userToken
     }
   });
   if (response.status === 200) {

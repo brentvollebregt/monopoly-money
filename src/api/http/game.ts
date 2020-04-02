@@ -45,10 +45,7 @@ router.post("/:gameId", (req, res) => {
 // Get game status
 router.get("/:gameId", (req, res) => {
   const { gameId } = req.params;
-  const authorizationHeader = req.get("Authorization");
-  const userToken = authorizationHeader.startsWith("UserToken ")
-    ? authorizationHeader.replace("UserToken ", "")
-    : null;
+  const userToken = req.get("Authorization");
 
   if (!gameStore.doesGameExist(gameId)) {
     res.status(404).send("Game does not exist");

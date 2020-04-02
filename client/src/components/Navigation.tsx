@@ -26,25 +26,25 @@ const Navigation: React.FC<INavigationProps> = ({ inGame, isBanker }) => {
     {
       path: "/funds",
       active: inGame,
-      title: "Funds", // $ sign
+      title: "Funds",
       icon: FundsIcon
     },
     {
       path: "/history",
       active: inGame,
-      title: "History", // List icons
+      title: "History",
       icon: ListIcon
     },
     {
       path: "/bank",
       active: inGame && isBanker,
-      title: "Bank", // Bank icon
+      title: "Bank",
       icon: BankIcon
     },
     {
-      path: "/game",
+      path: "/settings",
       active: inGame && isBanker,
-      title: "Game", // Settings
+      title: "Settings",
       icon: SettingsIcon
     }
   ];

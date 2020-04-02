@@ -6,6 +6,7 @@ import { ReactComponent as BankIcon } from "../img/bank.svg";
 import { ReactComponent as FundsIcon } from "../img/funds.svg";
 import { ReactComponent as ListIcon } from "../img/list.svg";
 import { ReactComponent as SettingsIcon } from "../img/settings.svg";
+import { routePaths } from "../constants";
 
 interface INavigationProps {
   inGame: boolean;
@@ -24,25 +25,25 @@ const Navigation: React.FC<INavigationProps> = ({ inGame, isBanker }) => {
 
   const navbarLinks: INavbarLink[] = [
     {
-      path: "/funds",
+      path: routePaths.funds,
       active: inGame,
       title: "Funds",
       icon: FundsIcon
     },
     {
-      path: "/history",
+      path: routePaths.history,
       active: inGame,
       title: "History",
       icon: ListIcon
     },
     {
-      path: "/bank",
+      path: routePaths.bank,
       active: inGame && isBanker,
       title: "Bank",
       icon: BankIcon
     },
     {
-      path: "/settings",
+      path: routePaths.settings,
       active: inGame && isBanker,
       title: "Settings",
       icon: SettingsIcon

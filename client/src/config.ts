@@ -1,17 +1,58 @@
+import { routePaths } from "./constants";
+
+interface IPageMeta {
+  titlePrefix: string;
+  description?: string;
+  index: boolean;
+}
+
 export default {
   api: {
     root: process.env.REACT_APP_API_ROOT ? process.env.REACT_APP_API_ROOT : window.location.origin
   },
   siteUrl: "https://monopoly-money.nitratine.net",
-  routeDescriptions: {
-    "/": "Monopoly Money helps you manage your finances in a game of monopoly from the browser."
-  },
-  noIndexRoutes: ["/funds", "/bank", "/transactions", "/game"]
+  pageMeta: {
+    [routePaths.home]: {
+      titlePrefix: "",
+      description:
+        "Monopoly Money helps you manage your finances in a game of monopoly from the browser.",
+      index: true
+    },
+    [routePaths.join]: {
+      titlePrefix: "Join Game",
+      description: "TODO",
+      index: true
+    },
+    [routePaths.newGame]: {
+      titlePrefix: "New Game",
+      description: "TODO",
+      index: true
+    },
+    [routePaths.funds]: {
+      titlePrefix: "Funds",
+      description: "TODO",
+      index: false
+    },
+    [routePaths.bank]: {
+      titlePrefix: "Bank",
+      description: "TODO",
+      index: false
+    },
+    [routePaths.history]: {
+      titlePrefix: "History",
+      description: "TODO",
+      index: false
+    },
+    [routePaths.settings]: {
+      titlePrefix: "Settings",
+      description: "TODO",
+      index: false
+    }
+  }
 } as {
   api: {
     root: string;
   };
   siteUrl: string;
-  routeDescriptions: Record<string, string>;
-  noIndexRoutes: string[];
+  pageMeta: Record<string, IPageMeta>;
 };

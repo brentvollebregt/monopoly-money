@@ -11,11 +11,10 @@ import Bank from "./pages/Bank";
 import History from "./pages/History";
 import Settings from "./pages/Settings";
 import Join from "./pages/Join";
-import config from "./config";
 import { routePaths } from "./constants";
 
 const wrapRoute = (route: string, child: JSX.Element) => (
-  <MetaTags route={route} description={config.routeDescriptions[route]}>
+  <MetaTags route={route}>
     <PageSizeWrapper>{child}</PageSizeWrapper>
   </MetaTags>
 );
@@ -25,10 +24,8 @@ const App: React.FC = () => {
 
   const path = usePath();
 
-  const inGame = true;
-  const isBanker = true;
-  // const inGame = gameState !== null;
-  // const isBanker = gameState !== null && gameState.isBanker;
+  const inGame = gameState !== null;
+  const isBanker = gameState !== null && gameState.isBanker;
 
   // If the user has gone to a non-game route, clear the game state
   useEffect(() => {

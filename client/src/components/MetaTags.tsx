@@ -3,28 +3,23 @@ import useMetaTags from "react-metatags-hook";
 import BannerImage from "../img/banner.png";
 import config from "../config";
 
-interface IProps {
-  titlePrefix?: string;
-  description: string;
+interface IProps extends React.PropsWithChildren<{}> {
   route: string;
 }
 
-const MetaTags: React.FC<React.PropsWithChildren<IProps>> = ({
-  titlePrefix,
-  description,
-  route,
-  children
-}) => {
-  const title = (titlePrefix || "") + "Monopoly Money";
+const MetaTags: React.FC<IProps> = ({ route, children }) => {
+  const configPageMeta = config.pageMeta[route];
+  const title = `${configPageMeta.titlePrefix} Monopoly Money`;
+
   useMetaTags({
     title,
-    description,
+    description: configPageMeta.description,
     charset: "utf-8",
     lang: "en",
     metas: [
       {
         name: "robots",
-        content: config.noIndexRoutes.indexOf(route) === -1 ? "noindex, nofollow" : "index"
+        content: configPageMeta.index ? "index" : "noindex, nofollow"
       }
     ],
     links: [

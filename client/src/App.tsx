@@ -36,17 +36,17 @@ const App: React.FC = () => {
     }
   }, [path]);
 
-  const onGameSetup = (gameId: string, userId: string) => {
+  const onGameSetup = (gameId: string, userToken: string) => {
     // Save current game for potential later use
     if (gameHandler !== null) {
-      storeGame(gameHandler.gameId, gameHandler.userId);
+      storeGame(gameHandler.gameId, gameHandler.userToken);
     }
 
     // Setup a new game handler
-    setGameHandler(new GameHandler(gameId, userId));
+    setGameHandler(new GameHandler(gameId, userToken));
 
     // Store new game details
-    storeGame(gameId, userId);
+    storeGame(gameId, userToken);
 
     // Go to the funds page
     navigate("/funds");
@@ -54,7 +54,7 @@ const App: React.FC = () => {
 
   const onGameDestroy = () => {
     if (gameHandler !== null) {
-      storeGame(gameHandler.gameId, gameHandler.userId);
+      storeGame(gameHandler.gameId, gameHandler.userToken);
     }
     setGameHandler(null);
   };

@@ -1,3 +1,5 @@
+import { Event } from "../gameStore/types";
+
 // REST HTTP Types
 
 export interface ICreateGameRequest {
@@ -25,7 +27,16 @@ export interface IGameStatus {
 
 // Websocket Incoming Message Types
 
-export type IncomingMessage = IBankerGiveToPlayerMessage | IBankerTakeFromPlayerMessage;
+export type IncomingMessage =
+  | IAuthMessage
+  | IBankerGiveToPlayerMessage
+  | IBankerTakeFromPlayerMessage;
+
+export interface IAuthMessage {
+  type: "auth";
+  gameId: string;
+  userToken: string;
+}
 
 export interface IBankerGiveToPlayerMessage {
   type: "bankerGiveToPlayer";
@@ -37,8 +48,9 @@ export interface IBankerTakeFromPlayerMessage {
 
 // Websocket Outgoing Message Types
 
-export type OutgoingMessage = ITemp1;
+export type OutgoingMessage = IInitialEventArrayMessage;
 
-export interface ITemp1 {
-  type: "ITemp1";
+export interface IInitialEventArrayMessage {
+  type: "initialEventArray";
+  events: Event[];
 }

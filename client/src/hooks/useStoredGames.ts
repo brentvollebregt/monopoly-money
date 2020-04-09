@@ -8,7 +8,7 @@ const storedGamesLocalStorageKey = "storedGames";
 
 interface IStoredGameInLocalStorage {
   gameId: string;
-  userId: string;
+  userToken: string;
   time: DateTime;
 }
 
@@ -23,12 +23,12 @@ const useStoredGames = () => {
   );
   const [gameStatuses, setGameStatuses] = useState<Record<string, IGameStatus | null>>({});
 
-  const storeGame = (gameId: string, userId: string) => {
+  const storeGame = (gameId: string, userToken: string) => {
     setStoredGames([
       ...(storedGames ?? []).filter((game) => game.gameId !== gameId), // Remove current instance
       {
         gameId,
-        userId,
+        userToken,
         time: DateTime.local()
       }
     ]);
@@ -40,7 +40,7 @@ const useStoredGames = () => {
       (game) => Object.keys(gameStatuses).indexOf(game.gameId) === -1
     );
 
-    gamesWithoutStatuses.forEach(({ gameId, userId }) => {
+    gamesWithoutStatuses.forEach(({ gameId, userToken }) => {
       // Initially insert a null (to stop multiple requests)
       setGameStatuses((current) => ({
         ...current,
@@ -48,7 +48,7 @@ const useStoredGames = () => {
       }));
 
       // Make the request
-      getGameStatus(gameId, userId).then((status) => {
+      getGameStatus(gameId, userToken).then((status) => {
         if (status === "DoesNotExist") {
           // Remove the game if it no longer exists
           setStoredGames((storedGames ?? []).filter((g) => g.gameId !== gameId));

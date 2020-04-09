@@ -1,4 +1,5 @@
 import * as websocket from "ws";
+import { DateTime } from "luxon";
 
 export type Event =
   | IPlayerJoinEvent
@@ -16,7 +17,7 @@ export interface IGame {
 }
 
 export interface IEvent {
-  time: Date;
+  time: DateTime;
   actionedBy: "system" | "banker" | string;
 }
 

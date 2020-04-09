@@ -1,12 +1,17 @@
 import * as http from "http";
 import * as https from "https";
 import * as websocket from "ws";
-import { MessageHandler, bankerGiveToPlayer, bankerTakeFromPlayer } from "./messageHandlers";
+import {
+  MessageHandler,
+  authMessage,
+  bankerGiveToPlayer,
+  bankerTakeFromPlayer
+} from "./messageHandlers";
 import { IncomingMessage } from "../dto";
 import { IUserData } from "../types";
 
 // Function that take a message and decide whether to act on it
-const messageHandlers: MessageHandler[] = [bankerGiveToPlayer, bankerTakeFromPlayer];
+const messageHandlers: MessageHandler[] = [authMessage, bankerGiveToPlayer, bankerTakeFromPlayer];
 
 // Setup the websocket API
 const setupWebsocketAPI = (server: http.Server | https.Server) => {
@@ -15,12 +20,12 @@ const setupWebsocketAPI = (server: http.Server | https.Server) => {
   wss.on("connection", (ws: websocket) => {
     const userData: IUserData = {
       gameId: null,
-      playerId: null
+      userToken: null
     };
 
     ws.on("message", (message: string) => {
       const incomingMessage = JSON.parse(message) as IncomingMessage;
-      messageHandlers.forEach(messageHandler => {
+      messageHandlers.forEach((messageHandler) => {
         messageHandler(ws, userData, incomingMessage);
       });
     });

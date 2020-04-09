@@ -8,7 +8,7 @@ import { DateTime } from "luxon";
 
 interface IHomeProps {
   storedGames: IStoredGame[];
-  onGameSetup: (gameId: string, userId: string) => void;
+  onGameSetup: (gameId: string, userToken: string) => void;
 }
 
 const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
@@ -38,15 +38,15 @@ const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
       <div className="mt-4">
         <h2>Your Active Games</h2>
         {storedGames.length > 0 ? (
-          storedGames.map(({ gameId, userId, status }, index) => (
+          storedGames.map(({ gameId, userToken, status }, index) => (
             <div key={gameId}>
               <div>
                 Created Time:{" "}
                 {status === null ? "" : DateTime.fromISO(status.createdTime).toFormat("DD h:mm a")}
               </div>
               <div>GameId: {gameId}</div>
-              <div>UserId: {userId}</div>
-              <Button onClick={() => onGameSetup(gameId, userId)}>Join {gameId}</Button>
+              <div>userToken: {userToken}</div>
+              <Button onClick={() => onGameSetup(gameId, userToken)}>Join {gameId}</Button>
               {index !== storedGames.length - 1 && <hr />}
             </div>
           ))

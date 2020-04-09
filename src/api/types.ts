@@ -1,4 +1,4 @@
 export interface IUserData {
   gameId: string | null;
-  playerId: string | null;
+  userToken: string | null;
 }

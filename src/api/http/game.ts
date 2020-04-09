@@ -7,6 +7,7 @@ import {
   IJoinGameResponse,
   IGameStatus
 } from "../dto";
+import { DateTime } from "luxon";
 
 export const subRoute = "/api/game";
 
@@ -55,7 +56,7 @@ router.get("/:gameId", (req, res) => {
     const state = gameStore.gameStatus(gameId); // TODO
 
     const response: IGameStatus = {
-      createdTime: new Date(),
+      createdTime: DateTime.local().toISO(),
       players: {}
     };
     res.json(response);

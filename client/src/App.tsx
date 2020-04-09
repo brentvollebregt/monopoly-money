@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "./components/Navigation";
-import { IGameState } from "./types";
 import MetaTags from "./components/MetaTags";
 import PageSizeWrapper from "./components/PageSizeWrapper";
 import Home from "./pages/Home";
@@ -12,6 +11,8 @@ import History from "./pages/History";
 import Settings from "./pages/Settings";
 import Join from "./pages/Join";
 import { routePaths } from "./constants";
+import GameHandler from "./logic/GameHandler";
+import useStoredGames from "./hooks/useStoredGames";
 
 const wrapRoute = (route: string, child: JSX.Element) => (
   <MetaTags route={route}>
@@ -20,38 +21,42 @@ const wrapRoute = (route: string, child: JSX.Element) => (
 );
 
 const App: React.FC = () => {
-  const [gameState, setGameState] = useState<IGameState | null>(null);
+  const [gameHandler, setGameHandler] = useState<GameHandler | null>(null);
+  const { storedGames, storeGame } = useStoredGames();
 
   const path = usePath();
 
-  const inGame = gameState !== null;
-  const isBanker = gameState !== null && gameState.isBanker;
+  const inGame = gameHandler !== null;
+  const isBanker = gameHandler !== null && gameHandler.isBanker;
 
   // If the user has gone to a non-game route, clear the game state
   useEffect(() => {
     if (path === routePaths.home || path === routePaths.join || path === routePaths.newGame) {
-      // TODO Save game state for later so they can join again (use these to display the tiles for past/current games)
-      setGameState(null);
+      onGameDestroy();
     }
   }, [path]);
 
   const onGameSetup = (gameId: string, userId: string) => {
-    // TODO Save current for potential later use?
-    // Setup our game state
-    setGameState({
-      gameId,
-      userId,
-      events: [],
-      isBanker: false
-    });
+    // Save current game for potential later use
+    if (gameHandler !== null) {
+      storeGame(gameHandler.gameId, gameHandler.userId);
+    }
 
-    // TODO Store the new gameId and userId incase the user leaves and comes back (do not restore, just give the option to join again)
+    // Setup a new game handler
+    setGameHandler(new GameHandler(gameId, userId));
+
+    // Store new game details
+    storeGame(gameId, userId);
 
     // Go to the funds page
     navigate("/funds");
+  };
 
-    // Create the websocket connection
-    // TODO
+  const onGameDestroy = () => {
+    if (gameHandler !== null) {
+      storeGame(gameHandler.gameId, gameHandler.userId);
+    }
+    setGameHandler(null);
   };
 
   const routes = {

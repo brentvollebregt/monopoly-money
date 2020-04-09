@@ -13,7 +13,7 @@ export const createGame = (name: string): Promise<IJoinGameResponse> => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ name } as ICreateGameRequest)
-  }).then(r => {
+  }).then((r) => {
     if (r.status === 200) {
       return r.json() as Promise<IJoinGameResponse>;
     } else {
@@ -45,7 +45,7 @@ export const joinGame = async (
   }
 };
 
-export const gameStatus = async (
+export const getGameStatus = async (
   gameId: string,
   userToken: string
 ): Promise<IGameStatus | "DoesNotExist"> => {
@@ -58,7 +58,7 @@ export const gameStatus = async (
   });
   if (response.status === 200) {
     return response.json() as Promise<IGameStatus>;
-  } else if (response.status === 200) {
+  } else if (response.status === 404) {
     return Promise.resolve("DoesNotExist") as Promise<"DoesNotExist">;
   }
   {

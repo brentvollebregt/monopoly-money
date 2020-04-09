@@ -20,17 +20,16 @@ export default {
     },
     [routePaths.join]: {
       titlePrefix: "Join Game",
-      description: "TODO",
+      description: "Join a Monopoly Money game",
       index: true
     },
     [routePaths.newGame]: {
       titlePrefix: "New Game",
-      description: "TODO",
+      description: "Create a new Monopoly Money game",
       index: true
     },
     [routePaths.funds]: {
       titlePrefix: "Funds",
-      description: "TODO",
       index: false
     },
     [routePaths.bank]: {
@@ -40,12 +39,10 @@ export default {
     },
     [routePaths.history]: {
       titlePrefix: "History",
-      description: "TODO",
       index: false
     },
     [routePaths.settings]: {
       titlePrefix: "Settings",
-      description: "TODO",
       index: false
     }
   }

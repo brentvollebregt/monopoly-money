@@ -4,7 +4,7 @@ export default {
     routes: ["/", "/about"]
   },
   server: {
-    allowed_origins: process.env.SERVER_ALLOWED_ORIGINS,
+    allowed_origins: [process.env.SERVER_ALLOWED_ORIGINS],
     port: process.env.PORT || 5000
   }
 };

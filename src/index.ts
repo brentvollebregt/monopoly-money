@@ -20,7 +20,7 @@ app.use((req, res, next) => {
   if (config.server.allowed_origins.indexOf(origin) !== -1) {
     res.header("Access-Control-Allow-Origin", origin);
   }
-  res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Credentials", "true");
   next();
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 // Setup the serving of the frontend React app
 const clientBuildDirectory = path.join(__dirname, config.client.relative_build_directory);
 app.use(express.static(clientBuildDirectory)); // Non-index.html files
-config.client.routes.forEach(route =>
+config.client.routes.forEach((route) =>
   app.use(route, express.static(path.join(clientBuildDirectory, "index.html")))
 );
 

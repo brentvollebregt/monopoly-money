@@ -60,7 +60,8 @@ const App: React.FC = () => {
   };
 
   const routes = {
-    [routePaths.home]: () => wrapRoute(routePaths.home, <Home />),
+    [routePaths.home]: () =>
+      wrapRoute(routePaths.home, <Home storedGames={storedGames} onGameSetup={onGameSetup} />),
     [routePaths.join]: () =>
       wrapRoute(routePaths.join, <Join newGame={false} onGameSetup={onGameSetup} />),
     [routePaths.newGame]: () =>

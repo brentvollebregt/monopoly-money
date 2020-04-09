@@ -2,9 +2,16 @@ import React from "react";
 import bannerImage from "../../img/banner.png";
 import { Button } from "react-bootstrap";
 import { navigate, useTitle } from "hookrouter";
+import { IStoredGame } from "../../hooks/useStoredGames";
 import "./Home.scss";
+import { DateTime } from "luxon";
 
-const Home: React.FC = () => {
+interface IHomeProps {
+  storedGames: IStoredGame[];
+  onGameSetup: (gameId: string, userId: string) => void;
+}
+
+const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
   useTitle("Monopoly Money");
 
   const newGame = () => navigate("/new-game");
@@ -30,6 +37,24 @@ const Home: React.FC = () => {
 
       <div className="mt-4">
         <h2>Your Active Games</h2>
+        {storedGames.length > 0 ? (
+          storedGames.map(({ gameId, userId, status }, index) => (
+            <div key={gameId}>
+              <div>
+                Created Time:{" "}
+                {status === null ? "" : DateTime.fromISO(status.createdTime).toFormat("DD h:mm a")}
+              </div>
+              <div>GameId: {gameId}</div>
+              <div>UserId: {userId}</div>
+              <Button onClick={() => onGameSetup(gameId, userId)}>Join {gameId}</Button>
+              {index !== storedGames.length - 1 && <hr />}
+            </div>
+          ))
+        ) : (
+          <>
+            <div>You have no active games</div>
+          </>
+        )}
         {/* TODO */}
       </div>
 

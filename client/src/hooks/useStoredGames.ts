@@ -6,18 +6,18 @@ import { getGameStatus } from "../api";
 
 const storedGamesLocalStorageKey = "storedGames";
 
-interface IStoredGame {
+interface IStoredGameInLocalStorage {
   gameId: string;
   userId: string;
   time: DateTime;
 }
 
-interface IStoredGameWithStatus extends IStoredGame {
+export interface IStoredGame extends IStoredGameInLocalStorage {
   status: IGameStatus | null;
 }
 
 const useStoredGames = () => {
-  const [storedGames, setStoredGames] = useLocalStorage<IStoredGame[]>(
+  const [storedGames, setStoredGames] = useLocalStorage<IStoredGameInLocalStorage[]>(
     storedGamesLocalStorageKey,
     []
   );
@@ -73,7 +73,7 @@ const useStoredGames = () => {
   }, [storedGames, gameStatuses]);
 
   // Merge the games and statuses together
-  const storedGamesWithDetail: IStoredGameWithStatus[] = (storedGames ?? []).map((game) => ({
+  const storedGamesWithDetail: IStoredGame[] = (storedGames ?? []).map((game) => ({
     ...game,
     status: gameStatuses[game.gameId] ?? null
   }));

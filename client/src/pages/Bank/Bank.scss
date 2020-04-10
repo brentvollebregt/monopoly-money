@@ -2,4 +2,20 @@
   .mid-dropdown button {
     border-radius: 0;
   }
+
+  $dollar-sign-width: 25px;
+
+  .with-dollar-sign-input-icon {
+    padding-left: $dollar-sign-width;
+  }
+
+  .dollar-sign-input-icon {
+    z-index: 3;
+    position: absolute;
+    transform: translate(0, -50%);
+    top: 50%;
+    pointer-events: none;
+    width: $dollar-sign-width;
+    text-align: center;
+  }
 }

@@ -91,7 +91,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
         )}
       </Form.Group>
 
-      <Button variant="primary" onClick={onSubmit}>
+      <Button block variant="primary" onClick={onSubmit}>
         {newGame ? "Create" : "Join"}
       </Button>
     </div>

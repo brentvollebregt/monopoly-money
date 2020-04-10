@@ -46,7 +46,7 @@ const Funds: React.FC = () => {
 
       <div className="balance-grid">
         {balances.map(({ name, balance }) => (
-          <Card className="text-center">
+          <Card key={name} className="text-center">
             <Card.Body className="p-3">
               <div>{name}</div>
               <div>${balance}</div>

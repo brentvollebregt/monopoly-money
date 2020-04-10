@@ -53,7 +53,7 @@ const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
                 </div>
                 <div>
                   {["Brent: $1000000", "Robert: $5550000", "Rob: $480000"].map((player) => (
-                    <Badge variant="success" className="mr-1">
+                    <Badge key={player} variant="success" className="mr-1">
                       {player}
                     </Badge>
                   ))}

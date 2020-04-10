@@ -12,7 +12,7 @@ export interface IGame {
   code: string; // The code associated with the game instance
   open: boolean; // Whether the game is open to people joining
   events: Event[]; // Events in this game
-  subscribedWebsockets: websocket[]; // Players listening to events
+  subscribedWebSockets: websocket[]; // Players listening to events
   bankers: string[]; // Ids of those players who have banker privileges
   userTokenToPlayers: Record<string, string>; // A mapping of ids only known by a user to match to a player
 }

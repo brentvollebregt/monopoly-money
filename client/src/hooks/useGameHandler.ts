@@ -11,10 +11,6 @@ const useGameHandler = (authInfo: IGameHandlerAuthInfo | null) => {
 
   // Create / destroy the game handler when new new auth is provided
   useEffect(() => {
-    console.log(
-      "new authInfo in useGameHandler. (make sure this is not called unnecessarily)",
-      authInfo
-    );
     if (authInfo === null) {
       setGameHandler(null);
     } else {

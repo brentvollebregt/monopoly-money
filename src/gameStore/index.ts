@@ -14,17 +14,18 @@ class GameStore {
     this.games[gameId] = {
       code: gameId,
       open: true,
-      events: [],
-      subscribedWebsockets: [],
-      bankers: [],
-      userTokenToPlayers: {}
+      events: [], // All events
+      subscribedWebSockets: [], // Anyone part of the game
+      bankers: [], // playerId[]
+      userTokenToPlayers: {} // userToken => playerId
     };
 
     // Add the banker as a player and make them a banker
     const userToken = this.addPlayer(gameId, bankerName);
     const playerId = this.games[gameId].userTokenToPlayers[userToken];
-    this.games[gameId].bankers.push(playerId);
+    this.setPlayerBankerStatus(gameId, playerId, true);
 
+    // Return the new game id and the users userToken
     return { gameId, userToken };
   };
 
@@ -64,10 +65,23 @@ class GameStore {
   };
 
   // Set a player as a banker
-  public setPlayerAsBanker = (gameId: string, userId: string) => {
+  public setPlayerBankerStatus = (gameId: string, playerId: string, isBanker: boolean) => {
+    if (isBanker && this.games[gameId].bankers.indexOf(playerId) === -1) {
+      // If we are setting the player as banker and they are not already in the list, add them
+      this.games[gameId].bankers.push(playerId);
+    } else if (!isBanker && this.games[gameId].bankers.indexOf(playerId) !== -1) {
+      // If we are setting the player as not a banker and they are in the list, remove them
+      const currentIndex = this.games[gameId].bankers.indexOf(playerId);
+      this.games[gameId].bankers.splice(currentIndex, 1);
+    }
+  };
 
-  }
+  // Subscribe a websocket to get any event updates
+  public subscribeWebSocketToEvents = (gameId: string, ws: websocket) => {
+    this.games[gameId].subscribedWebSockets.push(ws);
+  };
 
+  // Get a brief summary of a running game
   public gameStatusSummary = (gameId: string) => {
     // TODO
   };
@@ -75,7 +89,7 @@ class GameStore {
   private pushEvent = (gameId: string, event: Event) => {
     this.games[gameId].events.push(event);
 
-    Object.values(this.games[gameId].subscribedWebsockets).forEach((ws) => {
+    Object.values(this.games[gameId].subscribedWebSockets).forEach((ws) => {
       ws.send(JSON.stringify(event));
     });
   };

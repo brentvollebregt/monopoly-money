@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTitle, navigate } from "hookrouter";
+import { useTitle } from "hookrouter";
 import { Form, Button, FormControlProps } from "react-bootstrap";
 import { ReplaceProps, BsPrefixProps } from "react-bootstrap/helpers";
 import { createGame, joinGame } from "../../api";
@@ -10,7 +10,6 @@ interface IJoinProps {
 }
 
 const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
-  // <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback>
   const title = newGame ? "Create Game" : "Join Game";
 
   const [gameId, setGameId] = useState("");
@@ -77,12 +76,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
       {!newGame && (
         <Form.Group>
           <Form.Label>Game Id</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="XXXXXX"
-            value={gameId}
-            onChange={onGameIdChange}
-          />
+          <Form.Control placeholder="XXXXXX" value={gameId} onChange={onGameIdChange} />
           {gameError && (
             <Form.Text style={{ color: "var(--danger)" }}>That game does not exist</Form.Text>
           )}

@@ -39,6 +39,9 @@ export const authMessage: MessageHandler = (ws, userData, message) => {
     userData.gameId = message.gameId;
     userData.userToken = message.userToken;
 
+    // Subscribe this websocket to game events
+    gameStore.subscribeWebSocketToEvents(userData.gameId, ws);
+
     // Send initial events
     const outgoingMessage: IInitialEventArrayMessage = {
       type: "initialEventArray",

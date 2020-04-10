@@ -22,6 +22,10 @@ const isAuthenticated = (ws: websocket, { gameId, userToken }: IUserData): boole
   return true;
 };
 
+const isBanker = ({ gameId, userToken }: IUserData): boolean => {
+  return gameStore.isUserABanker(gameId, userToken);
+};
+
 export type MessageHandler = (ws: websocket, userData: IUserData, message: IncomingMessage) => void;
 
 export const authMessage: MessageHandler = (ws, userData, message) => {
@@ -52,7 +56,7 @@ export const authMessage: MessageHandler = (ws, userData, message) => {
 };
 
 export const bankerGiveToPlayer: MessageHandler = (ws, userData, message) => {
-  if (!isAuthenticated(ws, userData)) {
+  if (!isAuthenticated(ws, userData) || !isBanker(userData)) {
     return;
   }
   if (message.type === "bankerGiveToPlayer") {
@@ -60,9 +64,16 @@ export const bankerGiveToPlayer: MessageHandler = (ws, userData, message) => {
 };
 
 export const bankerTakeFromPlayer: MessageHandler = (ws, userData, message) => {
-  if (!isAuthenticated(ws, userData)) {
+  if (!isAuthenticated(ws, userData) || !isBanker(userData)) {
     return;
   }
   if (message.type === "bankerTakeFromPlayer") {
   }
+};
+
+export const makePlayerBanker: MessageHandler = (ws, userData, message) => {
+  if (!isAuthenticated(ws, userData) || !isBanker(userData)) {
+    return;
+  }
+  // TODO
 };

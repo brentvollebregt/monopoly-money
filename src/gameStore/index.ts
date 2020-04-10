@@ -39,6 +39,12 @@ class GameStore {
   public isUserInGame = (gameId: string, userToken: string) =>
     this.games[gameId].userTokenToPlayers.hasOwnProperty(userToken);
 
+  // Check if a userToken is allowed to make banker actions in a game
+  public isUserABanker = (gameId: string, userToken: string) => {
+    const playerId = this.games[gameId].userTokenToPlayers[userToken];
+    return this.games[gameId].bankers.indexOf(playerId) !== -1
+  }
+
   // Get all the events from a game
   public getGameEvents = (gameId: string) => this.games[gameId].events;
 

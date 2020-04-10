@@ -5,7 +5,7 @@ import {
   IDoesGameExistRequest,
   IJoinGameRequest,
   IJoinGameResponse,
-  IGameStatus
+  IGameStatusSummary
 } from "../dto";
 import { DateTime } from "luxon";
 
@@ -53,9 +53,9 @@ router.get("/:gameId", (req, res) => {
   } else if (!gameStore.isUserInGame(gameId, userToken)) {
     res.status(401).send("You are not permitted to make this operation");
   } else {
-    const state = gameStore.gameStatus(gameId); // TODO
+    const state = gameStore.gameStatusSummary(gameId); // TODO
 
-    const response: IGameStatus = {
+    const response: IGameStatusSummary = {
       createdTime: DateTime.local().toISO(),
       players: {}
     };

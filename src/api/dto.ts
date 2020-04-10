@@ -20,7 +20,7 @@ export interface IDoesGameExistRequest {
   userToken: string;
 }
 
-export interface IGameStatus {
+export interface IGameStatusSummary {
   createdTime: string; // ISO DateTime string
   players: Record<string, number>; // Players and balances
 }

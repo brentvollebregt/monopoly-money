@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { DateTime } from "luxon";
 import useLocalStorage from "@rehooks/local-storage";
-import { IGameStatus } from "../../../src/api/dto";
+import { IGameStatusSummary } from "../../../src/api/dto";
 import { getGameStatus } from "../api";
 
 const storedGamesLocalStorageKey = "storedGames";
@@ -13,7 +13,7 @@ interface IStoredGameInLocalStorage {
 }
 
 export interface IStoredGame extends IStoredGameInLocalStorage {
-  status: IGameStatus | null;
+  status: IGameStatusSummary | null;
 }
 
 const useStoredGames = () => {
@@ -21,7 +21,7 @@ const useStoredGames = () => {
     storedGamesLocalStorageKey,
     []
   );
-  const [gameStatuses, setGameStatuses] = useState<Record<string, IGameStatus | null>>({});
+  const [gameStatuses, setGameStatuses] = useState<Record<string, IGameStatusSummary | null>>({});
 
   const storeGame = (gameId: string, userToken: string) => {
     setStoredGames([
@@ -53,13 +53,16 @@ const useStoredGames = () => {
           // Remove the game if it no longer exists
           setStoredGames((storedGames ?? []).filter((g) => g.gameId !== gameId));
           setGameStatuses((current) =>
-            Object.keys(current).reduce((acc: Record<string, IGameStatus | null>, curr: string) => {
-              if (curr !== gameId) {
-                return { ...acc, [gameId]: current[gameId] };
-              } else {
-                return acc;
-              }
-            }, {} as Record<string, IGameStatus | null>)
+            Object.keys(current).reduce(
+              (acc: Record<string, IGameStatusSummary | null>, curr: string) => {
+                if (curr !== gameId) {
+                  return { ...acc, [gameId]: current[gameId] };
+                } else {
+                  return acc;
+                }
+              },
+              {} as Record<string, IGameStatusSummary | null>
+            )
           );
         } else {
           // Add the status

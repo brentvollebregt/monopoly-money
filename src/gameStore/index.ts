@@ -1,6 +1,7 @@
 import * as websocket from "ws";
 import { createUniqueGameId, generateTimeBasedId } from "./utils";
 import { IGame, IPlayerJoinEvent, Event } from "./types";
+import { DateTime } from "luxon";
 
 class GameStore {
   private games: Record<string, IGame> = {};
@@ -27,15 +28,20 @@ class GameStore {
     return { gameId, userToken };
   };
 
+  // Check if a game exists
+  public doesGameExist = (gameId: string) => this.games.hasOwnProperty(gameId);
+
+  // Check if a game is open
+  public isGameOpen = (gameId: string) => this.games[gameId].open;
+
+  // Check if a userToken is in a game
   public isUserInGame = (gameId: string, userToken: string) =>
     this.games[gameId].userTokenToPlayers.hasOwnProperty(userToken);
 
-  public doesGameExist = (gameId: string) => this.games.hasOwnProperty(gameId);
-
-  public isGameOpen = (gameId: string) => this.games[gameId].open;
-
+  // Get all the events from a game
   public getGameEvents = (gameId: string) => this.games[gameId].events;
 
+  // Add a player to a game and get the new userToken
   public addPlayer = (gameId: string, name: string): string => {
     // Identify id
     const playerId = generateTimeBasedId();
@@ -44,7 +50,7 @@ class GameStore {
     // Add the player
     const event: IPlayerJoinEvent = {
       type: "playerJoin",
-      time: new Date(),
+      time: DateTime.local(),
       actionedBy: playerId,
       id: playerId,
       name
@@ -57,14 +63,19 @@ class GameStore {
     return userToken;
   };
 
-  public gameStatus = (gameId: string) => {
+  // Set a player as a banker
+  public setPlayerAsBanker = (gameId: string, userId: string) => {
+
+  }
+
+  public gameStatusSummary = (gameId: string) => {
     // TODO
   };
 
   private pushEvent = (gameId: string, event: Event) => {
     this.games[gameId].events.push(event);
 
-    Object.values(this.games[gameId].subscribedWebsockets).forEach(ws => {
+    Object.values(this.games[gameId].subscribedWebsockets).forEach((ws) => {
       ws.send(JSON.stringify(event));
     });
   };

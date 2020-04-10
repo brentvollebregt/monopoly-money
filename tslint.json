@@ -9,7 +9,9 @@
     "arrow-parens": false,
     "ordered-imports": false,
     "object-literal-key-quotes": false,
-    "max-line-length": [false]
+    "max-line-length": [false],
+    "object-literal-sort-keys": false,
+    "semicolon": false
   },
   "rulesDirectory": []
 }

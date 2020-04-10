@@ -50,7 +50,7 @@ const Funds: React.FC = () => {
             <Card.Body className="p-3">
               <div>{name}</div>
               <div>${balance}</div>
-              <Button size="sm" variant="outline-dark">
+              <Button size="sm" variant="outline-dark" className="mt-2">
                 Send Money
               </Button>
             </Card.Body>

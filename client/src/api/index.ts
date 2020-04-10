@@ -60,8 +60,7 @@ export const getGameStatus = async (
     return response.json() as Promise<IGameStatusSummary>;
   } else if (response.status === 404) {
     return Promise.resolve("DoesNotExist") as Promise<"DoesNotExist">;
-  }
-  {
+  } else {
     throw new Error(`Server Error (HTTP${response.status})`);
   }
 };

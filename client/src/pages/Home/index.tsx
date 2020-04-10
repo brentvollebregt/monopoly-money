@@ -63,7 +63,7 @@ const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
                   size="sm"
                   variant="outline-primary"
                   onClick={() => onGameSetup(gameId, userToken)}
-                  className="mt-1"
+                  className="mt-2"
                 >
                   Join Game
                 </Button>

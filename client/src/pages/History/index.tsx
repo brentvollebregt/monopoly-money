@@ -1,7 +1,22 @@
 import React from "react";
+import { Event } from "../../../../src/gameStore/types";
+import "./History.scss";
 
-const History: React.FC = () => {
-  return <div>History</div>;
+interface IHistoryProps {
+  events: Event[];
+}
+
+const History: React.FC<IHistoryProps> = ({ events }) => {
+  return (
+    <div className="history">
+      {events.map((event, index) => (
+        <div className="event">
+          <div className="bar"></div>
+          <div className="event-details">Event</div>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default History;

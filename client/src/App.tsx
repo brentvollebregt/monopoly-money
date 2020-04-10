@@ -27,7 +27,8 @@ const App: React.FC = () => {
   const path = usePath();
 
   const inGame = gameState !== null;
-  const isBanker = gameState !== null && gameState.isBanker;
+  const isBanker = true;
+  // const isBanker = gameState !== null && gameState.isBanker;
 
   // If the user has gone to a non-game route, clear the game state
   useEffect(() => {
@@ -74,7 +75,7 @@ const App: React.FC = () => {
     [routePaths.bank]:
       inGame && isBanker ? () => wrapRoute(routePaths.bank, <Bank />) : () => <NotFound />,
     [routePaths.history]: inGame
-      ? () => wrapRoute(routePaths.history, <History />)
+      ? () => wrapRoute(routePaths.history, <History events={gameState?.events ?? []} />)
       : () => <NotFound />,
     [routePaths.settings]:
       inGame && isBanker ? () => wrapRoute(routePaths.settings, <Settings />) : () => <NotFound />

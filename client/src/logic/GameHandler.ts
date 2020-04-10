@@ -3,6 +3,7 @@ import config from "../config";
 import { IAuthMessage, OutgoingMessage } from "../../../src/api/dto";
 
 export interface IGameHandlerState {
+  events: Event[];
   isBanker: boolean;
 }
 
@@ -38,6 +39,7 @@ class GameHandler {
   // Get data to be used to display the UI
   public getCurrentState(): IGameHandlerState {
     return {
+      events: this.events,
       isBanker: false
     };
   }

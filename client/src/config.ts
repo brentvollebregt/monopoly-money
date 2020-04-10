@@ -29,7 +29,7 @@ export default {
       index: true
     },
     [routePaths.funds]: {
-      titlePrefix: "Funds",
+      titlePrefix: "Manage Funds",
       index: false
     },
     [routePaths.bank]: {

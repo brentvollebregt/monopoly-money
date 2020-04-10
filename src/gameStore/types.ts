@@ -1,6 +1,8 @@
 import * as websocket from "ws";
 import { DateTime } from "luxon";
 
+type PlayerId = string;
+
 export type Event =
   | IPlayerJoinEvent
   | IPlayerDeleteEvent
@@ -13,41 +15,41 @@ export interface IGame {
   open: boolean; // Whether the game is open to people joining
   events: Event[]; // Events in this game
   subscribedWebSockets: websocket[]; // Players listening to events
-  bankers: string[]; // Ids of those players who have banker privileges
-  userTokenToPlayers: Record<string, string>; // A mapping of ids only known by a user to match to a player
+  bankers: PlayerId[]; // Ids of those players who have banker privileges
+  userTokenToPlayers: Record<string, PlayerId>; // A mapping of ids only known by a user to match to a player
 }
 
 export interface IEvent {
-  time: DateTime;
-  actionedBy: "system" | "banker" | string;
+  time: string; // ISO string
+  actionedBy: "system" | "banker" | PlayerId;
 }
 
 export interface IPlayerJoinEvent extends IEvent {
   type: "playerJoin";
-  id: string;
+  id: PlayerId;
   name: string;
 }
 
 export interface IPlayerDeleteEvent extends IEvent {
   type: "playerDelete";
-  id: string;
+  id: PlayerId;
 }
 
 export interface IPlayerNameChangeEvent extends IEvent {
   type: "playerNameChange";
-  id: string;
+  id: PlayerId;
   name: string;
 }
 
 export interface IPlayerBankerStatusChange extends IEvent {
   type: "playerBankerStatusChange";
-  id: string;
+  id: PlayerId;
   isBanker: boolean;
 }
 
 export interface ITransactionEvent extends IEvent {
   type: "transaction";
-  from: "banker" | "freeParking" | string;
-  to: "banker" | "freeParking" | string;
+  from: "banker" | "freeParking" | PlayerId;
+  to: "banker" | "freeParking" | PlayerId;
   amount: number;
 }

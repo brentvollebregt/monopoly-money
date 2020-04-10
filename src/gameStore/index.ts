@@ -42,8 +42,8 @@ class GameStore {
   // Check if a userToken is allowed to make banker actions in a game
   public isUserABanker = (gameId: string, userToken: string) => {
     const playerId = this.games[gameId].userTokenToPlayers[userToken];
-    return this.games[gameId].bankers.indexOf(playerId) !== -1
-  }
+    return this.games[gameId].bankers.indexOf(playerId) !== -1;
+  };
 
   // Get all the events from a game
   public getGameEvents = (gameId: string) => this.games[gameId].events;
@@ -57,7 +57,7 @@ class GameStore {
     // Add the player
     const event: IPlayerJoinEvent = {
       type: "playerJoin",
-      time: DateTime.local(),
+      time: DateTime.local().toISO(),
       actionedBy: playerId,
       id: playerId,
       name

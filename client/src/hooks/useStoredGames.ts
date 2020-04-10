@@ -9,7 +9,7 @@ const storedGamesLocalStorageKey = "storedGames";
 interface IStoredGameInLocalStorage {
   gameId: string;
   userToken: string;
-  time: DateTime;
+  time: string;
 }
 
 export interface IStoredGame extends IStoredGameInLocalStorage {
@@ -29,7 +29,7 @@ const useStoredGames = () => {
       {
         gameId,
         userToken,
-        time: DateTime.local()
+        time: DateTime.local().toISO()
       }
     ]);
   };

@@ -1,6 +1,6 @@
 import React from "react";
 import bannerImage from "../../img/banner.png";
-import { Button } from "react-bootstrap";
+import { Button, Card, Badge } from "react-bootstrap";
 import { navigate, useTitle } from "hookrouter";
 import { IStoredGame } from "../../hooks/useStoredGames";
 import "./Home.scss";
@@ -38,17 +38,37 @@ const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
       <div className="mt-4">
         <h2>Your Active Games</h2>
         {storedGames.length > 0 ? (
-          storedGames.map(({ gameId, userToken, status }, index) => (
-            <div key={gameId}>
-              <div>
-                Created Time:{" "}
-                {status === null ? "" : DateTime.fromISO(status.createdTime).toFormat("DD h:mm a")}
-              </div>
-              <div>GameId: {gameId}</div>
-              <div>userToken: {userToken}</div>
-              <Button onClick={() => onGameSetup(gameId, userToken)}>Join {gameId}</Button>
-              {index !== storedGames.length - 1 && <hr />}
-            </div>
+          storedGames.map(({ gameId, userToken, status }) => (
+            <Card key={gameId} className="mb-1">
+              <Card.Body className="p-2">
+                <div className="text-left">
+                  Game {gameId}
+                  <small style={{ float: "right" }}>
+                    (
+                    {status === null
+                      ? ""
+                      : DateTime.fromISO(status.createdTime).toFormat("DD h:mm a")}
+                    )
+                  </small>
+                </div>
+                <div>
+                  {["Brent: $1000000", "Robert: $5550000", "Rob: $480000"].map((player) => (
+                    <Badge variant="success" className="mr-1">
+                      {player}
+                    </Badge>
+                  ))}
+                </div>
+                <Button
+                  block
+                  size="sm"
+                  variant="outline-primary"
+                  onClick={() => onGameSetup(gameId, userToken)}
+                  className="mt-1"
+                >
+                  Join Game
+                </Button>
+              </Card.Body>
+            </Card>
           ))
         ) : (
           <>
@@ -58,15 +78,14 @@ const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
         {/* TODO */}
       </div>
 
-      <div>
-        <h2>Restore A Game</h2>
-        {/* TODO */}
-      </div>
+      <hr />
 
       <div>
         <h2>What is Monopoly Money?</h2>
         {/* TODO */}
       </div>
+
+      <hr />
 
       <div>
         <h2>How it Works</h2>

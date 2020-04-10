@@ -11,8 +11,8 @@ import History from "./pages/History";
 import Settings from "./pages/Settings";
 import Join from "./pages/Join";
 import { routePaths } from "./constants";
-import GameHandler from "./logic/GameHandler";
 import useStoredGames from "./hooks/useStoredGames";
+import useGameHandler, { IGameHandlerAuthInfo } from "./hooks/useGameHandler";
 
 const wrapRoute = (route: string, child: JSX.Element) => (
   <MetaTags route={route}>
@@ -21,13 +21,13 @@ const wrapRoute = (route: string, child: JSX.Element) => (
 );
 
 const App: React.FC = () => {
-  const [gameHandler, setGameHandler] = useState<GameHandler | null>(null);
   const { storedGames, storeGame } = useStoredGames();
-
+  const [gameHandlerAuthInfo, setGameHandlerAuthInfo] = useState<IGameHandlerAuthInfo | null>(null);
+  const gameState = useGameHandler(gameHandlerAuthInfo);
   const path = usePath();
 
-  const inGame = gameHandler !== null;
-  const isBanker = gameHandler !== null && gameHandler.isBanker;
+  const inGame = gameState !== null;
+  const isBanker = gameState !== null && gameState.isBanker;
 
   // If the user has gone to a non-game route, clear the game state
   useEffect(() => {
@@ -36,27 +36,31 @@ const App: React.FC = () => {
     }
   }, [path]);
 
+  // Go to the funds page after a game has been setup
+  useEffect(() => {
+    if (inGame) {
+      navigate("/funds");
+    }
+  }, [inGame]);
+
   const onGameSetup = (gameId: string, userToken: string) => {
     // Save current game for potential later use
-    if (gameHandler !== null) {
-      storeGame(gameHandler.gameId, gameHandler.userToken);
+    if (gameHandlerAuthInfo !== null) {
+      storeGame(gameHandlerAuthInfo.gameId, gameHandlerAuthInfo.userToken);
     }
 
-    // Setup a new game handler
-    setGameHandler(new GameHandler(gameId, userToken));
+    // Setup a new game handler by setting up auth
+    setGameHandlerAuthInfo({ gameId, userToken });
 
     // Store new game details
     storeGame(gameId, userToken);
-
-    // Go to the funds page
-    navigate("/funds");
   };
 
   const onGameDestroy = () => {
-    if (gameHandler !== null) {
-      storeGame(gameHandler.gameId, gameHandler.userToken);
+    if (gameHandlerAuthInfo !== null) {
+      storeGame(gameHandlerAuthInfo.gameId, gameHandlerAuthInfo.userToken);
     }
-    setGameHandler(null);
+    setGameHandlerAuthInfo(null);
   };
 
   const routes = {

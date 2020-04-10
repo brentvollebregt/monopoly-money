@@ -2,6 +2,10 @@ import { Event } from "../../../src/gameStore/types";
 import config from "../config";
 import { IAuthMessage, OutgoingMessage } from "../../../src/api/dto";
 
+export interface IGameHandlerState {
+  isBanker: boolean;
+}
+
 class GameHandler {
   public gameId: string;
   public userToken: string;
@@ -32,14 +36,17 @@ class GameHandler {
   }
 
   // Get data to be used to display the UI
-  public getCurrentState() {}
+  public getCurrentState(): IGameHandlerState {
+    return {
+      isBanker: false
+    };
+  }
 
   private onWebSocketMessage(event: MessageEvent) {
     const incomingMessage = JSON.parse(event.data) as OutgoingMessage;
 
     if (incomingMessage.type === "initialEventArray") {
       this.events = incomingMessage.events;
-      console.log("initialEventArray", this);
     }
   }
 }

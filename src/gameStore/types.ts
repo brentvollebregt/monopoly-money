@@ -5,6 +5,7 @@ export type Event =
   | IPlayerJoinEvent
   | IPlayerDeleteEvent
   | IPlayerNameChangeEvent
+  | IPlayerBankerStatusChange
   | ITransactionEvent;
 
 export interface IGame {
@@ -36,6 +37,12 @@ export interface IPlayerNameChangeEvent extends IEvent {
   type: "playerNameChange";
   id: string;
   name: string;
+}
+
+export interface IPlayerBankerStatusChange extends IEvent {
+  type: "playerBankerStatusChange";
+  id: string;
+  isBanker: boolean;
 }
 
 export interface ITransactionEvent extends IEvent {

@@ -33,15 +33,19 @@ const Settings: React.FC = () => {
         </thead>
         <tbody>
           {players.map(({ name, balance, playerId }) => (
-            <tr>
+            <tr key={playerId}>
               <td>{name}</td>
               <td>{balance}</td>
               <td>
                 <Button variant="outline-secondary" size="sm" title="Rename">
-                  ✏️
+                  <span role="img" aria-label="Rename">
+                    ✏️
+                  </span>
                 </Button>
                 <Button variant="outline-danger" size="sm" title="Remove" className="ml-1">
-                  🗑️
+                  <span role="img" aria-label="Remove">
+                    🗑️
+                  </span>
                 </Button>
               </td>
             </tr>

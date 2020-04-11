@@ -7,8 +7,9 @@ export type Event =
   | IPlayerJoinEvent
   | IPlayerDeleteEvent
   | IPlayerNameChangeEvent
-  | IPlayerBankerStatusChange
-  | ITransactionEvent;
+  | IPlayerBankerStatusChangeEvent
+  | ITransactionEvent
+  | IGameOpenStateChangeEvent;
 
 export interface IGame {
   code: string; // The code associated with the game instance
@@ -41,7 +42,7 @@ export interface IPlayerNameChangeEvent extends IEvent {
   name: string;
 }
 
-export interface IPlayerBankerStatusChange extends IEvent {
+export interface IPlayerBankerStatusChangeEvent extends IEvent {
   type: "playerBankerStatusChange";
   id: PlayerId;
   isBanker: boolean;
@@ -52,4 +53,9 @@ export interface ITransactionEvent extends IEvent {
   from: "banker" | "freeParking" | PlayerId;
   to: "banker" | "freeParking" | PlayerId;
   amount: number;
+}
+
+export interface IGameOpenStateChangeEvent extends IEvent {
+  type: "gameOpenStateChange";
+  open: boolean;
 }

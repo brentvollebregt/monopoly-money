@@ -1,15 +1,6 @@
 import * as websocket from "ws";
-import { DateTime } from "luxon";
 
 type PlayerId = string;
-
-export type Event =
-  | IPlayerJoinEvent
-  | IPlayerDeleteEvent
-  | IPlayerNameChangeEvent
-  | IPlayerBankerStatusChangeEvent
-  | ITransactionEvent
-  | IGameOpenStateChangeEvent;
 
 export interface IGame {
   code: string; // The code associated with the game instance
@@ -20,6 +11,14 @@ export interface IGame {
   userTokenToPlayers: Record<string, PlayerId>; // A mapping of ids only known by a user to match to a player
 }
 
+export type Event =
+  | IPlayerJoinEvent
+  | IPlayerDeleteEvent
+  | IPlayerNameChangeEvent
+  | IPlayerBankerStatusChangeEvent
+  | ITransactionEvent
+  | IGameOpenStateChangeEvent;
+
 export interface IEvent {
   time: string; // ISO string
   actionedBy: "system" | "banker" | PlayerId;
@@ -27,24 +26,24 @@ export interface IEvent {
 
 export interface IPlayerJoinEvent extends IEvent {
   type: "playerJoin";
-  id: PlayerId;
+  playerId: PlayerId;
   name: string;
 }
 
 export interface IPlayerDeleteEvent extends IEvent {
   type: "playerDelete";
-  id: PlayerId;
+  playerId: PlayerId;
 }
 
 export interface IPlayerNameChangeEvent extends IEvent {
   type: "playerNameChange";
-  id: PlayerId;
+  playerId: PlayerId;
   name: string;
 }
 
 export interface IPlayerBankerStatusChangeEvent extends IEvent {
   type: "playerBankerStatusChange";
-  id: PlayerId;
+  playerId: PlayerId;
   isBanker: boolean;
 }
 

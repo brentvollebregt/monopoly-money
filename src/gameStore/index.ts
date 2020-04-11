@@ -59,7 +59,7 @@ class GameStore {
       type: "playerJoin",
       time: DateTime.local().toISO(),
       actionedBy: playerId,
-      id: playerId,
+      playerId,
       name
     };
     this.pushEvent(gameId, event);
@@ -90,6 +90,12 @@ class GameStore {
   // Get a brief summary of a running game
   public gameStatusSummary = (gameId: string) => {
     // TODO
+  };
+
+  private addEvent = (gameId: string, event: Event) => {
+    // TODO All events must be added through here
+    // TODO Calculate next state and store in game for easy access
+    // TODO Afterwards, this is the only function to call this.pushEvent
   };
 
   private pushEvent = (gameId: string, event: Event) => {

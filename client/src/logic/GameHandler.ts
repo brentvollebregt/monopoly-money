@@ -1,4 +1,8 @@
 import { Event } from "../../../src/gameStore/types";
+import calculateState, {
+  IGameState,
+  defaultGameState
+} from "../../../src/gameStore/calculateState";
 import config from "../config";
 import { IAuthMessage, OutgoingMessage, IProposeEventMessage } from "../../../src/api/dto";
 
@@ -10,13 +14,15 @@ export interface IGameHandlerState {
 class GameHandler {
   public gameId: string;
   public userToken: string;
-  public isBanker: boolean = false;
+  public playerId: string;
   private events: Event[] = [];
   private webSocket: WebSocket;
+  private gameState: IGameState = defaultGameState;
 
-  constructor(gameId: string, userToken: string) {
+  constructor(gameId: string, userToken: string, playerId: string) {
     this.gameId = gameId;
     this.userToken = userToken;
+    this.playerId = playerId;
 
     // Create websocket and assign onmessage
     const webSocketAPIRoot = config.api.root.replace(/http?/g, "ws"); // I couldn't be bothered just making another config value
@@ -37,24 +43,36 @@ class GameHandler {
   }
 
   // Get data to be used to display the UI
-  public getCurrentState(): IGameHandlerState {
-    return {
-      events: this.events,
-      isBanker: false
-    };
+  public getState(): IGameState {
+    return this.gameState;
   }
 
+  // Get all events
+  public getEvents(): Event[] {
+    return this.events;
+  }
+
+  // Identify whether this user is a banker
+  public amIABanker() {
+    return this.gameState.players.find((p) => p.playerId === this.playerId)?.banker ?? false;
+  }
+
+  // TODO Actions to call submitEvent
+
+  // On messages from the server
   private onWebSocketMessage(event: MessageEvent) {
     const incomingMessage = JSON.parse(event.data) as OutgoingMessage;
 
     if (incomingMessage.type === "initialEventArray") {
       this.events = incomingMessage.events;
+      this.gameState = calculateState(this.events, this.gameState);
     } else if (incomingMessage.type === "newEvent") {
       this.events.push(incomingMessage.event);
-      // TODO Calculate game state
+      this.gameState = calculateState([incomingMessage.event], this.gameState);
     }
   }
 
+  // Messages to the server
   private submitEvent(event: Event) {
     const message: IProposeEventMessage = {
       type: "proposeEvent",

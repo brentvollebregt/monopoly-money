@@ -6,7 +6,7 @@ import { createGame, joinGame } from "../../api";
 
 interface IJoinProps {
   newGame: boolean;
-  onGameSetup: (gameId: string, userToken: string) => void;
+  onGameSetup: (gameId: string, userToken: string, playerId: string) => void;
 }
 
 const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
@@ -41,7 +41,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
       // Create game
       createGame(name)
         .then((result) => {
-          onGameSetup(result.gameId, result.userToken);
+          onGameSetup(result.gameId, result.userToken, result.playerId);
         })
         .catch((error) => console.log(error));
     } else {
@@ -62,7 +62,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
           } else if (result === "NotOpen") {
             console.warn("Not Open"); // TODO
           } else {
-            onGameSetup(result.gameId, result.userToken);
+            onGameSetup(result.gameId, result.userToken, result.playerId);
           }
         })
         .catch((error) => console.log(error));

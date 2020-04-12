@@ -8,7 +8,7 @@ import { DateTime } from "luxon";
 
 interface IHomeProps {
   storedGames: IStoredGame[];
-  onGameSetup: (gameId: string, userToken: string) => void;
+  onGameSetup: (gameId: string, userToken: string, playerId: string) => void;
 }
 
 const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
@@ -38,7 +38,7 @@ const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
       <div className="mt-4">
         <h2>Your Active Games</h2>
         {storedGames.length > 0 ? (
-          storedGames.map(({ gameId, userToken, status }) => (
+          storedGames.map(({ gameId, userToken, playerId, status }) => (
             <Card key={gameId} className="mb-1">
               <Card.Body className="p-2">
                 <div className="text-left">
@@ -62,7 +62,7 @@ const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
                   block
                   size="sm"
                   variant="outline-primary"
-                  onClick={() => onGameSetup(gameId, userToken)}
+                  onClick={() => onGameSetup(gameId, userToken, playerId)}
                   className="mt-2"
                 >
                   Join Game

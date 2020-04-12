@@ -12,7 +12,8 @@ export interface IJoinGameRequest {
 
 export interface IJoinGameResponse {
   gameId: string;
-  userToken: string; // A user id is used to identify a user
+  userToken: string; // An auth token is used to identify a user
+  playerId: string; // Tell the player who they are (not required when making calls)
 }
 
 export interface IDoesGameExistRequest {

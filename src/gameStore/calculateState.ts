@@ -13,6 +13,12 @@ export interface IGameState {
   open: boolean;
 }
 
+export const defaultGameState: IGameState = {
+  players: [],
+  freeParkingBalance: 0,
+  open: true
+};
+
 const calculateState = (events: Event[], currentState: IGameState): IGameState => {
   return events.reduce((state: IGameState, event: Event) => {
     switch (event.type) {

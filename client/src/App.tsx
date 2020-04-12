@@ -27,8 +27,7 @@ const App: React.FC = () => {
   const path = usePath();
 
   const inGame = gameState !== null;
-  const isBanker = true;
-  // const isBanker = gameState !== null && gameState.isBanker;
+  const isBanker = gameState !== null && gameState.isBanker;
 
   // If the user has gone to a non-game route, clear the game state
   useEffect(() => {
@@ -44,22 +43,30 @@ const App: React.FC = () => {
     }
   }, [inGame]);
 
-  const onGameSetup = (gameId: string, userToken: string) => {
+  const onGameSetup = (gameId: string, userToken: string, playerId: string) => {
     // Save current game for potential later use
     if (gameHandlerAuthInfo !== null) {
-      storeGame(gameHandlerAuthInfo.gameId, gameHandlerAuthInfo.userToken);
+      storeGame(
+        gameHandlerAuthInfo.gameId,
+        gameHandlerAuthInfo.userToken,
+        gameHandlerAuthInfo.playerId
+      );
     }
 
     // Setup a new game handler by setting up auth
-    setGameHandlerAuthInfo({ gameId, userToken });
+    setGameHandlerAuthInfo({ gameId, userToken, playerId });
 
     // Store new game details
-    storeGame(gameId, userToken);
+    storeGame(gameId, userToken, playerId);
   };
 
   const onGameDestroy = () => {
     if (gameHandlerAuthInfo !== null) {
-      storeGame(gameHandlerAuthInfo.gameId, gameHandlerAuthInfo.userToken);
+      storeGame(
+        gameHandlerAuthInfo.gameId,
+        gameHandlerAuthInfo.userToken,
+        gameHandlerAuthInfo.playerId
+      );
     }
     setGameHandlerAuthInfo(null);
   };

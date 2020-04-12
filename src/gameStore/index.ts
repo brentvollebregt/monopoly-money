@@ -9,16 +9,16 @@ class GameStore {
     const gameId = createUniqueGameId(Object.keys(this.games));
 
     // Create the game
-    const deleteInstance = () => this.deleteGame(gameId)
+    const deleteInstance = () => this.deleteGame(gameId);
     this.games[gameId] = new Game(deleteInstance);
 
     // Add the user that created this game and set them as a banker
     const game = this.games[gameId];
-    const {userToken, playerId} = game.addPlayer(initialBankersName);
+    const { userToken, playerId } = game.addPlayer(initialBankersName);
     game.setPlayerBankerStatus(playerId, true);
 
     // Return the new game id and the users userToken
-    return { gameId, userToken };
+    return { gameId, userToken, playerId };
   }
 
   public doesGameExist(gameId: string) {

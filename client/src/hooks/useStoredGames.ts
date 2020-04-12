@@ -9,6 +9,7 @@ const storedGamesLocalStorageKey = "storedGames";
 interface IStoredGameInLocalStorage {
   gameId: string;
   userToken: string;
+  playerId: string;
   time: string;
 }
 
@@ -23,12 +24,13 @@ const useStoredGames = () => {
   );
   const [gameStatuses, setGameStatuses] = useState<Record<string, IGameStatusSummary | null>>({});
 
-  const storeGame = (gameId: string, userToken: string) => {
+  const storeGame = (gameId: string, userToken: string, playerId: string) => {
     setStoredGames([
       ...(storedGames ?? []).filter((game) => game.gameId !== gameId), // Remove current instance
       {
         gameId,
         userToken,
+        playerId,
         time: DateTime.local().toISO()
       }
     ]);

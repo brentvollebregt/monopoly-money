@@ -17,9 +17,9 @@ const router = express.Router();
 router.post("/", (req, res) => {
   const { name } = req.body as ICreateGameRequest;
 
-  const { gameId, userToken } = gameStore.createGame(name);
+  const { gameId, userToken, playerId } = gameStore.createGame(name);
 
-  const response: IJoinGameResponse = { gameId, userToken };
+  const response: IJoinGameResponse = { gameId, userToken, playerId };
   res.json(response);
   res.end();
 });
@@ -35,9 +35,9 @@ router.post("/:gameId", (req, res) => {
     res.status(403).send("Game is not open");
   } else {
     const game = gameStore.getGame(gameId);
-    const { userToken } = game.addPlayer(name);
+    const { userToken, playerId } = game.addPlayer(name);
 
-    const response: IJoinGameResponse = { gameId, userToken };
+    const response: IJoinGameResponse = { gameId, userToken, playerId };
     res.json(response);
   }
 

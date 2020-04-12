@@ -25,12 +25,9 @@ export interface IGameStatusSummary {
   players: Record<string, number>; // Players and balances
 }
 
-// Websocket Incoming Message Types
+// Websocket Incoming Message Types (server <= client)
 
-export type IncomingMessage =
-  | IAuthMessage
-  | IBankerGiveToPlayerMessage
-  | IBankerTakeFromPlayerMessage;
+export type IncomingMessage = IAuthMessage | IProposeEventMessage;
 
 export interface IAuthMessage {
   type: "auth";
@@ -38,19 +35,21 @@ export interface IAuthMessage {
   userToken: string;
 }
 
-export interface IBankerGiveToPlayerMessage {
-  type: "bankerGiveToPlayer";
+export interface IProposeEventMessage {
+  type: "proposeEvent";
+  event: Event;
 }
 
-export interface IBankerTakeFromPlayerMessage {
-  type: "bankerTakeFromPlayer";
-}
+// Websocket Outgoing Message Types (server => client)
 
-// Websocket Outgoing Message Types
-
-export type OutgoingMessage = IInitialEventArrayMessage;
+export type OutgoingMessage = IInitialEventArrayMessage | INewEventMessage;
 
 export interface IInitialEventArrayMessage {
   type: "initialEventArray";
   events: Event[];
+}
+
+export interface INewEventMessage {
+  type: "newEvent";
+  event: Event;
 }

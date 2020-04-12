@@ -1,6 +1,6 @@
 import { Event } from "../../../src/gameStore/types";
 import config from "../config";
-import { IAuthMessage, OutgoingMessage } from "../../../src/api/dto";
+import { IAuthMessage, OutgoingMessage, IProposeEventMessage } from "../../../src/api/dto";
 
 export interface IGameHandlerState {
   events: Event[];
@@ -49,7 +49,18 @@ class GameHandler {
 
     if (incomingMessage.type === "initialEventArray") {
       this.events = incomingMessage.events;
+    } else if (incomingMessage.type === "newEvent") {
+      this.events.push(incomingMessage.event);
+      // TODO Calculate game state
     }
+  }
+
+  private submitEvent(event: Event) {
+    const message: IProposeEventMessage = {
+      type: "proposeEvent",
+      event
+    };
+    this.webSocket.send(JSON.stringify(message));
   }
 }
 

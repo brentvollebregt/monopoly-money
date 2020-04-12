@@ -55,25 +55,14 @@ export const authMessage: MessageHandler = (ws, userData, message) => {
   }
 };
 
-export const bankerGiveToPlayer: MessageHandler = (ws, userData, message) => {
-  if (!isAuthenticated(ws, userData) || !isBanker(userData)) {
-    return;
-  }
-  if (message.type === "bankerGiveToPlayer") {
-  }
-};
+export const proposeEvent: MessageHandler = (ws, userData, message) => {
+  if (message.type === "proposeEvent") {
+    if (!isAuthenticated(ws, userData)) {
+      return;
+    }
+    const isPlayerBanker = isBanker(userData);
+    const event = message.event;
 
-export const bankerTakeFromPlayer: MessageHandler = (ws, userData, message) => {
-  if (!isAuthenticated(ws, userData) || !isBanker(userData)) {
-    return;
+    // TODO handle event (check for validity)
   }
-  if (message.type === "bankerTakeFromPlayer") {
-  }
-};
-
-export const makePlayerBanker: MessageHandler = (ws, userData, message) => {
-  if (!isAuthenticated(ws, userData) || !isBanker(userData)) {
-    return;
-  }
-  // TODO
 };

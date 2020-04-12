@@ -2,6 +2,9 @@ import * as websocket from "ws";
 import { createUniqueGameId, generateTimeBasedId } from "./utils";
 import { IGame, IPlayerJoinEvent, Event } from "./types";
 import { DateTime } from "luxon";
+import { INewEventMessage } from "../api/dto";
+
+// TODO Turn this object into Record<sting, GameStore> so we don't have to keep passing gameId around.
 
 class GameStore {
   private games: Record<string, IGame> = {};
@@ -92,17 +95,17 @@ class GameStore {
     // TODO
   };
 
-  private addEvent = (gameId: string, event: Event) => {
-    // TODO All events must be added through here
-    // TODO Calculate next state and store in game for easy access
-    // TODO Afterwards, this is the only function to call this.pushEvent
-  };
-
   private pushEvent = (gameId: string, event: Event) => {
+    // Add event
     this.games[gameId].events.push(event);
 
+    // TODO Calculate new state and store in game for easy access
+
+    // Construct message
+    const outgoingMessage: INewEventMessage = { type: "newEvent", event };
+
     Object.values(this.games[gameId].subscribedWebSockets).forEach((ws) => {
-      ws.send(JSON.stringify(event));
+      ws.send(JSON.stringify(outgoingMessage));
     });
   };
 }

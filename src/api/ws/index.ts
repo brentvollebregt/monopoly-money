@@ -1,17 +1,12 @@
 import * as http from "http";
 import * as https from "https";
 import * as websocket from "ws";
-import {
-  MessageHandler,
-  authMessage,
-  bankerGiveToPlayer,
-  bankerTakeFromPlayer
-} from "./messageHandlers";
+import { MessageHandler, authMessage, proposeEvent } from "./messageHandlers";
 import { IncomingMessage } from "../dto";
 import { IUserData } from "../types";
 
-// Function that take a message and decide whether to act on it
-const messageHandlers: MessageHandler[] = [authMessage, bankerGiveToPlayer, bankerTakeFromPlayer];
+// Functions that take a message and decide whether to act on it
+const messageHandlers: MessageHandler[] = [authMessage, proposeEvent];
 
 // Setup the websocket API
 const setupWebsocketAPI = (server: http.Server | https.Server) => {
@@ -32,6 +27,7 @@ const setupWebsocketAPI = (server: http.Server | https.Server) => {
 
     ws.on("close", (code: number, reason: string) => {
       // TODO Handle clients leaving
+      console.error("onclose is not being handled");
     });
   });
 };

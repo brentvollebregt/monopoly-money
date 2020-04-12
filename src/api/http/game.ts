@@ -31,10 +31,11 @@ router.post("/:gameId", (req, res) => {
 
   if (!gameStore.doesGameExist(gameId)) {
     res.status(404).send("Game does not exist");
-  } else if (!gameStore.isGameOpen(gameId)) {
+  } else if (!gameStore.getGame(gameId).isGameOpen()) {
     res.status(403).send("Game is not open");
   } else {
-    const userToken = gameStore.addPlayer(gameId, name);
+    const game = gameStore.getGame(gameId);
+    const { userToken } = game.addPlayer(name);
 
     const response: IJoinGameResponse = { gameId, userToken };
     res.json(response);
@@ -50,10 +51,11 @@ router.get("/:gameId", (req, res) => {
 
   if (!gameStore.doesGameExist(gameId)) {
     res.status(404).send("Game does not exist");
-  } else if (!gameStore.isUserInGame(gameId, userToken)) {
+  } else if (!gameStore.getGame(gameId).isUserInGame(userToken)) {
     res.status(401).send("You are not permitted to make this operation");
   } else {
-    const state = gameStore.gameStatusSummary(gameId); // TODO
+    const game = gameStore.getGame(gameId);
+    const state = game.gameStatusSummary(); // TODO
 
     const response: IGameStatusSummary = {
       createdTime: DateTime.local().toISO(),

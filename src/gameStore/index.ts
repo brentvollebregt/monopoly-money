@@ -1,113 +1,37 @@
-import * as websocket from "ws";
-import { createUniqueGameId, generateTimeBasedId } from "./utils";
-import { IGame, IPlayerJoinEvent, Event } from "./types";
-import { DateTime } from "luxon";
-import { INewEventMessage } from "../api/dto";
-
-// TODO Turn this object into Record<sting, GameStore> so we don't have to keep passing gameId around.
+import { createUniqueGameId } from "./utils";
+import Game from "./Game";
 
 class GameStore {
-  private games: Record<string, IGame> = {};
+  private games: Record<string, Game> = {};
 
-  public createGame = (bankerName: string) => {
+  public createGame(initialBankersName: string) {
     // Generate a game id
     const gameId = createUniqueGameId(Object.keys(this.games));
 
     // Create the game
-    this.games[gameId] = {
-      code: gameId,
-      open: true,
-      events: [], // All events
-      subscribedWebSockets: [], // Anyone part of the game
-      bankers: [], // playerId[]
-      userTokenToPlayers: {} // userToken => playerId
-    };
+    const deleteInstance = () => this.deleteGame(gameId)
+    this.games[gameId] = new Game(deleteInstance);
 
-    // Add the banker as a player and make them a banker
-    const userToken = this.addPlayer(gameId, bankerName);
-    const playerId = this.games[gameId].userTokenToPlayers[userToken];
-    this.setPlayerBankerStatus(gameId, playerId, true);
+    // Add the user that created this game and set them as a banker
+    const game = this.games[gameId];
+    const {userToken, playerId} = game.addPlayer(initialBankersName);
+    game.setPlayerBankerStatus(playerId, true);
 
     // Return the new game id and the users userToken
     return { gameId, userToken };
-  };
+  }
 
-  // Check if a game exists
-  public doesGameExist = (gameId: string) => this.games.hasOwnProperty(gameId);
+  public doesGameExist(gameId: string) {
+    return gameId in this.games;
+  }
 
-  // Check if a game is open
-  public isGameOpen = (gameId: string) => this.games[gameId].open;
+  public getGame(gameId: string) {
+    return this.games[gameId];
+  }
 
-  // Check if a userToken is in a game
-  public isUserInGame = (gameId: string, userToken: string) =>
-    this.games[gameId].userTokenToPlayers.hasOwnProperty(userToken);
-
-  // Check if a userToken is allowed to make banker actions in a game
-  public isUserABanker = (gameId: string, userToken: string) => {
-    const playerId = this.games[gameId].userTokenToPlayers[userToken];
-    return this.games[gameId].bankers.indexOf(playerId) !== -1;
-  };
-
-  // Get all the events from a game
-  public getGameEvents = (gameId: string) => this.games[gameId].events;
-
-  // Add a player to a game and get the new userToken
-  public addPlayer = (gameId: string, name: string): string => {
-    // Identify id
-    const playerId = generateTimeBasedId();
-    const userToken = generateTimeBasedId();
-
-    // Add the player
-    const event: IPlayerJoinEvent = {
-      type: "playerJoin",
-      time: DateTime.local().toISO(),
-      actionedBy: playerId,
-      playerId,
-      name
-    };
-    this.pushEvent(gameId, event);
-
-    // Map the user token to the player id
-    this.games[gameId].userTokenToPlayers[userToken] = playerId;
-
-    return userToken;
-  };
-
-  // Set a player as a banker
-  public setPlayerBankerStatus = (gameId: string, playerId: string, isBanker: boolean) => {
-    if (isBanker && this.games[gameId].bankers.indexOf(playerId) === -1) {
-      // If we are setting the player as banker and they are not already in the list, add them
-      this.games[gameId].bankers.push(playerId);
-    } else if (!isBanker && this.games[gameId].bankers.indexOf(playerId) !== -1) {
-      // If we are setting the player as not a banker and they are in the list, remove them
-      const currentIndex = this.games[gameId].bankers.indexOf(playerId);
-      this.games[gameId].bankers.splice(currentIndex, 1);
-    }
-  };
-
-  // Subscribe a websocket to get any event updates
-  public subscribeWebSocketToEvents = (gameId: string, ws: websocket) => {
-    this.games[gameId].subscribedWebSockets.push(ws);
-  };
-
-  // Get a brief summary of a running game
-  public gameStatusSummary = (gameId: string) => {
-    // TODO
-  };
-
-  private pushEvent = (gameId: string, event: Event) => {
-    // Add event
-    this.games[gameId].events.push(event);
-
-    // TODO Calculate new state and store in game for easy access
-
-    // Construct message
-    const outgoingMessage: INewEventMessage = { type: "newEvent", event };
-
-    Object.values(this.games[gameId].subscribedWebSockets).forEach((ws) => {
-      ws.send(JSON.stringify(outgoingMessage));
-    });
-  };
+  public deleteGame(gameId: string) {
+    delete this.games[gameId];
+  }
 }
 
 export default new GameStore();

@@ -7,6 +7,9 @@ import path from "path";
 import config from "./config";
 import { setupWebsocketAPI, GameRoutes, gameSubRoute, RestoreRoutes, restoreSubRoute } from "./api";
 
+import GS from "@monopoly-money/game-state";
+console.log("here:" + GS());
+
 const app = express();
 const server = http.createServer(app);
 

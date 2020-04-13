@@ -1,14 +1,6 @@
 import React, { useState } from "react";
-import {
-  InputGroup,
-  Button,
-  FormControl,
-  DropdownButton,
-  Dropdown,
-  FormControlProps
-} from "react-bootstrap";
+import { InputGroup, Button, FormControl, DropdownButton, Dropdown } from "react-bootstrap";
 import "./Bank.scss";
-import { ReplaceProps, BsPrefixProps } from "react-bootstrap/helpers";
 
 interface IPlayerSummary {
   name: string;
@@ -35,9 +27,7 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
 
   const valid = amount !== "" && selectedPlayer !== null;
 
-  const onAmountUpdate = (
-    event: React.FormEvent<ReplaceProps<"input", BsPrefixProps<"input"> & FormControlProps>>
-  ) => {
+  const onAmountUpdate = (event: React.FormEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget;
     const int = parseInt(value ?? "", 10);
     setAmount(isNaN(int) ? "" : `${int}`);

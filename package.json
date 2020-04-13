@@ -10,8 +10,8 @@
     "postinstall": "npm run bootstrap",
     "start": "echo todo",
     "build": "cd packages/game-state && npm run build && cd ../server && npm run build && cd ../client && npm run build",
-    "client:dev": "packages cd packages/server && npm start",
-    "server:dev": "cd packages/client && npm run dev"
+    "client:dev": "cd packages/client && npm start",
+    "server:dev": "cd packages/server && npm run dev"
   },
   "repository": {
     "type": "git",

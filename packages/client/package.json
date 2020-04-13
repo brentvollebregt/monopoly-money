@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "dependencies": {
     "@monopoly-money/game-state": "*",
+    "@monopoly-money/server": "*",
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
     "@rehooks/local-storage": "^2.3.0",

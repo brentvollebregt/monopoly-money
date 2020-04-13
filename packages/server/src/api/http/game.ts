@@ -49,7 +49,9 @@ router.get("/:gameId", (req, res) => {
   const { gameId } = req.params;
   const userToken = req.get("Authorization");
 
-  if (!gameStore.doesGameExist(gameId)) {
+  if (userToken === undefined) {
+    res.status(401).send("Authorization not supplied");
+  } else if (!gameStore.doesGameExist(gameId)) {
     res.status(404).send("Game does not exist");
   } else if (!gameStore.getGame(gameId).isUserInGame(userToken)) {
     res.status(401).send("You are not permitted to make this operation");

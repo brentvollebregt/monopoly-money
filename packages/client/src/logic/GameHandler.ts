@@ -1,6 +1,10 @@
 import { GameEvent, IGameState } from "@monopoly-money/game-state";
 import config from "../config";
-import { IAuthMessage, OutgoingMessage, IProposeEventMessage } from "../../../src/api/dto";
+import {
+  IAuthMessage,
+  OutgoingMessage,
+  IProposeEventMessage
+} from "@monopoly-money/server/build/api/dto";
 
 export interface IGameHandlerState {
   events: GameEvent[];

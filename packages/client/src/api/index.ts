@@ -4,7 +4,7 @@ import {
   IJoinGameRequest,
   IJoinGameResponse,
   IGameStatusSummary
-} from "../../../src/api/dto";
+} from "@monopoly-money/server/build/api/dto";
 
 export const createGame = (name: string): Promise<IJoinGameResponse> => {
   return fetch(`${config.api.root}/api/game`, {

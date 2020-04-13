@@ -24,6 +24,9 @@ const isAuthenticated = (ws: websocket, { gameId, userToken }: IUserData): boole
 };
 
 const isBanker = ({ gameId, userToken }: IUserData): boolean => {
+  if (gameId === null || userToken === null) {
+    throw new Error("Invalid state. isBanker check made when gameId/userToken is null");
+  }
   const game = gameStore.getGame(gameId);
   return game.isUserABanker(userToken);
 };

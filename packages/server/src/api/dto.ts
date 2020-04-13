@@ -1,4 +1,4 @@
-import { Event } from "../gameStore/types";
+import { GameEvent } from "@monopoly-money/game-state";
 
 // REST HTTP Types
 
@@ -38,7 +38,7 @@ export interface IAuthMessage {
 
 export interface IProposeEventMessage {
   type: "proposeEvent";
-  event: Event;
+  event: GameEvent;
 }
 
 // Websocket Outgoing Message Types (server => client)
@@ -47,10 +47,10 @@ export type OutgoingMessage = IInitialEventArrayMessage | INewEventMessage;
 
 export interface IInitialEventArrayMessage {
   type: "initialEventArray";
-  events: Event[];
+  events: GameEvent[];
 }
 
 export interface INewEventMessage {
   type: "newEvent";
-  event: Event;
+  event: GameEvent;
 }

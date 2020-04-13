@@ -1,12 +1,12 @@
 import * as websocket from "ws";
-import { Event, PlayerId, IPlayerJoinEvent } from "./types";
+import { GameEvent, PlayerId, IPlayerJoinEvent } from "@monopoly-money/game-state";
 import { generateTimeBasedId } from "./utils";
 import { DateTime } from "luxon";
 import { INewEventMessage, IInitialEventArrayMessage } from "../api/dto";
 
 export default class Game {
   private open: boolean = true; // Whether the game is open to people joining
-  private events: Event[] = []; // Events in this game
+  private events: GameEvent[] = []; // Events in this game
   private subscribedWebSockets: websocket[] = []; // Players listening to events
   private bankers: PlayerId[] = []; // Ids of those players who have banker privileges
   private userTokenToPlayers: Record<string, PlayerId> = {}; // A mapping of ids only known by a user to match to a player
@@ -83,7 +83,7 @@ export default class Game {
     // TODO
   };
 
-  private pushEvent = (event: Event) => {
+  private pushEvent = (event: GameEvent) => {
     // Add event
     this.events.push(event);
 

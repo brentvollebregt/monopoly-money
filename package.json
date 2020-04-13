@@ -1,11 +1,24 @@
 {
   "name": "monopoly-money",
   "private": true,
+  "description": "> TODO: description",
+  "author": "Brent Vollebregt <brent.vollebregt@gmail.com>",
+  "homepage": "https://github.com/brentvollebregt/monopoly-money#readme",
   "scripts": {
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap --hoist",
-    "start": "lerna run --scope server start",
-    "build": "cd packages/server && npm run build && cd ../client && npm run build"
+    "postinstall": "npm run bootstrap",
+    "start": "echo todo",
+    "build": "cd packages/game-state && npm run build && cd ../server && npm run build && cd ../client && npm run build",
+    "client:dev": "packages cd packages/server && npm start",
+    "server:dev": "cd packages/client && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brentvollebregt/monopoly-money.git"
+  },
+  "bugs": {
+    "url": "https://github.com/brentvollebregt/monopoly-money/issues"
   },
   "devDependencies": {
     "lerna": "^3.20.2"

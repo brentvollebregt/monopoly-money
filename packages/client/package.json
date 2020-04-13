@@ -1,7 +1,7 @@
 {
   "name": "@monopoly-money/client",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.1.0",
   "dependencies": {
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",

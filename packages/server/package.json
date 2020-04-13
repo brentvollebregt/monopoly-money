@@ -1,7 +1,7 @@
 {
   "name": "@monopoly-money/server",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
   "main": "build/index.js",
   "scripts": {
     "dev": "ts-node-dev --inspect --respawn --transpileOnly src/index.ts",
@@ -10,17 +10,6 @@
     "prestart": "npm run build",
     "start": "node ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/brentvollebregt/monopoly-money.git"
-  },
-  "keywords": [],
-  "author": "Brent Vollebregt",
-  "license": "",
-  "bugs": {
-    "url": "https://github.com/brentvollebregt/monopoly-money/issues"
-  },
-  "homepage": "https://github.com/brentvollebregt/monopoly-money#readme",
   "dependencies": {
     "@monopoly-money/game-state": "*",
     "@types/express": "^4.17.1",

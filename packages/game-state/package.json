@@ -1,0 +1,27 @@
+{
+  "name": "@monopoly-money/game-state",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Brent Vollebregt <brent.vollebregt@gmail.com>",
+  "homepage": "https://github.com/brentvollebregt/monopoly-money#readme",
+  "license": "ISC",
+  "main": "build/index.js",
+  "types": "build/index.d.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brentvollebregt/monopoly-money.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/brentvollebregt/monopoly-money/issues"
+  },
+  "dependencies": {
+    "typescript": "^3.8.3"
+  }
+}

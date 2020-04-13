@@ -1,8 +1,5 @@
 import { Event } from "../../../src/gameStore/types";
-import calculateState, {
-  IGameState,
-  defaultGameState
-} from "../../../src/gameStore/calculateState";
+import { IGameState } from "../../../src/gameStore/calculateState";
 import config from "../config";
 import { IAuthMessage, OutgoingMessage, IProposeEventMessage } from "../../../src/api/dto";
 
@@ -10,6 +7,16 @@ export interface IGameHandlerState {
   events: Event[];
   isBanker: boolean;
 }
+
+const defaultGameState: IGameState = {
+  players: [],
+  freeParkingBalance: 0,
+  open: true
+};
+
+const calculateState = (events: Event[], currentState: IGameState): IGameState => {
+  return currentState;
+};
 
 class GameHandler {
   public gameId: string;

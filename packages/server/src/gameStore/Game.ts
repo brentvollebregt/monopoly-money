@@ -91,9 +91,18 @@ export default class Game {
     ws.send(JSON.stringify(outgoingMessage));
   };
 
-  // Get a brief summary of a running game
-  public gameStatusSummary = () => {
-    // TODO
+  // Get the game state
+  public getGameState = (): IGameState => {
+    return this.gameState;
+  };
+
+  // Add an event
+  public addEvent = (event: GameEvent, actionedBy: PlayerId) => {
+    this.pushEvent({
+      ...event,
+      actionedBy,
+      time: DateTime.local().toISO()
+    });
   };
 
   private pushEvent = (event: GameEvent) => {

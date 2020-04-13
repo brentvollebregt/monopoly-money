@@ -23,14 +23,6 @@ const isAuthenticated = (ws: websocket, { gameId, userToken }: IUserData): boole
   return true;
 };
 
-const isBanker = ({ gameId, userToken }: IUserData): boolean => {
-  if (gameId === null || userToken === null) {
-    throw new Error("Invalid state. isBanker check made when gameId/userToken is null");
-  }
-  const game = gameStore.getGame(gameId);
-  return game.isUserABanker(userToken);
-};
-
 export type MessageHandler = (ws: websocket, userData: IUserData, message: IncomingMessage) => void;
 
 export const authMessage: MessageHandler = (ws, userData, message) => {
@@ -55,20 +47,32 @@ export const authMessage: MessageHandler = (ws, userData, message) => {
   }
 };
 
-export const proposeEvent: MessageHandler = (ws, userData, message) => {
+export const proposeEvent: MessageHandler = (ws, { gameId, userToken }, message) => {
   if (message.type === "proposeEvent") {
-    if (!isAuthenticated(ws, userData)) {
+    if (!isAuthenticated(ws, { gameId, userToken })) {
       return;
     }
-    const isPlayerBanker = isBanker(userData);
+    if (gameId === null || userToken === null) {
+      throw new Error("Invalid state. isBanker check made when gameId/userToken is null");
+    }
+    const game = gameStore.getGame(gameId);
+    const isPlayerBanker = game.isUserABanker(userToken);
+    const playerId = game.getPlayerId(userToken);
     const event = message.event;
 
-    console.log(event);
-
-    switch (
-      event.type
-      // TODO handle event (check for validity)
-    ) {
+    switch (event.type) {
+      case "transaction":
+        if ((event.from === "bank" || event.from === "freeParking") && !isPlayerBanker) {
+          return; // Only bankers can send money from the bank or free parking
+        } else if (
+          event.from !== "bank" &&
+          event.from !== "freeParking" &&
+          event.from !== playerId
+        ) {
+          return; // If a user is not a banker, they cannot send money from anyone but themselves
+        }
+        game.addEvent(event, playerId);
+        return;
     }
   }
 };

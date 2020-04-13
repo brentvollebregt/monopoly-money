@@ -56,27 +56,65 @@ export const calculateGameState = (events: GameEvent[], currentState: IGameState
         };
 
       case "transaction":
-        const sourcePlayer = state.players.find((p) => p.playerId === event.from);
-        const destinationPlayer = state.players.find((p) => p.playerId === event.to);
-        // TODO if event.from or event.to equals "freeParking" or "bank"
-        if (sourcePlayer === undefined || destinationPlayer === undefined) {
-          throw new Error("Unable to find source or destination player");
+        if (event.from === "bank" || event.from === "freeParking") {
+          const destinationPlayer = state.players.find((p) => p.playerId === event.to);
+          if (destinationPlayer === undefined) {
+            throw new Error("Unable to find destination player");
+          }
+          return {
+            ...state,
+            players: [
+              ...state.players.filter((p) => p.playerId !== event.from && p.playerId !== event.to),
+              {
+                ...destinationPlayer,
+                balance: destinationPlayer.balance + event.amount
+              }
+            ],
+            freeParkingBalance:
+              event.from === "freeParking"
+                ? state.freeParkingBalance - event.amount
+                : state.freeParkingBalance
+          };
+        } else if (event.to === "bank" || event.to === "freeParking") {
+          const sourcePlayer = state.players.find((p) => p.playerId === event.from);
+          if (sourcePlayer === undefined) {
+            throw new Error("Unable to find source player");
+          }
+          return {
+            ...state,
+            players: [
+              ...state.players.filter((p) => p.playerId !== event.from && p.playerId !== event.to),
+              {
+                ...sourcePlayer,
+                balance: sourcePlayer.balance - event.amount
+              }
+            ],
+            freeParkingBalance:
+              event.from === "freeParking"
+                ? state.freeParkingBalance + event.amount
+                : state.freeParkingBalance
+          };
+        } else {
+          const sourcePlayer = state.players.find((p) => p.playerId === event.from);
+          const destinationPlayer = state.players.find((p) => p.playerId === event.to);
+          if (sourcePlayer === undefined || destinationPlayer === undefined) {
+            throw new Error("Unable to find source or destination player");
+          }
+          return {
+            ...state,
+            players: [
+              ...state.players.filter((p) => p.playerId !== event.from && p.playerId !== event.to),
+              {
+                ...sourcePlayer,
+                balance: sourcePlayer.balance - event.amount
+              },
+              {
+                ...destinationPlayer,
+                balance: destinationPlayer.balance + event.amount
+              }
+            ]
+          };
         }
-        return {
-          ...state,
-          players: [
-            ...state.players.filter((p) => p.playerId !== event.from && p.playerId !== event.to),
-            {
-              ...sourcePlayer,
-              balance: sourcePlayer.balance - event.amount
-            },
-            {
-              ...destinationPlayer,
-              balance: destinationPlayer.balance + event.amount
-            }
-          ]
-        };
-
       case "gameOpenStateChange":
         return {
           ...state,

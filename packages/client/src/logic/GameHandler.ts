@@ -1,10 +1,9 @@
-import { Event } from "../../../src/gameStore/types";
-import { IGameState } from "../../../src/gameStore/calculateState";
+import { GameEvent, IGameState } from "@monopoly-money/game-state";
 import config from "../config";
 import { IAuthMessage, OutgoingMessage, IProposeEventMessage } from "../../../src/api/dto";
 
 export interface IGameHandlerState {
-  events: Event[];
+  events: GameEvent[];
   isBanker: boolean;
 }
 
@@ -14,7 +13,7 @@ const defaultGameState: IGameState = {
   open: true
 };
 
-const calculateState = (events: Event[], currentState: IGameState): IGameState => {
+const calculateState = (events: GameEvent[], currentState: IGameState): IGameState => {
   return currentState;
 };
 
@@ -22,7 +21,7 @@ class GameHandler {
   public gameId: string;
   public userToken: string;
   public playerId: string;
-  private events: Event[] = [];
+  private events: GameEvent[] = [];
   private webSocket: WebSocket;
   private gameState: IGameState = defaultGameState;
 
@@ -55,7 +54,7 @@ class GameHandler {
   }
 
   // Get all events
-  public getEvents(): Event[] {
+  public getEvents(): GameEvent[] {
     return this.events;
   }
 
@@ -80,7 +79,7 @@ class GameHandler {
   }
 
   // Messages to the server
-  private submitEvent(event: Event) {
+  private submitEvent(event: GameEvent) {
     const message: IProposeEventMessage = {
       type: "proposeEvent",
       event

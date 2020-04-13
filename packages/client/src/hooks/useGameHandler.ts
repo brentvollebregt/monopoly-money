@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import GameHandler from "../logic/GameHandler";
-import { IGameState } from "../../../src/gameStore/calculateState";
-import { Event } from "../../../src/gameStore/types";
+import { GameEvent, IGameState } from "@monopoly-money/game-state";
 
 export interface IGameHandlerAuthInfo {
   gameId: string;
@@ -11,7 +10,7 @@ export interface IGameHandlerAuthInfo {
 
 export interface IGameHandlerState extends IGameState {
   isBanker: boolean;
-  events: Event[];
+  events: GameEvent[];
 }
 
 const useGameHandler = (authInfo: IGameHandlerAuthInfo | null): IGameHandlerState | null => {

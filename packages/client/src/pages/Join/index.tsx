@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTitle } from "hookrouter";
-import { Form, Button, FormControlProps } from "react-bootstrap";
-import { ReplaceProps, BsPrefixProps } from "react-bootstrap/helpers";
+import { Form, Button } from "react-bootstrap";
 import { createGame, joinGame } from "../../api";
 
 interface IJoinProps {
@@ -19,15 +18,11 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
 
   useTitle(`${title} - Monopoly Money`);
 
-  const onGameIdChange = (
-    event: React.FormEvent<ReplaceProps<"input", BsPrefixProps<"input"> & FormControlProps>>
-  ) => {
+  const onGameIdChange = (event: React.FormEvent<HTMLInputElement>) => {
     setGameId(event.currentTarget.value ?? "");
   };
 
-  const onNameChange = (
-    event: React.FormEvent<ReplaceProps<"input", BsPrefixProps<"input"> & FormControlProps>>
-  ) => {
+  const onNameChange = (event: React.FormEvent<HTMLInputElement>) => {
     setName(event.currentTarget.value || ""); // TODO Why can't I use??
   };
 

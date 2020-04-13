@@ -1,26 +1,13 @@
 import React from "react";
 import ValuePlayerForm from "./ValuePlayerForm";
+import { IGameStatePlayer } from "@monopoly-money/game-state";
 import "./Bank.scss";
 
-const Bank: React.FC = () => {
-  const players = [
-    {
-      name: "Brent",
-      balance: 50000000,
-      playerId: "5hg43-5v34v345v-35v345v34-5v34"
-    },
-    {
-      name: "Robert",
-      balance: 52550000,
-      playerId: "5hg43-fdsftrge3-gerger-5v34"
-    },
-    {
-      name: "Bob",
-      balance: 1000000,
-      playerId: "5hg43-5v34v345v-fdsfsdfsd-534tfg434ct"
-    }
-  ];
+interface IBankProps {
+  players: IGameStatePlayer[];
+}
 
+const Bank: React.FC<IBankProps> = ({ players }) => {
   return (
     <div className="bank">
       <ValuePlayerForm

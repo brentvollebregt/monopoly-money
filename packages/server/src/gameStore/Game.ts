@@ -1,6 +1,14 @@
 import * as websocket from "ws";
-import { GameEvent, PlayerId, IPlayerJoinEvent } from "@monopoly-money/game-state";
-import { generateTimeBasedId } from "./utils";
+import {
+  GameEvent,
+  PlayerId,
+  IPlayerJoinEvent,
+  IPlayerBankerStatusChangeEvent,
+  defaultGameState,
+  IGameState,
+  calculateGameState
+} from "@monopoly-money/game-state";
+import { generateTimeBasedId, generateRandomId } from "./utils";
 import { DateTime } from "luxon";
 import { INewEventMessage, IInitialEventArrayMessage } from "../api/dto";
 
@@ -8,8 +16,8 @@ export default class Game {
   private open: boolean = true; // Whether the game is open to people joining
   private events: GameEvent[] = []; // Events in this game
   private subscribedWebSockets: websocket[] = []; // Players listening to events
-  private bankers: PlayerId[] = []; // Ids of those players who have banker privileges
   private userTokenToPlayers: Record<string, PlayerId> = {}; // A mapping of ids only known by a user to match to a player
+  private gameState: IGameState = defaultGameState;
 
   private deleteInstance: () => void; // TODO On game delete (fire out events saying game has ended)
 
@@ -26,7 +34,8 @@ export default class Game {
   // Check if a userToken is allowed to make banker actions in a game
   public isUserABanker = (userToken: string) => {
     const playerId = this.userTokenToPlayers[userToken];
-    return this.bankers.indexOf(playerId) !== -1;
+    const player = this.gameState.players.find((p) => p.playerId === playerId);
+    return player !== undefined && player.banker;
   };
 
   public getPlayerId = (userToken: string) => this.userTokenToPlayers[userToken];
@@ -35,7 +44,7 @@ export default class Game {
   public addPlayer = (name: string) => {
     // Identify id
     const playerId = generateTimeBasedId();
-    const userToken = generateTimeBasedId();
+    const userToken = generateRandomId();
 
     // Add the player
     const event: IPlayerJoinEvent = {
@@ -54,15 +63,19 @@ export default class Game {
   };
 
   // Set a player as a banker
-  public setPlayerBankerStatus = (playerId: string, isBanker: boolean) => {
-    if (isBanker && this.bankers.indexOf(playerId) === -1) {
-      // If we are setting the player as banker and they are not already in the list, add them
-      this.bankers.push(playerId);
-    } else if (!isBanker && this.bankers.indexOf(playerId) !== -1) {
-      // If we are setting the player as not a banker and they are in the list, remove them
-      const currentIndex = this.bankers.indexOf(playerId);
-      this.bankers.splice(currentIndex, 1);
-    }
+  public setPlayerBankerStatus = (
+    playerId: string,
+    isBanker: boolean,
+    actionedByPlayerId: string
+  ) => {
+    const event: IPlayerBankerStatusChangeEvent = {
+      type: "playerBankerStatusChange",
+      time: DateTime.local().toISO(),
+      actionedBy: actionedByPlayerId,
+      playerId,
+      isBanker
+    };
+    this.pushEvent(event);
   };
 
   // Subscribe a websocket to get any event updates
@@ -87,11 +100,13 @@ export default class Game {
     // Add event
     this.events.push(event);
 
-    // TODO Calculate new state and store in game for easy access
+    // Calculate next state
+    this.gameState = calculateGameState([event], this.gameState);
 
     // Construct message
     const outgoingMessage: INewEventMessage = { type: "newEvent", event };
 
+    // Send the event to all listening websockets
     Object.values(this.subscribedWebSockets).forEach((ws) => {
       ws.send(JSON.stringify(outgoingMessage));
     });

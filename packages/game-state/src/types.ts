@@ -2,7 +2,7 @@ export type PlayerId = string;
 
 // Game state
 
-interface IGameStatePlayer {
+export interface IGameStatePlayer {
   playerId: PlayerId;
   name: string;
   banker: boolean;

@@ -1,4 +1,4 @@
-import { v1 as uuidv1 } from "uuid";
+import { v1 as uuidv1, v4 as uuidv4 } from "uuid";
 
 const createGameId = () => {
   const min = 100000;
@@ -16,3 +16,4 @@ export const createUniqueGameId = (existingGameIds: string[]) => {
 };
 
 export const generateTimeBasedId = () => uuidv1();
+export const generateRandomId = () => uuidv4();

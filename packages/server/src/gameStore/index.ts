@@ -15,7 +15,7 @@ class GameStore {
     // Add the user that created this game and set them as a banker
     const game = this.games[gameId];
     const { userToken, playerId } = game.addPlayer(initialBankersName);
-    game.setPlayerBankerStatus(playerId, true);
+    game.setPlayerBankerStatus(playerId, true, playerId);
 
     // Return the new game id and the users userToken
     return { gameId, userToken, playerId };

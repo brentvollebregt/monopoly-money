@@ -1,4 +1,9 @@
-import { GameEvent, IGameState } from "@monopoly-money/game-state";
+import {
+  GameEvent,
+  IGameState,
+  defaultGameState,
+  calculateGameState
+} from "@monopoly-money/game-state";
 import config from "../config";
 import {
   IAuthMessage,
@@ -10,16 +15,6 @@ export interface IGameHandlerState {
   events: GameEvent[];
   isBanker: boolean;
 }
-
-const defaultGameState: IGameState = {
-  players: [],
-  freeParkingBalance: 0,
-  open: true
-};
-
-const calculateState = (events: GameEvent[], currentState: IGameState): IGameState => {
-  return currentState;
-};
 
 class GameHandler {
   public gameId: string;
@@ -75,10 +70,10 @@ class GameHandler {
 
     if (incomingMessage.type === "initialEventArray") {
       this.events = incomingMessage.events;
-      this.gameState = calculateState(this.events, this.gameState);
+      this.gameState = calculateGameState(this.events, this.gameState);
     } else if (incomingMessage.type === "newEvent") {
       this.events.push(incomingMessage.event);
-      this.gameState = calculateState([incomingMessage.event], this.gameState);
+      this.gameState = calculateGameState([incomingMessage.event], this.gameState);
     }
   }
 

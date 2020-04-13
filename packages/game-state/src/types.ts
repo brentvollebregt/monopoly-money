@@ -1,4 +1,5 @@
 export type PlayerId = string;
+export type GameEntity = "bank" | "freeParking" | PlayerId;
 
 // Game state
 
@@ -27,7 +28,7 @@ export type GameEvent =
 
 export interface IGameEvent {
   time: string; // ISO string
-  actionedBy: "system" | "banker" | PlayerId;
+  actionedBy: PlayerId;
 }
 
 export interface IPlayerJoinEvent extends IGameEvent {
@@ -55,8 +56,8 @@ export interface IPlayerBankerStatusChangeEvent extends IGameEvent {
 
 export interface ITransactionEvent extends IGameEvent {
   type: "transaction";
-  from: "banker" | "freeParking" | PlayerId;
-  to: "banker" | "freeParking" | PlayerId;
+  from: GameEntity;
+  to: GameEntity;
   amount: number;
 }
 

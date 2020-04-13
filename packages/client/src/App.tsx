@@ -81,7 +81,14 @@ const App: React.FC = () => {
     [routePaths.funds]: inGame ? () => wrapRoute(routePaths.funds, <Funds />) : () => <NotFound />,
     [routePaths.bank]:
       inGame && isBanker
-        ? () => wrapRoute(routePaths.bank, <Bank players={gameState?.players ?? []} />)
+        ? () =>
+            wrapRoute(
+              routePaths.bank,
+              <Bank
+                players={gameState?.players ?? []}
+                proposeTransaction={gameState?.actions.proposeTransaction ?? ((a, b, c) => {})}
+              />
+            )
         : () => <NotFound />,
     [routePaths.history]: inGame
       ? () => wrapRoute(routePaths.history, <History events={gameState?.events ?? []} />)

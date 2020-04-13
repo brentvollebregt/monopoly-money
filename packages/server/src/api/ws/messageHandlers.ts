@@ -63,6 +63,8 @@ export const proposeEvent: MessageHandler = (ws, userData, message) => {
     const isPlayerBanker = isBanker(userData);
     const event = message.event;
 
+    console.log(event);
+
     switch (
       event.type
       // TODO handle event (check for validity)

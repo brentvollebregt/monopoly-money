@@ -58,6 +58,7 @@ export const calculateGameState = (events: GameEvent[], currentState: IGameState
       case "transaction":
         const sourcePlayer = state.players.find((p) => p.playerId === event.from);
         const destinationPlayer = state.players.find((p) => p.playerId === event.to);
+        // TODO if event.from or event.to equals "freeParking" or "bank"
         if (sourcePlayer === undefined || destinationPlayer === undefined) {
           throw new Error("Unable to find source or destination player");
         }

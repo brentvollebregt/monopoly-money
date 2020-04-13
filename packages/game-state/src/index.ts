@@ -1,6 +1,7 @@
 import { defaultGameState, calculateGameState } from "./state";
 import {
   PlayerId,
+  GameEntity,
   IGameStatePlayer,
   IGameState,
   GameEvent,
@@ -16,6 +17,7 @@ export {
   defaultGameState,
   calculateGameState,
   PlayerId,
+  GameEntity,
   IGameStatePlayer,
   IGameState,
   GameEvent,

@@ -90,7 +90,7 @@ export const calculateGameState = (events: GameEvent[], currentState: IGameState
               }
             ],
             freeParkingBalance:
-              event.from === "freeParking"
+              event.to === "freeParking"
                 ? state.freeParkingBalance + event.amount
                 : state.freeParkingBalance
           };

@@ -5,7 +5,7 @@ import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 interface ISendMoneyProps {
   balance: number;
   playerId: string;
-  recipientPlayer: IGameStatePlayer;
+  recipient: "freeParking" | IGameStatePlayer;
   proposeTransaction: (from: GameEntity, to: GameEntity, amount: number) => void;
   onClose: () => void;
 }
@@ -13,7 +13,7 @@ interface ISendMoneyProps {
 const SendMoney: React.FC<ISendMoneyProps> = ({
   balance,
   playerId,
-  recipientPlayer,
+  recipient,
   proposeTransaction,
   onClose
 }) => {
@@ -27,7 +27,11 @@ const SendMoney: React.FC<ISendMoneyProps> = ({
       setSubmitError(`You do not have enough money ($${balance})`);
     } else {
       setSubmitError(null);
-      proposeTransaction(playerId, recipientPlayer.playerId, parseInt(amount, 10));
+      proposeTransaction(
+        playerId,
+        recipient === "freeParking" ? "freeParking" : recipient.playerId,
+        parseInt(amount, 10)
+      );
       onClose();
     }
   };
@@ -46,7 +50,9 @@ const SendMoney: React.FC<ISendMoneyProps> = ({
   return (
     <Modal show={true} onHide={cancel} size="lg" centered className="send-money-modal">
       <Modal.Header closeButton>
-        <Modal.Title>Transfer Funds to {recipientPlayer.name}</Modal.Title>
+        <Modal.Title>
+          Transfer Funds to {recipient === "freeParking" ? "Free Parking" : recipient.name}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <InputGroup>

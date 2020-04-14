@@ -21,7 +21,7 @@ const Funds: React.FC<IFundsProps> = ({
   freeParkingBalance,
   proposeTransaction
 }) => {
-  const [sendFundsTo, setSendFundsTo] = useState<string | null>(null);
+  const [sendFundsTo, setSendFundsTo] = useState<GameEntity | null>(null);
 
   const me = players.find((p) => p.playerId === playerId);
   const isBanker = me?.banker ?? false;
@@ -32,7 +32,11 @@ const Funds: React.FC<IFundsProps> = ({
         <SendMoneyModal
           balance={me?.balance ?? 0}
           playerId={playerId}
-          recipientPlayer={players.find((p) => p.playerId === sendFundsTo)!}
+          recipient={
+            sendFundsTo === "freeParking"
+              ? "freeParking"
+              : players.find((p) => p.playerId === sendFundsTo)!
+          }
           proposeTransaction={proposeTransaction}
           onClose={() => setSendFundsTo(null)}
         />
@@ -82,7 +86,17 @@ const Funds: React.FC<IFundsProps> = ({
         </div>
 
         <Card className="mt-1 text-center">
-          <Card.Body className="p-3">Free Parking: ${freeParkingBalance}</Card.Body>
+          <Card.Body className="p-3">
+            <div>Free Parking: ${freeParkingBalance}</div>
+            <Button
+              size="sm"
+              variant="outline-dark"
+              className="mt-2"
+              onClick={() => setSendFundsTo("freeParking")}
+            >
+              Send Money
+            </Button>
+          </Card.Body>
         </Card>
       </div>
     </>

@@ -1,14 +1,20 @@
 import React from "react";
 import useMetaTags from "react-metatags-hook";
 import BannerImage from "../img/banner.png";
-import config from "../config";
+import { pageMeta, siteUrl } from "../constants";
+
+export interface IPageMeta {
+  titlePrefix: string;
+  description?: string;
+  index: boolean;
+}
 
 interface IProps extends React.PropsWithChildren<{}> {
   route: string;
 }
 
 const MetaTags: React.FC<IProps> = ({ route, children }) => {
-  const configPageMeta = config.pageMeta[route];
+  const configPageMeta = pageMeta[route];
   const title = `${configPageMeta.titlePrefix} Monopoly Money`;
 
   useMetaTags({
@@ -23,13 +29,13 @@ const MetaTags: React.FC<IProps> = ({ route, children }) => {
       }
     ],
     links: [
-      { rel: "canonical", href: config.siteUrl + route },
+      { rel: "canonical", href: siteUrl + route },
       { rel: "icon", type: "image/ico", href: "/favicon.ico" },
       { rel: "apple-touch-icon", type: "image/png", href: "/logo.png" }
     ],
     openGraph: {
       title,
-      image: config.siteUrl + BannerImage,
+      image: siteUrl + BannerImage,
       site_name: "Monopoly Money"
     }
   });

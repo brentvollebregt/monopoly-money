@@ -16,11 +16,6 @@ export interface IJoinGameResponse {
   playerId: string; // Tell the player who they are (not required when making calls)
 }
 
-export interface IDoesGameExistRequest {
-  gameId: string;
-  userToken: string;
-}
-
 // Websocket Incoming Message Types (server <= client)
 
 export type IncomingMessage = IAuthMessage | IProposeEventMessage;

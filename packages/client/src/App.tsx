@@ -26,9 +26,6 @@ const App: React.FC = () => {
   const gameState = useGameHandler(gameHandlerAuthInfo);
   const path = usePath();
 
-  const inGame = gameState !== null;
-  const isBanker = gameState !== null && gameState.isBanker;
-
   // If the user has gone to a non-game route, clear the game state
   useEffect(() => {
     if (path === routePaths.home || path === routePaths.join || path === routePaths.newGame) {
@@ -38,10 +35,10 @@ const App: React.FC = () => {
 
   // Go to the funds page after a game has been setup
   useEffect(() => {
-    if (inGame) {
+    if (gameState !== null) {
       navigate("/funds");
     }
-  }, [inGame]);
+  }, [gameState]);
 
   const onGameSetup = (gameId: string, userToken: string, playerId: string) => {
     // Save current game for potential later use
@@ -78,30 +75,34 @@ const App: React.FC = () => {
       wrapRoute(routePaths.join, <Join newGame={false} onGameSetup={onGameSetup} />),
     [routePaths.newGame]: () =>
       wrapRoute(routePaths.newGame, <Join newGame={true} onGameSetup={onGameSetup} />),
-    [routePaths.funds]: inGame ? () => wrapRoute(routePaths.funds, <Funds />) : () => <NotFound />,
+    [routePaths.funds]:
+      gameState !== null ? () => wrapRoute(routePaths.funds, <Funds />) : () => <NotFound />,
     [routePaths.bank]:
-      inGame && isBanker
+      gameState !== null && gameState.isBanker
         ? () =>
             wrapRoute(
               routePaths.bank,
               <Bank
-                players={gameState?.players ?? []}
-                proposeTransaction={gameState?.actions.proposeTransaction ?? ((a, b, c) => {})}
+                players={gameState.players}
+                proposeTransaction={gameState.actions.proposeTransaction}
               />
             )
         : () => <NotFound />,
-    [routePaths.history]: inGame
-      ? () => wrapRoute(routePaths.history, <History events={gameState?.events ?? []} />)
-      : () => <NotFound />,
+    [routePaths.history]:
+      gameState !== null
+        ? () => wrapRoute(routePaths.history, <History events={gameState.events} />)
+        : () => <NotFound />,
     [routePaths.settings]:
-      inGame && isBanker ? () => wrapRoute(routePaths.settings, <Settings />) : () => <NotFound />
+      gameState !== null && gameState.isBanker
+        ? () => wrapRoute(routePaths.settings, <Settings />)
+        : () => <NotFound />
   };
 
   const routeResult = useRoutes(routes);
 
   return (
     <>
-      <Navigation inGame={inGame} isBanker={isBanker} />
+      <Navigation inGame={gameState !== null} isBanker={gameState?.isBanker ?? false} />
       <div className="my-3">{routeResult || <NotFound />}</div>
     </>
   );

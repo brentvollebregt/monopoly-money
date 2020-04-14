@@ -21,11 +21,6 @@ export interface IDoesGameExistRequest {
   userToken: string;
 }
 
-export interface IGameStatusSummary {
-  createdTime: string; // ISO DateTime string
-  players: Record<string, number>; // Players and balances
-}
-
 // Websocket Incoming Message Types (server <= client)
 
 export type IncomingMessage = IAuthMessage | IProposeEventMessage;

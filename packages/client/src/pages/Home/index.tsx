@@ -38,25 +38,28 @@ const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
       <div className="mt-4">
         <h2>Your Active Games</h2>
         {storedGames.length > 0 ? (
-          storedGames.map(({ gameId, userToken, playerId, status }) => (
+          storedGames.map(({ gameId, userToken, playerId, status, time }) => (
             <Card key={gameId} className="mb-1">
               <Card.Body className="p-2">
                 <div className="text-left">
                   Game {gameId}
                   <small style={{ float: "right" }}>
-                    (
-                    {status === null
-                      ? ""
-                      : DateTime.fromISO(status.createdTime).toFormat("DD h:mm a")}
-                    )
+                    {DateTime.fromISO(time).toFormat("DD h:mm a")}
                   </small>
                 </div>
                 <div>
-                  {["Brent: $1000000", "Robert: $5550000", "Rob: $480000"].map((player) => (
-                    <Badge key={player} variant="success" className="mr-1">
-                      {player}
+                  {status?.players.map((player) => (
+                    <Badge
+                      key={player.playerId}
+                      variant={player.banker ? "info" : "success"}
+                      className="mr-1"
+                    >
+                      {player.name}: ${player.balance}
                     </Badge>
                   ))}
+                  {status !== null && (
+                    <Badge variant="warning">Free Parking: ${status.freeParkingBalance}</Badge>
+                  )}
                 </div>
                 <Button
                   block

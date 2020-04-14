@@ -2,9 +2,9 @@ import config from "../config";
 import {
   ICreateGameRequest,
   IJoinGameRequest,
-  IJoinGameResponse,
-  IGameStatusSummary
+  IJoinGameResponse
 } from "@monopoly-money/server/build/api/dto";
+import { IGameState } from "@monopoly-money/game-state";
 
 export const createGame = (name: string): Promise<IJoinGameResponse> => {
   return fetch(`${config.api.root}/api/game`, {
@@ -48,7 +48,7 @@ export const joinGame = async (
 export const getGameStatus = async (
   gameId: string,
   userToken: string
-): Promise<IGameStatusSummary | "DoesNotExist"> => {
+): Promise<IGameState | "DoesNotExist"> => {
   const response = await fetch(`${config.api.root}/api/game/${gameId}`, {
     method: "GET",
     headers: {
@@ -57,7 +57,7 @@ export const getGameStatus = async (
     }
   });
   if (response.status === 200) {
-    return response.json() as Promise<IGameStatusSummary>;
+    return response.json() as Promise<IGameState>;
   } else if (response.status === 404) {
     return Promise.resolve("DoesNotExist") as Promise<"DoesNotExist">;
   } else {

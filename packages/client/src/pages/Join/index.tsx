@@ -13,8 +13,8 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
 
   const [gameId, setGameId] = useState("");
   const [name, setName] = useState("");
-  const [gameError, setGameError] = useState(false);
-  const [nameError, setNameError] = useState(false);
+  const [gameError, setGameError] = useState<string | null>(null);
+  const [nameError, setNameError] = useState<string | null>(null);
 
   useTitle(`${title} - Monopoly Money`);
 
@@ -30,9 +30,11 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
     if (newGame) {
       // Validity check
       if (name === "") {
-        setNameError(true);
+        setNameError("Please provide your name");
         return;
       }
+      setNameError(null);
+
       // Create game
       createGame(name)
         .then((result) => {
@@ -42,20 +44,25 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
     } else {
       // Validity check
       if (gameId === "") {
-        setGameError(true);
+        setGameError("Please provide the game Id");
         return;
+      }
+      {
+        setGameError(null);
       }
       if (name === "") {
-        setNameError(true);
+        setNameError("Please provide your name");
         return;
       }
+      setNameError(null);
+
       // Join game
       joinGame(gameId, name)
         .then((result) => {
           if (result === "DoesNotExist") {
-            console.warn("Does not Exist"); // TODO
+            setGameError("That game does not exist");
           } else if (result === "NotOpen") {
-            console.warn("Not Open"); // TODO
+            setGameError("That game is not open. Ask the banker to open the game.");
           } else {
             onGameSetup(result.gameId, result.userToken, result.playerId);
           }
@@ -72,18 +79,14 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
         <Form.Group>
           <Form.Label>Game Id</Form.Label>
           <Form.Control placeholder="XXXXXX" value={gameId} onChange={onGameIdChange} />
-          {gameError && (
-            <Form.Text style={{ color: "var(--danger)" }}>That game does not exist</Form.Text>
-          )}
+          <Form.Text style={{ color: "var(--danger)" }}>{gameError}</Form.Text>
         </Form.Group>
       )}
 
       <Form.Group>
-        <Form.Label>Name</Form.Label>
+        <Form.Label>Your Name</Form.Label>
         <Form.Control placeholder="Name" value={name} onChange={onNameChange} />
-        {nameError && (
-          <Form.Text style={{ color: "var(--danger)" }}>Please provide a name</Form.Text>
-        )}
+        <Form.Text style={{ color: "var(--danger)" }}>{nameError}</Form.Text>
       </Form.Group>
 
       <Button block variant="primary" onClick={onSubmit}>

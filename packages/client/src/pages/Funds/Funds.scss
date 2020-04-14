@@ -5,3 +5,12 @@
     grid-gap: 0.25rem;
   }
 }
+
+.send-money-modal {
+  $dollar-sign-width: 25px;
+
+  .submit-button {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
+}

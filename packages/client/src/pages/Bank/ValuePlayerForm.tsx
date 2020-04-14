@@ -48,7 +48,6 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
         <FormControl
           type="number"
           id={`${identifier}-value`}
-          placeholder="10000"
           value={amount}
           onChange={onAmountUpdate}
           className="with-dollar-sign-input-icon"

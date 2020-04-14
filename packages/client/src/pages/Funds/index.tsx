@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import "./Funds.scss";
 import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
+import SendMoneyModal from "./SendMoneyModal";
 
 interface IFundsProps {
   gameId: string;
@@ -20,47 +21,67 @@ const Funds: React.FC<IFundsProps> = ({
   freeParkingBalance,
   proposeTransaction
 }) => {
+  const [sendFundsTo, setSendFundsTo] = useState<string | null>(null);
+
   const me = players.find((p) => p.playerId === playerId);
   const isBanker = me?.banker ?? false;
 
   return (
-    <div className="funds">
-      {isGameOpen && (
-        <div className="text-center">
-          <h1>{gameId}</h1>
-          {isBanker && (
-            <small className="text-muted">
-              You can hide this by closing the game in the settings.
-            </small>
-          )}
-          <hr />
-        </div>
+    <>
+      {sendFundsTo !== null && (
+        <SendMoneyModal
+          balance={me?.balance ?? 0}
+          playerId={playerId}
+          recipientPlayer={players.find((p) => p.playerId === sendFundsTo)!}
+          proposeTransaction={proposeTransaction}
+          onClose={() => setSendFundsTo(null)}
+        />
       )}
 
-      <Card className="mb-1 text-center">
-        <Card.Body className="p-3">My Balance: ${me?.balance}</Card.Body>
-      </Card>
+      <div className="funds">
+        {isGameOpen && (
+          <div className="text-center">
+            <h1>{gameId}</h1>
+            {isBanker && (
+              <small className="text-muted">
+                You can hide this by closing the game in the settings.
+              </small>
+            )}
+            <hr />
+          </div>
+        )}
 
-      <div className="balance-grid">
-        {players
-          .filter((p) => p.playerId !== playerId)
-          .map(({ name, balance }) => (
-            <Card key={name} className="text-center">
-              <Card.Body className="p-3">
-                <div>{name}</div>
-                <div>${balance}</div>
-                <Button size="sm" variant="outline-dark" className="mt-2">
-                  Send Money
-                </Button>
-              </Card.Body>
-            </Card>
-          ))}
+        <Card className="mb-1 text-center">
+          <Card.Body className="p-3">My Balance: ${me?.balance}</Card.Body>
+        </Card>
+
+        <div className="balance-grid">
+          {players
+            .filter((p) => p.playerId !== playerId)
+            .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
+            .map((player) => (
+              <Card key={player.name} className="text-center">
+                <Card.Body className="p-3">
+                  <div>{player.name}</div>
+                  <div>${player.balance}</div>
+                  <Button
+                    size="sm"
+                    variant="outline-dark"
+                    className="mt-2"
+                    onClick={() => setSendFundsTo(player.playerId)}
+                  >
+                    Send Money
+                  </Button>
+                </Card.Body>
+              </Card>
+            ))}
+        </div>
+
+        <Card className="mt-1 text-center">
+          <Card.Body className="p-3">Free Parking: ${freeParkingBalance}</Card.Body>
+        </Card>
       </div>
-
-      <Card className="mt-1 text-center">
-        <Card.Body className="p-3">Free Parking: ${freeParkingBalance}</Card.Body>
-      </Card>
-    </div>
+    </>
   );
 };
 

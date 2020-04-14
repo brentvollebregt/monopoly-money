@@ -41,3 +41,4 @@ _TODO_
 - isAllowedToCreateEvent for security checks
 - Socket addEventListener
 - Reload active games when going back home
+- Put \$ in send money modal

@@ -21,13 +21,14 @@ const wrapRoute = (route: string, child: JSX.Element) => (
 );
 
 const App: React.FC = () => {
-  const { storedGames, storeGame } = useStoredGames();
+  const { storedGames, storeGame } = useStoredGames(); // TODO Copy this and put it in Home
   const [gameHandlerAuthInfo, setGameHandlerAuthInfo] = useState<IGameHandlerAuthInfo | null>(null);
   const gameState = useGameHandler(gameHandlerAuthInfo);
   const path = usePath();
 
   // If the user has gone to a non-game route, clear the game state
   useEffect(() => {
+    console.log({ path });
     if (path === routePaths.home || path === routePaths.join || path === routePaths.newGame) {
       onGameDestroy();
     }
@@ -35,7 +36,10 @@ const App: React.FC = () => {
 
   // Go to the funds page after a game has been setup
   useEffect(() => {
-    if (gameState !== null) {
+    if (
+      gameState !== null &&
+      (path === routePaths.home || path === routePaths.join || path === routePaths.newGame)
+    ) {
       navigate("/funds");
     }
   }, [gameState]);
@@ -76,7 +80,20 @@ const App: React.FC = () => {
     [routePaths.newGame]: () =>
       wrapRoute(routePaths.newGame, <Join newGame={true} onGameSetup={onGameSetup} />),
     [routePaths.funds]:
-      gameState !== null ? () => wrapRoute(routePaths.funds, <Funds />) : () => <NotFound />,
+      gameState !== null
+        ? () =>
+            wrapRoute(
+              routePaths.funds,
+              <Funds
+                gameId={gameState.gameId}
+                playerId={gameState.playerId}
+                isGameOpen={gameState.open}
+                players={gameState.players}
+                freeParkingBalance={gameState.freeParkingBalance}
+                proposeTransaction={gameState.actions.proposeTransaction}
+              />
+            )
+        : () => <NotFound />,
     [routePaths.bank]:
       gameState !== null && gameState.isBanker
         ? () =>

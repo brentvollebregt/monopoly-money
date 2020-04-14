@@ -9,6 +9,8 @@ export interface IGameHandlerAuthInfo {
 }
 
 export interface IGameHandlerState extends IGameState {
+  gameId: string;
+  playerId: string;
   isBanker: boolean;
   events: GameEvent[];
   actions: {
@@ -26,6 +28,7 @@ const useGameHandler = (authInfo: IGameHandlerAuthInfo | null): IGameHandlerStat
   // Create / destroy the game handler when new new auth is provided
   useEffect(() => {
     if (authInfo === null) {
+      // TODO && gameHandler !== null => stop the socket
       setGameHandler(null);
     } else {
       setGameHandler(
@@ -38,6 +41,8 @@ const useGameHandler = (authInfo: IGameHandlerAuthInfo | null): IGameHandlerStat
     ? null
     : {
         ...gameHandler.getState(),
+        gameId: gameHandler.gameId,
+        playerId: gameHandler.playerId,
         isBanker: gameHandler.amIABanker(),
         events: gameHandler.getEvents(),
         actions: {

@@ -52,7 +52,11 @@ const Funds: React.FC<IFundsProps> = ({
         )}
 
         <Card className="mb-1 text-center">
-          <Card.Body className="p-3">My Balance: ${me?.balance}</Card.Body>
+          {me !== undefined && (
+            <Card.Body className="p-3">
+              {me.name}: ${me.balance}
+            </Card.Body>
+          )}
         </Card>
 
         <div className="balance-grid">

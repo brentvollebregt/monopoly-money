@@ -21,7 +21,7 @@ const wrapRoute = (route: string, child: JSX.Element) => (
 );
 
 const App: React.FC = () => {
-  const { storedGames, storeGame } = useStoredGames(); // TODO Copy this and put it in Home
+  const { storeGame } = useStoredGames();
   const [gameHandlerAuthInfo, setGameHandlerAuthInfo] = useState<IGameHandlerAuthInfo | null>(null);
   const gameState = useGameHandler(gameHandlerAuthInfo);
   const path = usePath();
@@ -73,8 +73,7 @@ const App: React.FC = () => {
   };
 
   const routes = {
-    [routePaths.home]: () =>
-      wrapRoute(routePaths.home, <Home storedGames={storedGames} onGameSetup={onGameSetup} />),
+    [routePaths.home]: () => wrapRoute(routePaths.home, <Home onGameSetup={onGameSetup} />),
     [routePaths.join]: () =>
       wrapRoute(routePaths.join, <Join newGame={false} onGameSetup={onGameSetup} />),
     [routePaths.newGame]: () =>

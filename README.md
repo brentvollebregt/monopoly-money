@@ -37,8 +37,10 @@ _TODO_
 ## 🚧 TODO
 
 - Close ws when going home
-- Game status should return the game object
-- isAllowedToCreateEvent for security checks
 - Socket addEventListener
 - Reload active games when going back home
 - Put \$ in send money modal
+
+## Bugs 🐞
+
+- When clicking the logo to go home when you're in a game, you will go / => /funds => /

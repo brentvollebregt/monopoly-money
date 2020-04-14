@@ -2,17 +2,17 @@ import React from "react";
 import bannerImage from "../../img/banner.png";
 import { Button, Card, Badge } from "react-bootstrap";
 import { navigate, useTitle } from "hookrouter";
-import { IStoredGame } from "../../hooks/useStoredGames";
+import useStoredGames, { IStoredGame } from "../../hooks/useStoredGames";
 import "./Home.scss";
 import { DateTime } from "luxon";
 
 interface IHomeProps {
-  storedGames: IStoredGame[];
   onGameSetup: (gameId: string, userToken: string, playerId: string) => void;
 }
 
-const Home: React.FC<IHomeProps> = ({ storedGames, onGameSetup }) => {
+const Home: React.FC<IHomeProps> = ({ onGameSetup }) => {
   useTitle("Monopoly Money");
+  const { storedGames } = useStoredGames();
 
   const newGame = () => navigate("/new-game");
   const joinGame = () => navigate("/join");

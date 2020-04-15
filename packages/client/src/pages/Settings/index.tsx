@@ -35,7 +35,7 @@ const Settings: React.FC = () => {
           {players.map(({ name, balance, playerId }) => (
             <tr key={playerId}>
               <td>{name}</td>
-              <td>{balance}</td>
+              <td>${balance}</td>
               <td>
                 <Button variant="outline-secondary" size="sm" title="Rename">
                   <span role="img" aria-label="Rename">

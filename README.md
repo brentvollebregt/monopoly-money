@@ -36,6 +36,8 @@ _TODO_
 
 ## 🚧 TODO
 
+- Settings screen
+- Settings buttons
 - Close ws when going home
 - Socket addEventListener
 - Reload active games when going back home

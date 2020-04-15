@@ -28,7 +28,6 @@ const App: React.FC = () => {
 
   // If the user has gone to a non-game route, clear the game state
   useEffect(() => {
-    console.log({ path });
     if (path === routePaths.home || path === routePaths.join || path === routePaths.newGame) {
       onGameDestroy();
     }

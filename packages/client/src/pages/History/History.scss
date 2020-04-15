@@ -5,10 +5,6 @@
     display: grid;
     grid-template-columns: 8px 1fr;
 
-    .bar {
-      background: $cyan; // TODO Allow classes to set other colours like yellow, green, purple... (https://getbootstrap.com/docs/4.0/getting-started/theming/#all-colors)
-    }
-
     .event-details {
       padding-left: 8px;
     }

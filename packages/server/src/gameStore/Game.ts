@@ -13,7 +13,6 @@ import { DateTime } from "luxon";
 import { INewEventMessage, IInitialEventArrayMessage } from "../api/dto";
 
 export default class Game {
-  private open: boolean = true; // Whether the game is open to people joining
   private events: GameEvent[] = []; // Events in this game
   private subscribedWebSockets: websocket[] = []; // Players listening to events
   private userTokenToPlayers: Record<string, PlayerId> = {}; // A mapping of ids only known by a user to match to a player
@@ -26,7 +25,7 @@ export default class Game {
   }
 
   // Check if a game is open
-  public isGameOpen = () => this.open;
+  public isGameOpen = () => this.gameState.open;
 
   // Check if a userToken is in a game
   public isUserInGame = (userToken: string) => this.userTokenToPlayers.hasOwnProperty(userToken);

@@ -109,7 +109,18 @@ const App: React.FC = () => {
         : () => <NotFound />,
     [routePaths.settings]:
       gameState !== null && gameState.isBanker
-        ? () => wrapRoute(routePaths.settings, <Settings />)
+        ? () =>
+            wrapRoute(
+              routePaths.settings,
+              <Settings
+                isGameOpen={gameState.open}
+                players={gameState.players}
+                proposePlayerNameChange={gameState.actions.proposePlayerNameChange}
+                proposePlayerDelete={gameState.actions.proposePlayerDelete}
+                proposeGameOpenStateChange={gameState.actions.proposeGameOpenStateChange}
+                proposeGameEnd={gameState.actions.proposeGameEnd}
+              />
+            )
         : () => <NotFound />
   };
 

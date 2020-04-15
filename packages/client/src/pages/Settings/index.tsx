@@ -1,26 +1,24 @@
 import React from "react";
 import { Button, Table } from "react-bootstrap";
+import { IGameStatePlayer } from "@monopoly-money/game-state";
 
-const Settings: React.FC = () => {
-  const isGameOpen = true;
-  const players = [
-    {
-      name: "Brent",
-      balance: 50000000,
-      playerId: "5hg43-5v34v345v-35v345v34-5v34"
-    },
-    {
-      name: "Robert",
-      balance: 52550000,
-      playerId: "5hg43-fdsftrge3-gerger-5v34"
-    },
-    {
-      name: "Bob",
-      balance: 1000000,
-      playerId: "5hg43-5v34v345v-fdsfsdfsd-534tfg434ct"
-    }
-  ];
+interface ISettingsProps {
+  isGameOpen: boolean;
+  players: IGameStatePlayer[];
+  proposePlayerNameChange: (playerId: string, name: string) => void;
+  proposePlayerDelete: (playerId: string) => void;
+  proposeGameOpenStateChange: (open: boolean) => void;
+  proposeGameEnd: () => void;
+}
 
+const Settings: React.FC<ISettingsProps> = ({
+  isGameOpen,
+  players,
+  proposePlayerNameChange,
+  proposePlayerDelete,
+  proposeGameOpenStateChange,
+  proposeGameEnd
+}) => {
   return (
     <div>
       <Table striped bordered hover size="sm">

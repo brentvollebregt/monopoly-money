@@ -15,6 +15,10 @@ export interface IGameHandlerState extends IGameState {
   events: GameEvent[];
   actions: {
     proposeTransaction: (from: GameEntity, to: GameEntity, amount: number) => void;
+    proposePlayerNameChange: (playerId: string, name: string) => void;
+    proposePlayerDelete: (playerId: string) => void;
+    proposeGameOpenStateChange: (open: boolean) => void;
+    proposeGameEnd: () => void;
   };
 }
 
@@ -46,7 +50,11 @@ const useGameHandler = (authInfo: IGameHandlerAuthInfo | null): IGameHandlerStat
         isBanker: gameHandler.amIABanker(),
         events: gameHandler.getEvents(),
         actions: {
-          proposeTransaction: gameHandler.proposeTransaction.bind(gameHandler)
+          proposeTransaction: gameHandler.proposeTransaction.bind(gameHandler),
+          proposePlayerNameChange: gameHandler.proposePlayerNameChange.bind(gameHandler),
+          proposePlayerDelete: gameHandler.proposePlayerDelete.bind(gameHandler),
+          proposeGameOpenStateChange: gameHandler.proposeGameOpenStateChange.bind(gameHandler),
+          proposeGameEnd: gameHandler.proposeGameEnd.bind(gameHandler)
         }
       };
 };

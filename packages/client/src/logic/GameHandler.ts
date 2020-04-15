@@ -4,7 +4,10 @@ import {
   defaultGameState,
   calculateGameState,
   GameEntity,
-  ITransactionEvent
+  ITransactionEvent,
+  IPlayerNameChangeEvent,
+  IPlayerDeleteEvent,
+  IGameOpenStateChangeEvent
 } from "@monopoly-money/game-state";
 import config from "../config";
 import {
@@ -80,7 +83,45 @@ class GameHandler {
     this.submitEvent(event);
   }
 
-  // TODO Actions to call submitEvent
+  // Rename a player
+  public proposePlayerNameChange(playerId: string, name: string) {
+    const event: IPlayerNameChangeEvent = {
+      time: "", // Will be filled in by the server
+      actionedBy: "", // Will be filled in by the server
+      type: "playerNameChange",
+      playerId,
+      name
+    };
+    this.submitEvent(event);
+  }
+
+  // Remove a player
+  public proposePlayerDelete(playerId: string) {
+    const event: IPlayerDeleteEvent = {
+      time: "", // Will be filled in by the server
+      actionedBy: "", // Will be filled in by the server
+      type: "playerDelete",
+      playerId
+    };
+    this.submitEvent(event);
+  }
+
+  // Open / close game
+  public proposeGameOpenStateChange(open: boolean) {
+    const event: IGameOpenStateChangeEvent = {
+      time: "", // Will be filled in by the server
+      actionedBy: "", // Will be filled in by the server
+      type: "gameOpenStateChange",
+      open
+    };
+    this.submitEvent(event);
+  }
+
+  // End game
+  public proposeGameEnd() {
+    // TODO
+    console.error("proposeGameEnd not implemented");
+  }
 
   // On messages from the server
   private onWebSocketMessage(event: MessageEvent) {

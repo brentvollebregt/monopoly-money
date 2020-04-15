@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
+import { useModal } from "react-modal-hook";
+import RenamePlayer from "./RenamePlayer";
+import DeletePlayer from "./DeletePlayer";
 
 interface ISettingsProps {
   isGameOpen: boolean;
@@ -19,6 +22,36 @@ const Settings: React.FC<ISettingsProps> = ({
   proposeGameOpenStateChange,
   proposeGameEnd
 }) => {
+  const [actioningPlayer, setActioningPlayer] = useState<IGameStatePlayer | null>(null);
+  const [showNameChangeModal, hideNameChangeModal] = useModal(
+    () => (
+      <>
+        {actioningPlayer !== null && (
+          <RenamePlayer
+            player={actioningPlayer}
+            proposePlayerNameChange={proposePlayerNameChange}
+            onClose={hideNameChangeModal}
+          />
+        )}
+      </>
+    ),
+    [actioningPlayer]
+  );
+  const [showDeletePlayerModal, hideDeletePlayerModal] = useModal(
+    () => (
+      <>
+        {actioningPlayer !== null && (
+          <DeletePlayer
+            player={actioningPlayer}
+            proposePlayerDelete={proposePlayerDelete}
+            onClose={hideDeletePlayerModal}
+          />
+        )}
+      </>
+    ),
+    [actioningPlayer]
+  );
+
   return (
     <div>
       <Table striped bordered hover size="sm">
@@ -30,17 +63,34 @@ const Settings: React.FC<ISettingsProps> = ({
           </tr>
         </thead>
         <tbody>
-          {players.map(({ name, balance, playerId }) => (
-            <tr key={playerId}>
-              <td>{name}</td>
-              <td>${balance}</td>
+          {players.map((player) => (
+            <tr key={player.playerId}>
+              <td>{player.name}</td>
+              <td>${player.balance}</td>
               <td>
-                <Button variant="outline-secondary" size="sm" title="Rename">
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  title="Rename"
+                  onClick={() => {
+                    setActioningPlayer(player);
+                    showNameChangeModal();
+                  }}
+                >
                   <span role="img" aria-label="Rename">
                     ✏️
                   </span>
                 </Button>
-                <Button variant="outline-danger" size="sm" title="Remove" className="ml-1">
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  title="Remove"
+                  className="ml-1"
+                  onClick={() => {
+                    setActioningPlayer(player);
+                    showDeletePlayerModal();
+                  }}
+                >
                   <span role="img" aria-label="Remove">
                     🗑️
                   </span>
@@ -51,11 +101,11 @@ const Settings: React.FC<ISettingsProps> = ({
         </tbody>
       </Table>
 
-      <Button block variant="primary">
+      <Button block variant="primary" onClick={() => proposeGameOpenStateChange(!isGameOpen)}>
         {isGameOpen ? "Close" : "Open"} Game To New Players
       </Button>
 
-      <Button block variant="danger">
+      <Button block variant="danger" onClick={() => proposeGameEnd()}>
         End Game
       </Button>
     </div>

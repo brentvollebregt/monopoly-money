@@ -5,8 +5,6 @@
   "dependencies": {
     "@monopoly-money/game-state": "*",
     "@monopoly-money/server": "*",
-    "@material-ui/core": "^4.5.1",
-    "@material-ui/icons": "^4.5.1",
     "@rehooks/local-storage": "^2.3.0",
     "@types/hookrouter": "^2.2.1",
     "@types/luxon": "^1.22.0",
@@ -22,6 +20,7 @@
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.9.0",
     "react-metatags-hook": "^1.1.2",
+    "react-modal-hook": "^3.0.0",
     "react-scripts": "^3.4.0",
     "typescript": "^3.8.3"
   },

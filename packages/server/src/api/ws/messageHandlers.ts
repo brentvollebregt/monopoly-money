@@ -60,6 +60,7 @@ export const proposeEvent: MessageHandler = (ws, { gameId, userToken }, message)
     const playerId = game.getPlayerId(userToken);
     const event = message.event;
 
+    // Authorization filtering
     switch (event.type) {
       case "transaction":
         if ((event.from === "bank" || event.from === "freeParking") && !isPlayerBanker) {
@@ -71,8 +72,19 @@ export const proposeEvent: MessageHandler = (ws, { gameId, userToken }, message)
         ) {
           return; // If a user is not a banker, they cannot send money from anyone but themselves
         }
-        game.addEvent(event, playerId);
-        return;
+        break;
+      case "playerNameChange":
+        if (!isPlayerBanker && playerId !== event.playerId) {
+          return; // Only a banker or the modified player can change their name
+        }
+        break;
+      case "playerDelete":
+        if (!isPlayerBanker && playerId !== event.playerId) {
+          return; // Only a banker or the player themselves can remove a player from the game
+        }
+        break;
     }
+
+    game.addEvent(event, playerId);
   }
 };

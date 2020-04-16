@@ -17,3 +17,5 @@ export const createUniqueGameId = (existingGameIds: string[]) => {
 
 export const generateTimeBasedId = () => uuidv1();
 export const generateRandomId = () => uuidv4();
+
+export const getCurrentTime = () => new Date().toISOString();

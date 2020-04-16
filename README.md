@@ -36,7 +36,6 @@ _TODO_
 
 ## 🚧 TODO
 
-- Sort out builds
 - Port to new modals
 - Handle a player being removed
 - Toasts on failures ( cogo-toast when a player is removed from a game )

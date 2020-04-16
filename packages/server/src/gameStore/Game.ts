@@ -8,8 +8,7 @@ import {
   IGameState,
   calculateGameState
 } from "@monopoly-money/game-state";
-import { generateTimeBasedId, generateRandomId } from "./utils";
-import { DateTime } from "luxon";
+import { generateTimeBasedId, generateRandomId, getCurrentTime } from "./utils";
 import { INewEventMessage, IInitialEventArrayMessage } from "../api/dto";
 
 export default class Game {
@@ -48,7 +47,7 @@ export default class Game {
     // Add the player
     const event: IPlayerJoinEvent = {
       type: "playerJoin",
-      time: DateTime.local().toISO(),
+      time: getCurrentTime(),
       actionedBy: playerId,
       playerId,
       name
@@ -69,7 +68,7 @@ export default class Game {
   ) => {
     const event: IPlayerBankerStatusChangeEvent = {
       type: "playerBankerStatusChange",
-      time: DateTime.local().toISO(),
+      time: getCurrentTime(),
       actionedBy: actionedByPlayerId,
       playerId,
       isBanker
@@ -100,7 +99,7 @@ export default class Game {
     this.pushEvent({
       ...event,
       actionedBy,
-      time: DateTime.local().toISO()
+      time: getCurrentTime()
     });
 
     // TODO If this is a "playerDelete" => remove that players websocket (they would be notified that they were kicked by the event)

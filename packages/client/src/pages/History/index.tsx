@@ -117,7 +117,7 @@ const getEventDetails = (
       return {
         id: `${event.type + event.time}`,
         title: "Game Open State Change",
-        detail: `The game is now ${event.open ? "open" : "closed"} to new people joining`,
+        detail: `The game is now ${event.open ? "open" : "closed"} to new players`,
         colour: "blue"
       };
     }

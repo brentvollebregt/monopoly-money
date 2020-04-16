@@ -14,3 +14,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.remove-left-border-radius {
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
+
+.remove-right-border-radius {
+  border-bottom-right-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}

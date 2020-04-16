@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
 import { useModal } from "react-modal-hook";
-import RenamePlayer from "./RenamePlayer";
-import DeletePlayer from "./DeletePlayer";
+import RenamePlayerModal from "./RenamePlayerModal";
+import DeletePlayerModal from "./DeletePlayerModal";
+import EndGameConfirmDialog from "./EndGameConfirmDialog";
 
 interface ISettingsProps {
   isGameOpen: boolean;
@@ -27,7 +28,7 @@ const Settings: React.FC<ISettingsProps> = ({
     () => (
       <>
         {actioningPlayer !== null && (
-          <RenamePlayer
+          <RenamePlayerModal
             player={actioningPlayer}
             proposePlayerNameChange={proposePlayerNameChange}
             onClose={hideNameChangeModal}
@@ -41,12 +42,20 @@ const Settings: React.FC<ISettingsProps> = ({
     () => (
       <>
         {actioningPlayer !== null && (
-          <DeletePlayer
+          <DeletePlayerModal
             player={actioningPlayer}
             proposePlayerDelete={proposePlayerDelete}
             onClose={hideDeletePlayerModal}
           />
         )}
+      </>
+    ),
+    [actioningPlayer]
+  );
+  const [showEndGameConfirmModal, hideEndGameConfirmModal] = useModal(
+    () => (
+      <>
+        <EndGameConfirmDialog proposeGameEnd={proposeGameEnd} onClose={hideEndGameConfirmModal} />
       </>
     ),
     [actioningPlayer]
@@ -105,7 +114,7 @@ const Settings: React.FC<ISettingsProps> = ({
         {isGameOpen ? "Close" : "Open"} Game To New Players
       </Button>
 
-      <Button block variant="danger" onClick={() => proposeGameEnd()}>
+      <Button block variant="danger" onClick={() => showEndGameConfirmModal()}>
         End Game
       </Button>
     </div>

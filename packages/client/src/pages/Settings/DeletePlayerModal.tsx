@@ -2,13 +2,17 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
 
-interface IDeletePlayerProps {
+interface IDeletePlayerModalProps {
   player: IGameStatePlayer;
   proposePlayerDelete: (playerId: string) => void;
   onClose: () => void;
 }
 
-const DeletePlayer: React.FC<IDeletePlayerProps> = ({ player, proposePlayerDelete, onClose }) => {
+const DeletePlayerModal: React.FC<IDeletePlayerModalProps> = ({
+  player,
+  proposePlayerDelete,
+  onClose
+}) => {
   return (
     <Modal show={true} onHide={onClose} size="lg" centered>
       <Modal.Header closeButton>
@@ -36,4 +40,4 @@ const DeletePlayer: React.FC<IDeletePlayerProps> = ({ player, proposePlayerDelet
   );
 };
 
-export default DeletePlayer;
+export default DeletePlayerModal;

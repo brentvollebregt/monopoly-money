@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Card, Button, Modal, InputGroup, FormControl, Form } from "react-bootstrap";
+import { Button, Modal, InputGroup, FormControl, Form } from "react-bootstrap";
 import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 
-interface ISendMoneyProps {
+interface ISendMoneyModalProps {
   balance: number;
   playerId: string;
   recipient: "freeParking" | IGameStatePlayer;
@@ -10,7 +10,7 @@ interface ISendMoneyProps {
   onClose: () => void;
 }
 
-const SendMoney: React.FC<ISendMoneyProps> = ({
+const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
   balance,
   playerId,
   recipient,
@@ -60,7 +60,7 @@ const SendMoney: React.FC<ISendMoneyProps> = ({
             <InputGroup.Text>Amount</InputGroup.Text>
           </InputGroup.Prepend>
           <FormControl type="number" value={amount} onChange={onAmountUpdate} />
-          <Button variant="success" className="submit-button" onClick={submit}>
+          <Button variant="success" className="remove-left-border-radius" onClick={submit}>
             ✔️
           </Button>
         </InputGroup>
@@ -70,4 +70,4 @@ const SendMoney: React.FC<ISendMoneyProps> = ({
   );
 };
 
-export default SendMoney;
+export default SendMoneyModal;

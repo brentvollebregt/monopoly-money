@@ -99,6 +99,7 @@ const App: React.FC = () => {
               routePaths.bank,
               <Bank
                 players={gameState.players}
+                freeParkingBalance={gameState.freeParkingBalance}
                 proposeTransaction={gameState.actions.proposeTransaction}
               />
             )

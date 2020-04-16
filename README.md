@@ -36,8 +36,11 @@ _TODO_
 
 ## 🚧 TODO
 
-- Toasts on failures
+- Fix frontend build routes (could we reference them from constants?)
+- Sort out builds
+- Port to new modals
 - Handle a player being removed
+- Toasts on failures ( cogo-toast when a player is removed from a game )
 - Close ws when going home
 - Socket addEventListener
 - Reload active games when going back home

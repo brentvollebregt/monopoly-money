@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { InputGroup, Button, FormControl, DropdownButton, Dropdown } from "react-bootstrap";
-import "./Bank.scss";
-
-interface IPlayerSummary {
-  name: string;
-  balance: number;
-  playerId: string;
-}
+import { IGameStatePlayer } from "@monopoly-money/game-state";
 
 interface IValuePlayerFormProps {
   label: string;
   submitText: string;
-  players: IPlayerSummary[];
+  players: IGameStatePlayer[];
   onSubmit: (value: number, playerId: string) => void;
 }
 
@@ -23,7 +17,7 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
 }) => {
   const identifier = label.toLowerCase().replace(" ", "-");
   const [amount, setAmount] = useState("");
-  const [selectedPlayer, setSelectedPlayer] = useState<IPlayerSummary | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<IGameStatePlayer | null>(null);
 
   const valid = amount !== "" && selectedPlayer !== null;
 
@@ -44,7 +38,7 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
   return (
     <>
       <label htmlFor={`${identifier}-value`}>{label}</label>
-      <InputGroup className="mb-3">
+      <InputGroup>
         <FormControl
           type="number"
           id={`${identifier}-value`}

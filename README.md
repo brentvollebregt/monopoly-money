@@ -36,7 +36,6 @@ _TODO_
 
 ## 🚧 TODO
 
-- Fix frontend build routes (could we reference them from constants?)
 - Sort out builds
 - Port to new modals
 - Handle a player being removed

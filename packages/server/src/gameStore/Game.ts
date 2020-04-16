@@ -102,6 +102,8 @@ export default class Game {
       actionedBy,
       time: DateTime.local().toISO()
     });
+
+    // TODO If this is a "playerDelete" => remove that players websocket (they would be notified that they were kicked by the event)
   };
 
   private pushEvent = (event: GameEvent) => {

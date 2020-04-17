@@ -9,11 +9,16 @@ import {
   calculateGameState
 } from "@monopoly-money/game-state";
 import { generateTimeBasedId, generateRandomId, getCurrentTime } from "./utils";
-import { INewEventMessage, IInitialEventArrayMessage } from "../api/dto";
+import {
+  INewEventMessage,
+  IInitialEventArrayMessage,
+  IGameEndMessage,
+  OutgoingMessage
+} from "../api/dto";
 
 export default class Game {
   private events: GameEvent[] = []; // Events in this game
-  private subscribedWebSockets: websocket[] = []; // Players listening to events
+  private subscribedWebSockets: Record<string, websocket> = {}; // playerId: event websocket
   private userTokenToPlayers: Record<string, PlayerId> = {}; // A mapping of ids only known by a user to match to a player
   private gameState: IGameState = defaultGameState;
 
@@ -77,9 +82,9 @@ export default class Game {
   };
 
   // Subscribe a websocket to get any event updates
-  public subscribeWebSocketToEvents = (ws: websocket) => {
+  public subscribeWebSocketToEvents = (ws: websocket, playerId: string) => {
     // Add to subscription list
-    this.subscribedWebSockets.push(ws);
+    this.subscribedWebSockets[playerId] = ws;
 
     // Send out events that have ocurred
     const outgoingMessage: IInitialEventArrayMessage = {
@@ -102,7 +107,26 @@ export default class Game {
       time: getCurrentTime()
     });
 
-    // TODO If this is a "playerDelete" => remove that players websocket (they would be notified that they were kicked by the event)
+    // If a player has been deleted, remove close and remove their websocket
+    if (event.type === "playerDelete" && event.playerId in this.subscribedWebSockets) {
+      this.subscribedWebSockets[event.playerId].close();
+      delete this.subscribedWebSockets[event.playerId];
+    }
+  };
+
+  // End a game
+  public endGame = () => {
+    // Send end game notification to all player
+    const outgoingMessage: IGameEndMessage = { type: "gameEnd" };
+    this.sendMessageToAllInGame(outgoingMessage);
+
+    // Close all sockets and delete them
+    Object.values(this.subscribedWebSockets).forEach((ws) => {
+      ws.close();
+    });
+
+    // Delete the game
+    this.deleteInstance();
   };
 
   private pushEvent = (event: GameEvent) => {
@@ -112,10 +136,13 @@ export default class Game {
     // Calculate next state
     this.gameState = calculateGameState([event], this.gameState);
 
-    // Construct message
+    // Construct message and sent to all players
     const outgoingMessage: INewEventMessage = { type: "newEvent", event };
+    this.sendMessageToAllInGame(outgoingMessage);
+  };
 
-    // Send the event to all listening websockets
+  // Send a message to all listening websockets
+  private sendMessageToAllInGame = (outgoingMessage: OutgoingMessage) => {
     Object.values(this.subscribedWebSockets).forEach((ws) => {
       ws.send(JSON.stringify(outgoingMessage));
     });

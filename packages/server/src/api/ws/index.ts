@@ -1,12 +1,12 @@
 import * as http from "http";
 import * as https from "https";
 import * as websocket from "ws";
-import { MessageHandler, authMessage, proposeEvent } from "./messageHandlers";
+import { MessageHandler, authMessage, proposeEvent, proposeEndGame } from "./messageHandlers";
 import { IncomingMessage } from "../dto";
 import { IUserData } from "../types";
 
 // Functions that take a message and decide whether to act on it
-const messageHandlers: MessageHandler[] = [authMessage, proposeEvent];
+const messageHandlers: MessageHandler[] = [authMessage, proposeEvent, proposeEndGame];
 
 // Setup the websocket API
 const setupWebsocketAPI = (server: http.Server | https.Server) => {

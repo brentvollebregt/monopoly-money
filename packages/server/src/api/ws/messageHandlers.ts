@@ -43,7 +43,8 @@ export const authMessage: MessageHandler = (ws, userData, message) => {
     userData.userToken = message.userToken;
 
     // Subscribe this websocket to game events
-    game.subscribeWebSocketToEvents(ws);
+    const playerId = game.getPlayerId(userData.userToken);
+    game.subscribeWebSocketToEvents(ws, playerId);
   }
 };
 
@@ -53,7 +54,7 @@ export const proposeEvent: MessageHandler = (ws, { gameId, userToken }, message)
       return;
     }
     if (gameId === null || userToken === null) {
-      throw new Error("Invalid state. isBanker check made when gameId/userToken is null");
+      throw new Error("Invalid state. proposeEvent continued when gameId/userToken is null");
     }
     const game = gameStore.getGame(gameId);
     const isPlayerBanker = game.isUserABanker(userToken);
@@ -86,5 +87,22 @@ export const proposeEvent: MessageHandler = (ws, { gameId, userToken }, message)
     }
 
     game.addEvent(event, playerId);
+  }
+};
+
+export const proposeEndGame: MessageHandler = (ws, { gameId, userToken }, message) => {
+  if (message.type === "proposeEndGame") {
+    if (!isAuthenticated(ws, { gameId, userToken })) {
+      return;
+    }
+    if (gameId === null || userToken === null) {
+      throw new Error("Invalid state. proposeEndGame continued when gameId/userToken is null");
+    }
+    const game = gameStore.getGame(gameId);
+    const isPlayerBanker = game.isUserABanker(userToken);
+
+    if (isPlayerBanker) {
+      game.endGame();
+    }
   }
 };

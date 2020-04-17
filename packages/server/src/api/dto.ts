@@ -18,7 +18,7 @@ export interface IJoinGameResponse {
 
 // Websocket Incoming Message Types (server <= client)
 
-export type IncomingMessage = IAuthMessage | IProposeEventMessage;
+export type IncomingMessage = IAuthMessage | IProposeEventMessage | IProposeEndGameMessage;
 
 export interface IAuthMessage {
   type: "auth";
@@ -31,9 +31,13 @@ export interface IProposeEventMessage {
   event: GameEvent;
 }
 
+export interface IProposeEndGameMessage {
+  type: "proposeEndGame";
+}
+
 // Websocket Outgoing Message Types (server => client)
 
-export type OutgoingMessage = IInitialEventArrayMessage | INewEventMessage;
+export type OutgoingMessage = IInitialEventArrayMessage | INewEventMessage | IGameEndMessage;
 
 export interface IInitialEventArrayMessage {
   type: "initialEventArray";
@@ -43,4 +47,8 @@ export interface IInitialEventArrayMessage {
 export interface INewEventMessage {
   type: "newEvent";
   event: GameEvent;
+}
+
+export interface IGameEndMessage {
+  type: "gameEnd";
 }

@@ -13,7 +13,8 @@ import config from "../config";
 import {
   IAuthMessage,
   OutgoingMessage,
-  IProposeEventMessage
+  IProposeEventMessage,
+  IProposeEndGameMessage
 } from "@monopoly-money/server/build/api/dto";
 
 export interface IGameHandlerState {
@@ -117,10 +118,12 @@ class GameHandler {
     this.submitEvent(event);
   }
 
-  // End game
+  // Propose the game to end
   public proposeGameEnd() {
-    // TODO
-    console.error("proposeGameEnd not implemented");
+    const message: IProposeEndGameMessage = {
+      type: "proposeEndGame"
+    };
+    this.webSocket.send(JSON.stringify(message));
   }
 
   // On messages from the server
@@ -133,11 +136,25 @@ class GameHandler {
     } else if (incomingMessage.type === "newEvent") {
       this.events.push(incomingMessage.event);
       this.gameState = calculateGameState([incomingMessage.event], this.gameState);
+    } else if (incomingMessage.type === "gameEnd") {
+      this.gameEnd(false);
+    }
+
+    // Check if this player has been kicked
+    const inPlayers = this.gameState.players.map((p) => p.playerId).indexOf(this.playerId) !== -1;
+    if (!inPlayers) {
+      this.gameEnd(true);
     }
 
     // Notify the user of this class that a change has been made internally
     this.onGameStateChange();
   }
+
+  // When the game ends or player was kicked
+  private gameEnd = (wasKicked: boolean) => {
+    console.error(`Game over. ${wasKicked ? "Kicked" : ""}`);
+    // TODO Display message and clean up
+  };
 
   // Messages to the server
   private submitEvent(event: GameEvent) {

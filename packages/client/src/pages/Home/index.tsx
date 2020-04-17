@@ -2,7 +2,7 @@ import React from "react";
 import bannerImage from "../../img/banner.png";
 import { Button, Card, Badge } from "react-bootstrap";
 import { navigate, useTitle } from "hookrouter";
-import useStoredGames, { IStoredGame } from "../../hooks/useStoredGames";
+import useStoredGames from "../../hooks/useStoredGames";
 import "./Home.scss";
 import { DateTime } from "luxon";
 

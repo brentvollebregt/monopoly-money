@@ -41,7 +41,7 @@ const RenamePlayerModal: React.FC<IRenamePlayerModalProps> = ({
             onChange={(e: React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value)}
           />
           <Button variant="success" onClick={submit} className="remove-left-border-radius">
-            ✔️
+            Rename
           </Button>
         </InputGroup>
         <Form.Text style={{ color: "var(--danger)" }}>{submitError}</Form.Text>

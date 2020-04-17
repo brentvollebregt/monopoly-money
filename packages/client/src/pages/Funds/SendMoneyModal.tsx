@@ -61,7 +61,7 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
           </InputGroup.Prepend>
           <FormControl type="number" value={amount} onChange={onAmountUpdate} />
           <Button variant="success" className="remove-left-border-radius" onClick={submit}>
-            ✔️
+            Send
           </Button>
         </InputGroup>
         <Form.Text style={{ color: "var(--danger)" }}>{submitError}</Form.Text>

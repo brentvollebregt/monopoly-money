@@ -47,14 +47,16 @@ export const joinGame = async (
 
 export const getGameStatus = async (
   gameId: string,
-  userToken: string
+  userToken: string,
+  abortController: AbortController | undefined
 ): Promise<IGameState | "DoesNotExist"> => {
   const response = await fetch(`${config.api.root}/api/game/${gameId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: userToken
-    }
+    },
+    signal: abortController?.signal
   });
   if (response.status === 200) {
     return response.json() as Promise<IGameState>;

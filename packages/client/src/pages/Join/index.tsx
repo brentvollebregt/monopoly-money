@@ -47,9 +47,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
         setGameError("Please provide the game Id");
         return;
       }
-      {
-        setGameError(null);
-      }
+      setGameError(null);
       if (name === "") {
         setNameError("Please provide your name");
         return;

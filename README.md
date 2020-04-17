@@ -36,11 +36,9 @@ _TODO_
 
 ## 🚧 TODO
 
+- BUG: When clicking the logo to go home when you're in a game, you will go / => /funds => /
+- Home text
 - Put \$ in send money modal
 - Help button
   - Small tutorial with GIFs
   - Layout: Title, description, GIF (repeat)
-
-## Bugs 🐞
-
-- When clicking the logo to go home when you're in a game, you will go / => /funds => /

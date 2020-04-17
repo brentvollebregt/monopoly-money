@@ -49,7 +49,7 @@ const Funds: React.FC<IFundsProps> = ({
     } else {
       hideSendMoneyModal();
     }
-  }, [recipient]);
+  }, [recipient, showSendMoneyModal, hideSendMoneyModal]);
 
   const me = players.find((p) => p.playerId === playerId);
   const isBanker = me?.banker ?? false;

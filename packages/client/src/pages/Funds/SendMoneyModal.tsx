@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal, InputGroup, FormControl, Form } from "react-bootstrap";
 import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
+import { formatCurrency } from "../../utils";
 
 interface ISendMoneyModalProps {
   balance: number;
@@ -24,7 +25,7 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
     if (amount === "") {
       setSubmitError("Please provide an amount");
     } else if (parseInt(amount, 10) > balance) {
-      setSubmitError(`You do not have enough money ($${balance})`);
+      setSubmitError(`You do not have enough money (${formatCurrency(balance)})`);
     } else {
       setSubmitError(null);
       proposeTransaction(

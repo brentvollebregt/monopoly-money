@@ -5,6 +5,7 @@ import { navigate, useTitle } from "hookrouter";
 import useStoredGames from "../../hooks/useStoredGames";
 import "./Home.scss";
 import { DateTime } from "luxon";
+import { formatCurrency } from "../../utils";
 
 interface IHomeProps {
   onGameSetup: (gameId: string, userToken: string, playerId: string) => void;
@@ -48,17 +49,23 @@ const Home: React.FC<IHomeProps> = ({ onGameSetup }) => {
                   </small>
                 </div>
                 <div>
-                  {status?.players.map((player) => (
-                    <Badge
-                      key={player.playerId}
-                      variant={player.banker ? "info" : "success"}
-                      className="mr-1"
-                    >
-                      {player.name}: ${player.balance}
-                    </Badge>
-                  ))}
+                  {status?.players
+                    .sort((p1, p2) => (p1.playerId === playerId ? -1 : 0))
+                    .map((player) => (
+                      <Badge
+                        key={player.playerId}
+                        variant={
+                          player.playerId === playerId ? "dark" : player.banker ? "info" : "success"
+                        }
+                        className="mr-1"
+                      >
+                        {player.name}: {formatCurrency(player.balance)}
+                      </Badge>
+                    ))}
                   {status !== null && (
-                    <Badge variant="warning">Free Parking: ${status.freeParkingBalance}</Badge>
+                    <Badge variant="warning">
+                      Free Parking: {formatCurrency(status.freeParkingBalance)}
+                    </Badge>
                   )}
                 </div>
                 <Button

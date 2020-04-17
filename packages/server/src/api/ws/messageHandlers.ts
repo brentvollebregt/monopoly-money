@@ -23,6 +23,14 @@ const isAuthenticated = (ws: websocket, { gameId, userToken }: IUserData): boole
   return true;
 };
 
+export const onMessageStreamClosed = (ws: websocket, userData: IUserData) => {
+  if (userData.gameId !== null && userData.userToken !== null && isAuthenticated(ws, userData)) {
+    const game = gameStore.getGame(userData.gameId);
+    const playerId = game.getPlayerId(userData.userToken);
+    game.removePlayerWebSocket(playerId);
+  }
+};
+
 export type MessageHandler = (ws: websocket, userData: IUserData, message: IncomingMessage) => void;
 
 export const authMessage: MessageHandler = (ws, userData, message) => {

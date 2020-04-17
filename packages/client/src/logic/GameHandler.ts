@@ -64,8 +64,10 @@ class GameHandler {
 
     // Handle websocket close
     this.webSocket.onclose = (event) => {
-      // TODO Handle close
-      console.error("Websocket closed");
+      if (!event.wasClean) {
+        this.gameEnd("unexpectedWebSocketClosure");
+        this.onGameStateChange(true);
+      }
     };
   }
 
@@ -141,7 +143,7 @@ class GameHandler {
   }
 
   // When the game ends or player was kicked
-  public gameEnd = (reason: "end" | "removed" | null) => {
+  public gameEnd = (reason: "end" | "removed" | "unexpectedWebSocketClosure" | null) => {
     this.webSocket.close();
     switch (reason) {
       case "end":
@@ -149,6 +151,9 @@ class GameHandler {
         break;
       case "removed":
         this.onDisplayMessage("You have been removed from the game");
+        break;
+      case "unexpectedWebSocketClosure":
+        this.onDisplayMessage("Unexpectedly disconnection from the server");
         break;
     }
   };

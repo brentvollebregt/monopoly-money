@@ -1,7 +1,13 @@
 import * as http from "http";
 import * as https from "https";
 import * as websocket from "ws";
-import { MessageHandler, authMessage, proposeEvent, proposeEndGame } from "./messageHandlers";
+import {
+  MessageHandler,
+  authMessage,
+  proposeEvent,
+  proposeEndGame,
+  onMessageStreamClosed
+} from "./messageHandlers";
 import { IncomingMessage } from "../dto";
 import { IUserData } from "../types";
 
@@ -26,8 +32,7 @@ const setupWebsocketAPI = (server: http.Server | https.Server) => {
     });
 
     ws.on("close", (code: number, reason: string) => {
-      // TODO Handle clients leaving
-      console.error("onclose is not being handled");
+      onMessageStreamClosed(ws, userData);
     });
   });
 };

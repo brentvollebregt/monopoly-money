@@ -109,8 +109,21 @@ export default class Game {
 
     // If a player has been deleted, remove close and remove their websocket
     if (event.type === "playerDelete" && event.playerId in this.subscribedWebSockets) {
-      this.subscribedWebSockets[event.playerId].close();
-      delete this.subscribedWebSockets[event.playerId];
+      this.removePlayerWebSocket(event.playerId);
+    }
+
+    // If all bankers have removed themselves, end the game
+    const bankerPlayers = this.gameState.players.filter((p) => p.banker);
+    if (bankerPlayers.length === 0) {
+      this.endGame();
+    }
+  };
+
+  // Remove a player
+  public removePlayerWebSocket = (playerId: string) => {
+    if (playerId in this.subscribedWebSockets) {
+      this.subscribedWebSockets[playerId].close();
+      delete this.subscribedWebSockets[playerId];
     }
   };
 

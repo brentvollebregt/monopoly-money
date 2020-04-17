@@ -36,7 +36,7 @@ _TODO_
 
 ## 🚧 TODO
 
-- handle sockets being closed?
+- Ability to copy game id
 - Socket addEventListener
 - Put \$ in send money modal
 - Help button

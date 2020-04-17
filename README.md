@@ -36,11 +36,7 @@ _TODO_
 
 ## 🚧 TODO
 
-handle socket closed?
-
-- Handle a player being removed
-- Toasts on failures ( cogo-toast when a player is removed from a game )
-- Close ws when going home
+- handle sockets being closed?
 - Socket addEventListener
 - Put \$ in send money modal
 - Help button

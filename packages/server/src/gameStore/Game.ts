@@ -22,7 +22,7 @@ export default class Game {
   private userTokenToPlayers: Record<string, PlayerId> = {}; // A mapping of ids only known by a user to match to a player
   private gameState: IGameState = defaultGameState;
 
-  private deleteInstance: () => void; // TODO On game delete (fire out events saying game has ended)
+  private deleteInstance: () => void;
 
   constructor(deleteInstance: () => void) {
     this.deleteInstance = deleteInstance;

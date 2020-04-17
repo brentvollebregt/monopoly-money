@@ -23,7 +23,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
   };
 
   const onNameChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setName(event.currentTarget.value || ""); // TODO Why can't I use??
+    setName(event.currentTarget.value);
   };
 
   const onSubmit = () => {

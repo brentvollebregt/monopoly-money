@@ -34,7 +34,9 @@ const useGameHandler = (authInfo: IGameHandlerAuthInfo | null): IGameHandlerStat
   useEffect(() => {
     if (authInfo === null) {
       // If auth has been removed, remove the game handler
-      // TODO && gameHandler !== null => stop the socket
+      if (gameHandler !== null) {
+        gameHandler.gameEnd(null);
+      }
       setGameHandler(null);
     } else {
       // If auth has been provided, setup the game handler

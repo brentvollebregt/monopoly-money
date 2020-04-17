@@ -36,7 +36,7 @@ const useStoredGames = () => {
     ]);
   };
 
-  // Identify if we need to fetch some new game data // TODO This is very broken and kills your browser
+  // Identify if we need to fetch some new game data
   useEffect(() => {
     const gamesWithoutStatuses = (storedGames ?? []).filter(
       (game) => Object.keys(gameStatuses).indexOf(game.gameId) === -1
@@ -80,7 +80,7 @@ const useStoredGames = () => {
     status: gameStatuses[game.gameId] ?? null
   }));
 
-  return { storedGames: storedGamesWithDetail, storeGame }; // TODO Provide a flush to get the statuses again?
+  return { storedGames: storedGamesWithDetail, storeGame };
 };
 
 export default useStoredGames;

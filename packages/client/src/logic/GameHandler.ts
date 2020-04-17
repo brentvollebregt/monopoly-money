@@ -140,6 +140,19 @@ class GameHandler {
     this.webSocket.send(JSON.stringify(message));
   }
 
+  // When the game ends or player was kicked
+  public gameEnd = (reason: "end" | "removed" | null) => {
+    this.webSocket.close();
+    switch (reason) {
+      case "end":
+        this.onDisplayMessage("The game has been ended by the banker");
+        break;
+      case "removed":
+        this.onDisplayMessage("You have been removed from the game");
+        break;
+    }
+  };
+
   // On messages from the server
   private onWebSocketMessage(event: MessageEvent) {
     const incomingMessage = JSON.parse(event.data) as OutgoingMessage;
@@ -151,28 +164,19 @@ class GameHandler {
       this.events.push(incomingMessage.event);
       this.gameState = calculateGameState([incomingMessage.event], this.gameState);
     } else if (incomingMessage.type === "gameEnd") {
-      this.gameEnd(false);
+      this.gameEnd("end");
     }
 
     // Check if this player has been kicked
     const inPlayers = this.gameState.players.map((p) => p.playerId).indexOf(this.playerId) !== -1;
     if (!inPlayers) {
-      this.gameEnd(true);
+      this.gameEnd("removed");
     }
 
     // Notify the user of this class that a change has been made internally.
     const gameEnded = incomingMessage.type === "gameEnd" || !inPlayers;
     this.onGameStateChange(gameEnded);
   }
-
-  // When the game ends or player was kicked
-  private gameEnd = (wasKicked: boolean) => {
-    this.webSocket.close();
-    const uiMessage = wasKicked
-      ? "You have been removed from the game"
-      : "The game has been ended by the banker";
-    this.onDisplayMessage(uiMessage);
-  };
 
   // Messages to the server
   private submitEvent(event: GameEvent) {

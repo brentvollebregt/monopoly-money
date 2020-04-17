@@ -4,6 +4,7 @@ import "./Funds.scss";
 import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 import SendMoneyModal from "./SendMoneyModal";
 import { useModal } from "react-modal-hook";
+import GameCode from "./GameCode";
 
 interface IFundsProps {
   gameId: string;
@@ -54,17 +55,7 @@ const Funds: React.FC<IFundsProps> = ({
 
   return (
     <div className="funds">
-      {isGameOpen && (
-        <div className="text-center">
-          <h1>{gameId}</h1>
-          {isBanker && (
-            <small className="text-muted">
-              You can hide this by closing the game in the settings.
-            </small>
-          )}
-          <hr />
-        </div>
-      )}
+      {isGameOpen && <GameCode gameId={gameId} isBanker={isBanker} />}
 
       <Card className="mb-1 text-center">
         {me !== undefined && (

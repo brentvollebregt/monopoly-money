@@ -72,20 +72,33 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
   };
 
   return (
-    <div>
+    <div className="text-center">
       <h1>{title}</h1>
 
       {!newGame && (
         <Form.Group>
           <Form.Label>Game Id</Form.Label>
-          <Form.Control placeholder="XXXXXX" value={gameId} onChange={onGameIdChange} />
+          <Form.Control
+            placeholder="123456"
+            value={gameId}
+            className="text-center"
+            onChange={onGameIdChange}
+          />
           <Form.Text style={{ color: "var(--danger)" }}>{gameError}</Form.Text>
         </Form.Group>
       )}
 
       <Form.Group>
         <Form.Label>Your Name</Form.Label>
-        <Form.Control placeholder="Name" value={name} onChange={onNameChange} />
+        <Form.Control
+          placeholder="Name"
+          value={name}
+          className="text-center"
+          onChange={onNameChange}
+          onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) =>
+            event.key === "Enter" && onSubmit()
+          }
+        />
         <Form.Text style={{ color: "var(--danger)" }}>{nameError}</Form.Text>
       </Form.Group>
 

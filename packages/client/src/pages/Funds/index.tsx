@@ -5,6 +5,7 @@ import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 import SendMoneyModal from "./SendMoneyModal";
 import { useModal } from "react-modal-hook";
 import GameCode from "./GameCode";
+import { formatCurrency } from "../../utils";
 
 interface IFundsProps {
   gameId: string;
@@ -60,7 +61,7 @@ const Funds: React.FC<IFundsProps> = ({
       <Card className="mb-1 text-center">
         {me !== undefined && (
           <Card.Body className="p-3">
-            {me.name}: ${me.balance}
+            {me.name}: {formatCurrency(me.balance)}
           </Card.Body>
         )}
       </Card>
@@ -73,7 +74,7 @@ const Funds: React.FC<IFundsProps> = ({
             <Card key={player.name} className="text-center">
               <Card.Body className="p-3">
                 <div>{player.name}</div>
-                <div>${player.balance}</div>
+                <div>{formatCurrency(player.balance)}</div>
                 <Button
                   size="sm"
                   variant="outline-dark"
@@ -89,7 +90,7 @@ const Funds: React.FC<IFundsProps> = ({
 
       <Card className="mt-1 text-center">
         <Card.Body className="p-3">
-          <div>Free Parking: ${freeParkingBalance}</div>
+          <div>Free Parking: {formatCurrency(freeParkingBalance)}</div>
           <Button
             size="sm"
             variant="outline-dark"

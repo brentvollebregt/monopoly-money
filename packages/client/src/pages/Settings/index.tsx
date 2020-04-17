@@ -5,6 +5,7 @@ import { useModal } from "react-modal-hook";
 import RenamePlayerModal from "./RenamePlayerModal";
 import DeletePlayerModal from "./DeletePlayerModal";
 import EndGameConfirmDialog from "./EndGameConfirmDialog";
+import { formatCurrency } from "../../utils";
 
 interface ISettingsProps {
   isGameOpen: boolean;
@@ -66,7 +67,7 @@ const Settings: React.FC<ISettingsProps> = ({
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
-            <th>Player Name</th>
+            <th>Name</th>
             <th>Balance</th>
             <th></th>
           </tr>
@@ -75,7 +76,7 @@ const Settings: React.FC<ISettingsProps> = ({
           {players.map((player) => (
             <tr key={player.playerId}>
               <td>{player.name}</td>
-              <td>${player.balance}</td>
+              <td>{formatCurrency(player.balance)}</td>
               <td>
                 <Button
                   variant="outline-secondary"

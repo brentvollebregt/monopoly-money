@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { InputGroup, Button, DropdownButton, Dropdown } from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
+import { formatCurrency } from "../../utils";
 
 interface IGiveFreeParkingProps {
   players: IGameStatePlayer[];
@@ -26,7 +27,9 @@ const GiveFreeParking: React.FC<IGiveFreeParkingProps> = ({
 
   return (
     <>
-      <label htmlFor={`free-parking-player`}>Give Free Parking (${freeParkingBalance})</label>
+      <label htmlFor={`free-parking-player`}>
+        Give Free Parking ({formatCurrency(freeParkingBalance)})
+      </label>
       <InputGroup>
         <DropdownButton
           as={InputGroup.Prepend}

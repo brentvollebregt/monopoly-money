@@ -6,6 +6,7 @@ import {
   IGameState
 } from "@monopoly-money/game-state";
 import "./History.scss";
+import { formatCurrency } from "../../utils";
 
 interface IHistoryProps {
   events: GameEvent[];
@@ -84,7 +85,7 @@ const getEventDetails = (
       return {
         id: `${event.type + event.time}`,
         title: "Transaction",
-        detail: `${playerGiving} → ${playerReceiving} ($${event.amount})`,
+        detail: `${playerGiving} → ${playerReceiving} (${formatCurrency(event.amount)})`,
         colour: "green"
       };
     }

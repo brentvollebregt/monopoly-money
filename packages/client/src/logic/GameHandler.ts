@@ -53,22 +53,22 @@ class GameHandler {
     this.webSocket.onmessage = this.onWebSocketMessage.bind(this);
 
     // Send auth message on websocket open
-    this.webSocket.onopen = (event) => {
+    this.webSocket.addEventListener("open", (event) => {
       const message: IAuthMessage = {
         type: "auth",
         gameId: this.gameId,
         userToken: this.userToken
       };
       this.webSocket.send(JSON.stringify(message));
-    };
+    });
 
     // Handle websocket close
-    this.webSocket.onclose = (event) => {
+    this.webSocket.addEventListener("close", (event) => {
       if (!event.wasClean) {
         this.gameEnd("unexpectedWebSocketClosure");
         this.onGameStateChange(true);
       }
-    };
+    });
   }
 
   // Get data to be used to display the UI

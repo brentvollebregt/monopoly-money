@@ -36,8 +36,6 @@ _TODO_
 
 ## 🚧 TODO
 
-- Ability to copy game id
-- Socket addEventListener
 - Put \$ in send money modal
 - Help button
   - Small tutorial with GIFs

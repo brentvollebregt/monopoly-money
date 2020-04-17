@@ -26,16 +26,24 @@ class GameHandler {
   public gameId: string;
   public userToken: string;
   public playerId: string;
-  private onGameStateChange: () => void;
+  private onGameStateChange: (gameEnded: boolean) => void;
+  private onDisplayMessage: (message: string) => void;
   private events: GameEvent[] = [];
   private webSocket: WebSocket;
   private gameState: IGameState = defaultGameState;
 
-  constructor(gameId: string, userToken: string, playerId: string, onGameStateChange: () => void) {
+  constructor(
+    gameId: string,
+    userToken: string,
+    playerId: string,
+    onGameStateChange: (gameEnded: boolean) => void,
+    onDisplayMessage: (message: string) => void
+  ) {
     this.gameId = gameId;
     this.userToken = userToken;
     this.playerId = playerId;
     this.onGameStateChange = onGameStateChange;
+    this.onDisplayMessage = onDisplayMessage;
 
     // Create websocket and assign onmessage
     const webSocketAPIRoot = config.api.root.replace(/http?/g, "ws"); // I couldn't be bothered just making another config value
@@ -52,6 +60,12 @@ class GameHandler {
         userToken: this.userToken
       };
       this.webSocket.send(JSON.stringify(message));
+    };
+
+    // Handle websocket close
+    this.webSocket.onclose = (event) => {
+      // TODO Handle close
+      console.error("Websocket closed");
     };
   }
 
@@ -146,14 +160,18 @@ class GameHandler {
       this.gameEnd(true);
     }
 
-    // Notify the user of this class that a change has been made internally
-    this.onGameStateChange();
+    // Notify the user of this class that a change has been made internally.
+    const gameEnded = incomingMessage.type === "gameEnd" || !inPlayers;
+    this.onGameStateChange(gameEnded);
   }
 
   // When the game ends or player was kicked
   private gameEnd = (wasKicked: boolean) => {
-    console.error(`Game over. ${wasKicked ? "Kicked" : ""}`);
-    // TODO Display message and clean up
+    this.webSocket.close();
+    const uiMessage = wasKicked
+      ? "You have been removed from the game"
+      : "The game has been ended by the banker";
+    this.onDisplayMessage(uiMessage);
   };
 
   // Messages to the server

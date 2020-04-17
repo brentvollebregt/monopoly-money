@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import cogoToast from "cogo-toast";
 import GameHandler from "../logic/GameHandler";
 import { GameEvent, IGameState, GameEntity } from "@monopoly-money/game-state";
 
@@ -32,11 +33,33 @@ const useGameHandler = (authInfo: IGameHandlerAuthInfo | null): IGameHandlerStat
   // Create / destroy the game handler when new new auth is provided
   useEffect(() => {
     if (authInfo === null) {
+      // If auth has been removed, remove the game handler
       // TODO && gameHandler !== null => stop the socket
       setGameHandler(null);
     } else {
+      // If auth has been provided, setup the game handler
+      const onGameStateChange = (gameEnded: boolean) => {
+        if (gameEnded) {
+          setGameHandler(null);
+        } else {
+          forceUpdate();
+        }
+      };
+      const onDisplayMessage = (message: string) => {
+        const { hide } = cogoToast.info(message, {
+          position: "bottom-center",
+          hideAfter: 10,
+          onClick: () => hide && hide()
+        });
+      };
       setGameHandler(
-        new GameHandler(authInfo.gameId, authInfo.userToken, authInfo.playerId, () => forceUpdate())
+        new GameHandler(
+          authInfo.gameId,
+          authInfo.userToken,
+          authInfo.playerId,
+          onGameStateChange,
+          onDisplayMessage
+        )
       );
     }
   }, [authInfo]);

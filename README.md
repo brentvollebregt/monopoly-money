@@ -58,7 +58,7 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
-- BUG: useStoredGames seems to be spamming requests
+- Cache useStoredGames
 - M/K formatting and inputs
 - Help button
   - Small tutorial with GIFs

@@ -11,6 +11,7 @@ interface IJoinProps {
 const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
   const title = newGame ? "Create Game" : "Join Game";
 
+  const [loading, setLoading] = useState(false);
   const [gameId, setGameId] = useState("");
   const [name, setName] = useState("");
   const [gameError, setGameError] = useState<string | null>(null);
@@ -36,11 +37,13 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
       setNameError(null);
 
       // Create game
+      setLoading(true);
       createGame(name)
         .then((result) => {
           onGameSetup(result.gameId, result.userToken, result.playerId);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
     } else {
       // Validity check
       if (gameId === "") {
@@ -55,6 +58,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
       setNameError(null);
 
       // Join game
+      setLoading(true);
       joinGame(gameId, name)
         .then((result) => {
           if (result === "DoesNotExist") {
@@ -65,7 +69,8 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
             onGameSetup(result.gameId, result.userToken, result.playerId);
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
     }
   };
 
@@ -100,7 +105,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
         <Form.Text style={{ color: "var(--danger)" }}>{nameError}</Form.Text>
       </Form.Group>
 
-      <Button block variant="primary" onClick={onSubmit}>
+      <Button block variant="primary" onClick={onSubmit} disabled={loading}>
         {newGame ? "Create" : "Join"}
       </Button>
     </div>

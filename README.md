@@ -58,13 +58,13 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
+- Don't allow people to join under a different name when they already have previously joined
+  - Remove name box when the same game id is detected and swap in a message
 - Put \$ in send money modal
 - M/K formatting and inputs
 - Settings initialise button
   - Give out x amount of money to all
   - Chose a random player to start
-- Don't allow people to join under a different name when they already have previously joined
-  - Remove name box when the same game id is detected and swap in a message
 - Help button
   - Small tutorial with GIFs
   - Layout: Title, description, GIF (repeat)

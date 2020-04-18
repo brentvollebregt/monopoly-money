@@ -100,6 +100,9 @@ const App: React.FC = () => {
               <Bank
                 players={game.players}
                 freeParkingBalance={game.freeParkingBalance}
+                hasATransactionBeenMade={
+                  game.events.filter((e) => e.type === "transaction").length > 0
+                }
                 proposeTransaction={game.actions.proposeTransaction}
               />
             )

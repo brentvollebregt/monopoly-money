@@ -85,21 +85,25 @@ const Home: React.FC<IHomeProps> = ({ onGameSetup }) => {
             <div>You have no active games</div>
           </>
         )}
-        {/* TODO */}
       </div>
 
       <hr />
 
       <div>
         <h2>What is Monopoly Money?</h2>
-        {/* TODO */}
-      </div>
+        <p>
+          Monopoly Money is a webapp that helps you keep track of your finances in a game of
+          Monopoly (or any game that uses currency).
+        </p>
+        <p>
+          Instead of using the cash that the game commonly comes with, you can play Monopoly like
+          you're playing the credit card edition, but with your phone - a much more faster way to
+          exchange money.
+        </p>
 
-      <hr />
+        {/* TODO Screenshot of everyone's balances */}
 
-      <div>
-        <h2>How it Works</h2>
-        {/* TODO */}
+        {/* TODO Screenshot of history */}
       </div>
     </div>
   );

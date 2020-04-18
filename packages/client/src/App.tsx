@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useRoutes, navigate, usePath } from "hookrouter";
 import Navigation from "./components/Navigation";
 import MetaTags from "./components/MetaTags";
 import PageSizeWrapper from "./components/PageSizeWrapper";
 import Home from "./pages/Home";
-import { useRoutes, navigate, usePath } from "hookrouter";
-import NotFound from "./pages/NotFound";
+// import NotFound from "./pages/NotFound";
 import Funds from "./pages/Funds";
 import Bank from "./pages/Bank";
 import History from "./pages/History";
@@ -12,7 +12,7 @@ import Settings from "./pages/Settings";
 import Join from "./pages/Join";
 import { routePaths } from "./constants";
 import useStoredGames from "./hooks/useStoredGames";
-import useGameHandler, { IGameHandlerAuthInfo } from "./hooks/useGameHandler";
+import useGameHandler from "./hooks/useGameHandler";
 
 const wrapRoute = (route: string, child: JSX.Element) => (
   <MetaTags route={route}>
@@ -22,8 +22,7 @@ const wrapRoute = (route: string, child: JSX.Element) => (
 
 const App: React.FC = () => {
   const { storeGame } = useStoredGames();
-  const [gameHandlerAuthInfo, setGameHandlerAuthInfo] = useState<IGameHandlerAuthInfo | null>(null);
-  const gameState = useGameHandler(gameHandlerAuthInfo);
+  const { game, authInfo, initialize, clear } = useGameHandler();
   const path = usePath();
 
   // If the user has gone to a non-game route, clear the game state
@@ -33,43 +32,45 @@ const App: React.FC = () => {
     }
   }, [path]);
 
-  // Go to the funds page after a game has been setup
+  // If the user has gone to a route that we don't manage, go home
   useEffect(() => {
-    if (
-      gameState !== null &&
-      (path === routePaths.home || path === routePaths.join || path === routePaths.newGame)
-    ) {
-      navigate("/funds");
+    if (Object.values(routePaths).indexOf(path) === -1) {
+      navigate("/");
     }
-  }, [gameState]);
+  }, [path]);
+
+  // Navigate home when a game is ended
+  useEffect(() => {
+    if (game === null) {
+      navigate("/");
+    }
+  }, [game]);
 
   const onGameSetup = (gameId: string, userToken: string, playerId: string) => {
     // Save current game for potential later use
-    if (gameHandlerAuthInfo !== null) {
-      storeGame(
-        gameHandlerAuthInfo.gameId,
-        gameHandlerAuthInfo.userToken,
-        gameHandlerAuthInfo.playerId
-      );
+    if (authInfo !== null) {
+      storeGame(authInfo.gameId, authInfo.userToken, authInfo.playerId);
     }
 
     // Setup a new game handler by setting up auth
-    setGameHandlerAuthInfo({ gameId, userToken, playerId });
+    initialize({ gameId, userToken, playerId });
 
     // Store new game details
     storeGame(gameId, userToken, playerId);
+
+    // Go into game
+    navigate("/funds");
   };
 
   const onGameDestroy = () => {
-    if (gameHandlerAuthInfo !== null) {
-      storeGame(
-        gameHandlerAuthInfo.gameId,
-        gameHandlerAuthInfo.userToken,
-        gameHandlerAuthInfo.playerId
-      );
+    if (authInfo !== null) {
+      storeGame(authInfo.gameId, authInfo.userToken, authInfo.playerId);
     }
-    setGameHandlerAuthInfo(null);
+    clear();
   };
+
+  // Using Home as a "not found" component will put us back in the right place
+  const NotFound = () => <Home onGameSetup={onGameSetup} />;
 
   const routes = {
     [routePaths.home]: () => wrapRoute(routePaths.home, <Home onGameSetup={onGameSetup} />),
@@ -78,48 +79,48 @@ const App: React.FC = () => {
     [routePaths.newGame]: () =>
       wrapRoute(routePaths.newGame, <Join newGame={true} onGameSetup={onGameSetup} />),
     [routePaths.funds]:
-      gameState !== null
+      game !== null
         ? () =>
             wrapRoute(
               routePaths.funds,
               <Funds
-                gameId={gameState.gameId}
-                playerId={gameState.playerId}
-                isGameOpen={gameState.open}
-                players={gameState.players}
-                freeParkingBalance={gameState.freeParkingBalance}
-                proposeTransaction={gameState.actions.proposeTransaction}
+                gameId={game.gameId}
+                playerId={game.playerId}
+                isGameOpen={game.open}
+                players={game.players}
+                freeParkingBalance={game.freeParkingBalance}
+                proposeTransaction={game.actions.proposeTransaction}
               />
             )
         : () => <NotFound />,
     [routePaths.bank]:
-      gameState !== null && gameState.isBanker
+      game !== null && game.isBanker
         ? () =>
             wrapRoute(
               routePaths.bank,
               <Bank
-                players={gameState.players}
-                freeParkingBalance={gameState.freeParkingBalance}
-                proposeTransaction={gameState.actions.proposeTransaction}
+                players={game.players}
+                freeParkingBalance={game.freeParkingBalance}
+                proposeTransaction={game.actions.proposeTransaction}
               />
             )
         : () => <NotFound />,
     [routePaths.history]:
-      gameState !== null
-        ? () => wrapRoute(routePaths.history, <History events={gameState.events} />)
+      game !== null
+        ? () => wrapRoute(routePaths.history, <History events={game.events} />)
         : () => <NotFound />,
     [routePaths.settings]:
-      gameState !== null && gameState.isBanker
+      game !== null && game.isBanker
         ? () =>
             wrapRoute(
               routePaths.settings,
               <Settings
-                isGameOpen={gameState.open}
-                players={gameState.players}
-                proposePlayerNameChange={gameState.actions.proposePlayerNameChange}
-                proposePlayerDelete={gameState.actions.proposePlayerDelete}
-                proposeGameOpenStateChange={gameState.actions.proposeGameOpenStateChange}
-                proposeGameEnd={gameState.actions.proposeGameEnd}
+                isGameOpen={game.open}
+                players={game.players}
+                proposePlayerNameChange={game.actions.proposePlayerNameChange}
+                proposePlayerDelete={game.actions.proposePlayerDelete}
+                proposeGameOpenStateChange={game.actions.proposeGameOpenStateChange}
+                proposeGameEnd={game.actions.proposeGameEnd}
               />
             )
         : () => <NotFound />
@@ -129,7 +130,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Navigation inGame={gameState !== null} isBanker={gameState?.isBanker ?? false} />
+      <Navigation inGame={game !== null} isBanker={game?.isBanker ?? false} />
       <div className="my-3">{routeResult || <NotFound />}</div>
     </>
   );

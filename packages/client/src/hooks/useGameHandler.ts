@@ -23,7 +23,20 @@ export interface IGameHandlerState extends IGameState {
   };
 }
 
-const useGameHandler = (authInfo: IGameHandlerAuthInfo | null): IGameHandlerState | null => {
+const onDisplayMessage = (message: string) => {
+  const { hide } = cogoToast.info(message, {
+    position: "bottom-center",
+    hideAfter: 10,
+    onClick: () => hide && hide()
+  });
+};
+
+const useGameHandler = (): {
+  game: IGameHandlerState | null;
+  authInfo: IGameHandlerAuthInfo | null;
+  initialize: (auth: IGameHandlerAuthInfo) => void;
+  clear: () => void;
+} => {
   const [gameHandler, setGameHandler] = useState<GameHandler | null>(null);
 
   // Used to trigger updates from the GameHandler
@@ -31,57 +44,57 @@ const useGameHandler = (authInfo: IGameHandlerAuthInfo | null): IGameHandlerStat
   const forceUpdate = useCallback(() => updateState({}), []);
 
   // Create / destroy the game handler when new new auth is provided
-  useEffect(() => {
-    if (authInfo === null) {
-      // If auth has been removed, remove the game handler
-      if (gameHandler !== null) {
-        gameHandler.gameEnd(null);
+  const initialize = ({ gameId, userToken, playerId }: IGameHandlerAuthInfo) => {
+    // If auth has been provided, setup the game handler
+    const onGameStateChange = (gameEnded: boolean) => {
+      if (gameEnded) {
+        setGameHandler(null);
+      } else {
+        forceUpdate();
       }
-      setGameHandler(null);
-    } else {
-      // If auth has been provided, setup the game handler
-      const onGameStateChange = (gameEnded: boolean) => {
-        if (gameEnded) {
-          setGameHandler(null);
-        } else {
-          forceUpdate();
-        }
-      };
-      const onDisplayMessage = (message: string) => {
-        const { hide } = cogoToast.info(message, {
-          position: "bottom-center",
-          hideAfter: 10,
-          onClick: () => hide && hide()
-        });
-      };
-      setGameHandler(
-        new GameHandler(
-          authInfo.gameId,
-          authInfo.userToken,
-          authInfo.playerId,
-          onGameStateChange,
-          onDisplayMessage
-        )
-      );
-    }
-  }, [authInfo]);
+    };
+    setGameHandler(
+      new GameHandler(gameId, userToken, playerId, onGameStateChange, onDisplayMessage)
+    );
+  };
 
-  return gameHandler === null
-    ? null
-    : {
-        ...gameHandler.getState(),
-        gameId: gameHandler.gameId,
-        playerId: gameHandler.playerId,
-        isBanker: gameHandler.amIABanker(),
-        events: gameHandler.getEvents(),
-        actions: {
-          proposeTransaction: gameHandler.proposeTransaction.bind(gameHandler),
-          proposePlayerNameChange: gameHandler.proposePlayerNameChange.bind(gameHandler),
-          proposePlayerDelete: gameHandler.proposePlayerDelete.bind(gameHandler),
-          proposeGameOpenStateChange: gameHandler.proposeGameOpenStateChange.bind(gameHandler),
-          proposeGameEnd: gameHandler.proposeGameEnd.bind(gameHandler)
-        }
-      };
+  // Clear the current game
+  const clear = () => {
+    if (gameHandler !== null) {
+      gameHandler.gameEnd(null);
+    }
+    setGameHandler(null);
+  };
+
+  return {
+    initialize,
+    clear,
+    authInfo:
+      gameHandler === null
+        ? null
+        : {
+            gameId: gameHandler.gameId,
+            userToken: gameHandler.userToken,
+            playerId: gameHandler.playerId
+          },
+    game:
+      gameHandler === null
+        ? null
+        : {
+            ...gameHandler.getState(),
+            gameId: gameHandler.gameId,
+            playerId: gameHandler.playerId,
+            isBanker: gameHandler.amIABanker(),
+            events: gameHandler.getEvents(),
+            actions: {
+              proposeTransaction: gameHandler.proposeTransaction.bind(gameHandler),
+              proposePlayerNameChange: gameHandler.proposePlayerNameChange.bind(gameHandler),
+              proposePlayerDelete: gameHandler.proposePlayerDelete.bind(gameHandler),
+              proposeGameOpenStateChange: gameHandler.proposeGameOpenStateChange.bind(gameHandler),
+              proposeGameEnd: gameHandler.proposeGameEnd.bind(gameHandler)
+            }
+          }
+  };
 };
 
 export default useGameHandler;

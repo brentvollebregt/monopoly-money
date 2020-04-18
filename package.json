@@ -4,7 +4,7 @@
   "description": "> TODO: description",
   "author": "Brent Vollebregt <brent.vollebregt@gmail.com>",
   "homepage": "https://github.com/brentvollebregt/monopoly-money#readme",
-  "main": "build/index.js",
+  "main": "packages/server/build/index.js",
   "scripts": {
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap --hoist",

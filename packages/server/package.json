@@ -6,8 +6,6 @@
   "scripts": {
     "dev": "ts-node-dev --inspect --respawn --transpileOnly src/index.ts",
     "build": "tsc",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "prestart": "npm run build",
     "start": "node ."
   },
   "dependencies": {

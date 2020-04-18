@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useTitle } from "hookrouter";
 import { Form, Button } from "react-bootstrap";
 import { createGame, joinGame } from "../../api";
+import useStoredGames from "../../hooks/useStoredGames";
 
 interface IJoinProps {
   newGame: boolean;
@@ -10,14 +11,17 @@ interface IJoinProps {
 
 const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
   const title = newGame ? "Create Game" : "Join Game";
+  useTitle(`${title} - Monopoly Money`);
 
+  const { storedGames } = useStoredGames(false);
   const [loading, setLoading] = useState(false);
   const [gameId, setGameId] = useState("");
   const [name, setName] = useState("");
   const [gameError, setGameError] = useState<string | null>(null);
   const [nameError, setNameError] = useState<string | null>(null);
 
-  useTitle(`${title} - Monopoly Money`);
+  // If the game is already stored, join with what we have
+  const isAStoredGame = storedGames.map((g) => g.gameId).indexOf(gameId) !== -1;
 
   const onGameIdChange = (event: React.FormEvent<HTMLInputElement>) => {
     setGameId(event.currentTarget.value ?? "");
@@ -28,7 +32,10 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
   };
 
   const onSubmit = () => {
-    if (newGame) {
+    if (isAStoredGame) {
+      const storedGame = storedGames.find((g) => g.gameId === gameId)!;
+      onGameSetup(storedGame.gameId, storedGame.userToken, storedGame.playerId);
+    } else if (newGame) {
       // Validity check
       if (name === "") {
         setNameError("Please provide your name");
@@ -91,19 +98,25 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
         </Form.Group>
       )}
 
-      <Form.Group>
-        <Form.Label>Your Name</Form.Label>
-        <Form.Control
-          placeholder="Name"
-          value={name}
-          className="text-center"
-          onChange={onNameChange}
-          onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) =>
-            event.key === "Enter" && onSubmit()
-          }
-        />
-        <Form.Text style={{ color: "var(--danger)" }}>{nameError}</Form.Text>
-      </Form.Group>
+      {isAStoredGame ? (
+        <p>
+          <em>You're already in this game - name is not required.</em>
+        </p>
+      ) : (
+        <Form.Group>
+          <Form.Label>Your Name</Form.Label>
+          <Form.Control
+            placeholder="Name"
+            value={name}
+            className="text-center"
+            onChange={onNameChange}
+            onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) =>
+              event.key === "Enter" && onSubmit()
+            }
+          />
+          <Form.Text style={{ color: "var(--danger)" }}>{nameError}</Form.Text>
+        </Form.Group>
+      )}
 
       <Button block variant="primary" onClick={onSubmit} disabled={loading}>
         {newGame ? "Create" : "Join"}

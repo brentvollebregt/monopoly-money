@@ -17,7 +17,7 @@ export interface IStoredGame extends IStoredGameInLocalStorage {
   status: IGameState | null;
 }
 
-const useStoredGames = () => {
+const useStoredGames = (getStatuses: boolean = true) => {
   const [abortController] = useState(() => new AbortController());
   const [storedGames, setStoredGames] = useLocalStorage<IStoredGameInLocalStorage[]>(
     storedGamesLocalStorageKey,
@@ -39,6 +39,11 @@ const useStoredGames = () => {
 
   // Identify if we need to fetch some new game data
   useEffect(() => {
+    // If we don't want to fetch the statuses, exit early
+    if (!getStatuses) {
+      return;
+    }
+
     const gamesWithoutStatuses = (storedGames ?? []).filter(
       (game) => Object.keys(gameStatuses).indexOf(game.gameId) === -1
     );

@@ -4,7 +4,6 @@ import Navigation from "./components/Navigation";
 import MetaTags from "./components/MetaTags";
 import PageSizeWrapper from "./components/PageSizeWrapper";
 import Home from "./pages/Home";
-// import NotFound from "./pages/NotFound";
 import Funds from "./pages/Funds";
 import Bank from "./pages/Bank";
 import History from "./pages/History";

@@ -1,0 +1,31 @@
+name: Build and Deploy Client to gh-pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+
+      - name: Install Dependencies and Build
+        run: |
+          npm install
+          npm run build
+        env:
+          REACT_APP_API_ROOT: https://monopoly-money-server.herokuapp.com/
+          REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: UA-117153268-5
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./packages/client/build

@@ -14,10 +14,20 @@ app.set("trust proxy", 1); // Trust first proxy
 
 app.use(express.json());
 
+// Warn if config.server.allowed_origins has not been set
+if (config.server.allowed_origins === undefined) {
+  console.warn(
+    "config.server.allowed_origins has not been set. This is the equivalent of setting CORS to *"
+  );
+}
+
 // Setup CORS as per server.allowed_origins
 app.use((req, res, next) => {
   const origin = (req.get("origin") || req.get("referrer")) ?? "";
-  if (config.server.allowed_origins.indexOf(origin) !== -1) {
+  if (
+    config.server.allowed_origins === undefined ||
+    config.server.allowed_origins.indexOf(origin) !== -1
+  ) {
     res.header("Access-Control-Allow-Origin", origin);
   }
   res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization");

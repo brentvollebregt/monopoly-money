@@ -67,8 +67,8 @@ const Navigation: React.FC<INavigationProps> = ({ inGame, isBanker }) => {
         </Navbar.Brand>
         <Nav className="mr-auto">
           {navbarLinks
-            .filter(link => link.active)
-            .map(link => {
+            .filter((link) => link.active)
+            .map((link) => {
               const Icon = link.icon;
               return (
                 <Nav.Link
@@ -79,7 +79,13 @@ const Navigation: React.FC<INavigationProps> = ({ inGame, isBanker }) => {
                   className="p-0"
                 >
                   <Button variant="light" title={link.title} className="d-flex ml-1 icon-button">
-                    <Icon style={{ height: 25, width: 25 }} />
+                    <Icon
+                      style={{
+                        height: 25,
+                        width: 25,
+                        fill: currentPath === link.path ? "black" : "rgba(0,0,0,.65)"
+                      }}
+                    />
                     <span className="ml-1 d-none d-sm-inline">{link.title}</span>
                   </Button>
                 </Nav.Link>

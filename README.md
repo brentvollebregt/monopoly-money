@@ -1,36 +1,60 @@
-# monopoly-money
-A simple flask server that allows for a banker and multiple players
+<div style="text-align: center">
+    <a href="https://monopoly-money.nitratine.net/"><img src="./client/src/img/banner.png" alt="Monopoly Money Banner" style="background: white;"></a>
+</div>
+<p align="center">Manage your finances in a game of Monopoly from the browser.</p>
+<p align="center"><a href="https://monopoly-money.nitratine.net/">🌐: monopoly-money.nitratine.net</a></p>
 
-## Screenshots
-![Player Type and Name Select](http://i.imgur.com/0zerq2pm.png "Player Type and Name Select")
-![Player Game Select](http://i.imgur.com/LYiuJWym.png "Player Game Select")
-![Player View](http://i.imgur.com/ECPmDU3m.png "Player View")
-![Banker View](http://i.imgur.com/h1cJ5X2m.png "Banker View")
+## 🛠️ Setup
 
-## Requirements
-* Python 3.6 (basically anything that will run Flask)
-* Flask (pip install Flask)
+1. Clone the repo and cd into the project.
+2. Install dependencies by executing `npm install`.
+3. Setup environment variables. This can be done two ways:
+   - Set the environment variables in the current terminal session
+   - Copy the .env.example files in the server and client packages and populate them:
+     - Examples are at: `packages/server/.env.example` and `packages/client/.env.example`
+     - Copy these using `cp .env.example .env` and populate them both.
+4. Build dependencies using `npm run build`.
+5. Execute `npm start` to start the server
 
-## Usage
-1. Optional: delete data.json on first run or use the one supplied
-2. Run run_server.py
-3. Visit address displayed
-4. Choose if you are the banker or another player and supply your name
-5. If you are a player, enter the pin supplied by your banker
-6. Have fun
+The environment variables that can be used are (can also be found in .env.example files):
 
-## Features
-* Games that generate when a player makes themself a banker
-* Easily join a game using a pin
-* Transfer money easily
-* Auto refresh in the background (still manual button in /play/ if its too slow)
-* Banker can edit player names and remove people
-* Free parking
-* Ask who starts first (random selection of current players)
-* Log that says what has happened (Shows all money values in K)
-* Can set players balances
-* Lock the game so no one else can come in while you are in the middle of a game
+- `REACT_APP_API_ROOT` (optional): The route that the client requests. Not setting this will default to `window.location.origin`.
+- `SERVER_ALLOWED_ORIGINS` (optional): The origins that are served by the server. Not setting this is the equivalent of setting CORS to \*.
 
-## Sources
-* [material.io](material.io) for bank.png, play.png, close.png and edit.png
-* [http://www.iconarchive.com](http://www.iconarchive.com) for favicon
+### 🧪 Development Setup
+
+When running the client in development mode using `npm run client:dev`, the client will use the `REACT_APP_API_ROOT` environment variable value to decide where to send requests. If this is not provided, the current hosted URL will be used.
+
+`npm run server:dev` can also be used for development of the server; this allows for hot-reloading. Running the client using `npm run client:dev` and setting `REACT_APP_API_ROOT` to where the server is running will allow for a development setup with hot-reloading.
+
+> `launch.json` also offers the ability to connect and debug the the server when running `npm run client:dev`.
+
+## 📝 Features
+
+- Multiple games can be hosted on the server at once
+- Each player uses their own device; everyone joins one game.
+- Send money between players quickly
+- The person that created the game is the banker. This person can:
+  - Give money to players from the bank (and take money)
+  - Give free parking to players
+  - Update player names
+  - Delete players
+  - Stop new people from joining the game
+  - End the game completely
+- History is recorded of each game event that can be viewed by all players
+
+## ❓ Why?
+
+If you have every played the credit card edition of Monopoly, you will appreciate how much faster the game moves without having to count cash. This webapp substitutes the need for cash in a game of monopoly for a mobile-banking-like solution where players can easily send each other virtual currency.
+
+## 🚧 TODO
+
+The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
+
+- Put \$ in send money modal
+- M/K formatting and inputs
+- `1fr 1fr` cols on home screen for larger devices
+- Home text + images
+- Help button
+  - Small tutorial with GIFs
+  - Layout: Title, description, GIF (repeat)

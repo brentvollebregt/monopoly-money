@@ -1,0 +1,26 @@
+/* Set Theme */
+$theme-colors: (
+  // "info": tomato,
+    // "danger": teal
+);
+
+/* Import bootstrap to set changes */
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.remove-left-border-radius {
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
+
+.remove-right-border-radius {
+  border-bottom-right-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}

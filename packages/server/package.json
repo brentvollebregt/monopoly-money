@@ -1,0 +1,28 @@
+{
+  "name": "@monopoly-money/server",
+  "private": true,
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --inspect --respawn --transpileOnly src/index.ts",
+    "build": "tsc",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "prestart": "npm run build",
+    "start": "node ."
+  },
+  "dependencies": {
+    "@monopoly-money/game-state": "*",
+    "@types/express": "^4.17.1",
+    "@types/node": "^12.11.1",
+    "@types/uuid": "^7.0.2",
+    "@types/ws": "^7.2.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "typescript": "^3.6.4",
+    "uuid": "^7.0.2",
+    "ws": "^7.2.3"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^1.0.0-pre.43"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@monopoly-money/game-state",
+  "private": true,
+  "version": "0.0.0",
+  "main": "build/index.js",
+  "types": "build/index.d.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "typescript": "^3.8.3"
+  }
+}

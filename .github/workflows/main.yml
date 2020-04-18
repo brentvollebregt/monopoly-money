@@ -23,6 +23,7 @@ jobs:
         env:
           REACT_APP_API_ROOT: https://monopoly-money-server.herokuapp.com/
           REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: UA-117153268-5
+          CI: false
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

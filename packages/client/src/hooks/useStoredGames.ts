@@ -21,6 +21,16 @@ export interface IStoredGame extends IStoredGameInLocalStorage {
   status: IGameState | null;
 }
 
+const useStoredGamesStatusCache: Record<string, IGameState> = {};
+
+const putGameStatusInCache = (gameId: string, state: IGameState) => {
+  useStoredGamesStatusCache[gameId] = state;
+};
+
+const getGameStatusFromCache = (gameId: string) => {
+  return gameId in useStoredGamesStatusCache ? useStoredGamesStatusCache[gameId] : null;
+};
+
 const useStoredGames = (getStatuses: boolean = true) => {
   const [abortController] = useState(() => new AbortController());
   const [storedGames, setStoredGames] = useLocalStorage<IStoredGameInLocalStorage[]>(
@@ -52,7 +62,7 @@ const useStoredGames = (getStatuses: boolean = true) => {
     // Pre-populate statuses with null
     setGameStatuses((current) => [
       ...current,
-      ...gamesWithRequiredStatuses.map((g) => ({ ...g, status: null }))
+      ...gamesWithRequiredStatuses.map((g) => ({ ...g, status: getGameStatusFromCache(g.gameId) }))
     ]);
 
     // Fire off requests for statuses
@@ -64,6 +74,7 @@ const useStoredGames = (getStatuses: boolean = true) => {
             setStoredGames((storedGames ?? []).filter((g) => g.gameId !== game.gameId));
           } else {
             // Add the status
+            putGameStatusInCache(game.gameId, status);
             setGameStatuses((current) =>
               current.map((g) => (g.gameId !== game.gameId ? g : { ...game, status }))
             );

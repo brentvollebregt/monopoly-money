@@ -60,7 +60,15 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
           <InputGroup.Prepend>
             <InputGroup.Text>Amount</InputGroup.Text>
           </InputGroup.Prepend>
-          <FormControl type="number" value={amount} onChange={onAmountUpdate} />
+          <div className="d-flex">
+            <FormControl
+              type="number"
+              value={amount}
+              onChange={onAmountUpdate}
+              className="remove-left-border-radius remove-right-border-radius with-dollar-sign-input-icon"
+            />
+            <span className="dollar-sign-input-icon">$</span>
+          </div>
           <Button variant="success" className="remove-left-border-radius" onClick={submit}>
             Send
           </Button>

@@ -58,7 +58,7 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
-- Put \$ in send money modal
+- Navigation icon colouring
 - M/K formatting and inputs
 - Settings initialise button
   - Give out x amount of money to all

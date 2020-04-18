@@ -39,51 +39,55 @@ const Home: React.FC<IHomeProps> = ({ onGameSetup }) => {
       <div className="mt-4">
         <h2>Your Active Games</h2>
         {storedGames.length > 0 ? (
-          storedGames.map(({ gameId, userToken, playerId, status, time }) => (
-            <Card key={gameId} className="mb-1">
-              <Card.Body className="p-2">
-                <div className="text-left">
-                  Game {gameId}
-                  <small style={{ float: "right" }}>
-                    {DateTime.fromISO(time).toFormat("DD h:mm a")}
-                  </small>
-                </div>
-                <div>
-                  {status?.players
-                    .sort((p1, p2) => (p1.playerId === playerId ? -1 : 0))
-                    .map((player) => (
-                      <Badge
-                        key={player.playerId}
-                        variant={
-                          player.playerId === playerId ? "dark" : player.banker ? "info" : "success"
-                        }
-                        className="mr-1"
-                      >
-                        {player.name}: {formatCurrency(player.balance)}
+          <div className="active-game-cards">
+            {storedGames.map(({ gameId, userToken, playerId, status, time }) => (
+              <Card key={gameId} className="mb-1">
+                <Card.Body className="p-2">
+                  <div className="text-left">
+                    Game {gameId}
+                    <small style={{ float: "right" }}>
+                      {DateTime.fromISO(time).toFormat("DD h:mm a")}
+                    </small>
+                  </div>
+                  <div>
+                    {status?.players
+                      .sort((p1, p2) => (p1.playerId === playerId ? -1 : 0))
+                      .map((player) => (
+                        <Badge
+                          key={player.playerId}
+                          variant={
+                            player.playerId === playerId
+                              ? "dark"
+                              : player.banker
+                              ? "info"
+                              : "success"
+                          }
+                          className="mr-1"
+                        >
+                          {player.name}: {formatCurrency(player.balance)}
+                        </Badge>
+                      ))}
+                    {status !== null && (
+                      <Badge variant="warning">
+                        Free Parking: {formatCurrency(status.freeParkingBalance)}
                       </Badge>
-                    ))}
-                  {status !== null && (
-                    <Badge variant="warning">
-                      Free Parking: {formatCurrency(status.freeParkingBalance)}
-                    </Badge>
-                  )}
-                </div>
-                <Button
-                  block
-                  size="sm"
-                  variant="outline-primary"
-                  onClick={() => onGameSetup(gameId, userToken, playerId)}
-                  className="mt-2"
-                >
-                  Join Game
-                </Button>
-              </Card.Body>
-            </Card>
-          ))
+                    )}
+                  </div>
+                  <Button
+                    block
+                    size="sm"
+                    variant="outline-primary"
+                    onClick={() => onGameSetup(gameId, userToken, playerId)}
+                    className="mt-2"
+                  >
+                    Join Game
+                  </Button>
+                </Card.Body>
+              </Card>
+            ))}
+          </div>
         ) : (
-          <>
-            <div>You have no active games</div>
-          </>
+          <div>You have no active games</div>
         )}
       </div>
 

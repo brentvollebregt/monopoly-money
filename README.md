@@ -58,11 +58,14 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
-- Reference env vars out higher
 - Put \$ in send money modal
 - M/K formatting and inputs
-- `1fr 1fr` cols on home screen for larger devices
-- Home text + images
+- Settings initialise button
+  - Give out x amount of money to all
+  - Chose a random player to start
+- Don't allow people to join under a different name when they already have previously joined
+  - Remove name box when the same game id is detected and swap in a message
 - Help button
   - Small tutorial with GIFs
   - Layout: Title, description, GIF (repeat)
+- Screenshots on Nitratine and then link in the README

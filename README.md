@@ -47,7 +47,7 @@ When running the client in development mode using `npm run client:dev`, the clie
 
 If you have every played the credit card edition of Monopoly, you will appreciate how much faster the game moves without having to count cash. This webapp substitutes the need for cash in a game of monopoly for a mobile-banking-like solution where players can easily send each other virtual currency.
 
-## Deployment
+## 🌐 Deployment
 
 This application was designed to have the server deployed on Heroku (with the client) and a separate client on GitHub Pages.
 

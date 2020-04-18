@@ -21,7 +21,7 @@ jobs:
           npm install
           npm run build
         env:
-          REACT_APP_API_ROOT: https://monopoly-money-server.herokuapp.com/
+          REACT_APP_API_ROOT: https://monopoly-money-server.herokuapp.com
           REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: UA-117153268-5
           CI: false
 

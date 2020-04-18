@@ -1,5 +1,5 @@
 <div style="text-align: center">
-    <a href="https://monopoly-money.nitratine.net/"><img src="./client/src/img/banner.png" alt="Monopoly Money Banner" style="background: white;"></a>
+    <a href="https://monopoly-money.nitratine.net/"><img src="./packages/client/src/img/banner.png" alt="Monopoly Money Banner" style="background: white;"></a>
 </div>
 <p align="center">Manage your finances in a game of Monopoly from the browser.</p>
 <p align="center"><a href="https://monopoly-money.nitratine.net/">🌐: monopoly-money.nitratine.net</a></p>
@@ -51,6 +51,7 @@ If you have every played the credit card edition of Monopoly, you will appreciat
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
+- Reference env vars out higher
 - Put \$ in send money modal
 - M/K formatting and inputs
 - `1fr 1fr` cols on home screen for larger devices

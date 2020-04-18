@@ -9,7 +9,7 @@
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap --hoist",
     "postinstall": "npm run bootstrap",
-    "start": "cd packages/server && node .",
+    "start": "npm start --prefix packages/server",
     "build": "cd packages/game-state && npm run build && cd ../server && npm run build && cd ../client && npm run build && cd ../../ && node postbuild.js",
     "client:dev": "cd packages/client && npm start",
     "server:dev": "cd packages/server && npm run dev"

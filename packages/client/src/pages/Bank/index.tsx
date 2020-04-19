@@ -43,7 +43,7 @@ const Bank: React.FC<IBankProps> = ({
           submitText="Take"
           players={players}
           onSubmit={(value: number, playerId: string) =>
-            proposeTransaction("bank", playerId, -value)
+            proposeTransaction(playerId, "bank", value)
           }
         />
       </div>

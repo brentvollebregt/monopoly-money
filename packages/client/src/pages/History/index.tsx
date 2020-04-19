@@ -48,6 +48,11 @@ const getEventDetails = (
   detail: string;
   colour: "blue" | "red" | "orange" | "yellow" | "green" | "cyan"; // https://getbootstrap.com/docs/4.0/getting-started/theming/#all-colors
 } => {
+  const actioningPlayer =
+    event.type !== "playerJoin"
+      ? previousState.players.find((p) => p.playerId === event.actionedBy)
+      : previousState.players.find((p) => p.playerId === event.actionedBy);
+
   switch (event.type) {
     case "playerJoin": {
       const player = nextState.players.find((p) => p.playerId === event.playerId)!;
@@ -82,10 +87,15 @@ const getEventDetails = (
           : event.from === "freeParking"
           ? "Free Parking"
           : nextState.players.find((p) => p.playerId === event.from)!.name;
+      const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
+      const actionedByNote =
+        actionedBy.playerId === event.from ? "" : `(actioned by ${actionedBy.name})`;
       return {
         id: `${event.type + event.time}`,
-        title: "Transaction",
-        detail: `${playerGiving} → ${playerReceiving} (${formatCurrency(event.amount)})`,
+        title: `Transaction`,
+        detail: `${playerGiving} → ${playerReceiving} (${formatCurrency(
+          event.amount
+        )}) ${actionedByNote}`,
         colour: "green"
       };
     }

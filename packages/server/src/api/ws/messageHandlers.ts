@@ -72,6 +72,9 @@ export const proposeEvent: MessageHandler = (ws, { gameId, userToken }, message)
     // Authorization filtering
     switch (event.type) {
       case "transaction":
+        if (event.amount <= 0) {
+          return; // All transactions must have an amount greater than 0
+        }
         if ((event.from === "bank" || event.from === "freeParking") && !isPlayerBanker) {
           return; // Only bankers can send money from the bank or free parking
         } else if (

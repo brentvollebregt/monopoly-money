@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputGroup, Button, DropdownButton, Dropdown } from "react-bootstrap";
+import { InputGroup, Button, DropdownButton, Dropdown, Form } from "react-bootstrap";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
 
@@ -19,14 +19,21 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
   const identifier = label.toLowerCase().replace(" ", "-");
   const [amount, setAmount] = useState("");
   const [selectedPlayer, setSelectedPlayer] = useState<IGameStatePlayer | null>(null);
-
-  const valid = amount !== "" && selectedPlayer !== null;
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const submit = () => {
-    if (selectedPlayer !== null) {
+    const numericalAmount = parseInt(amount, 10);
+    if (isNaN(numericalAmount)) {
+      setSubmitError("Please provide an amount");
+    } else if (numericalAmount <= 0) {
+      setSubmitError("You must provide sum larger than $0");
+    } else if (selectedPlayer === null) {
+      setSubmitError("No player is selected");
+    } else {
       onSubmit(parseInt(amount, 10), selectedPlayer.playerId);
       setAmount("");
       setSelectedPlayer(null);
+      setSubmitError(null);
     }
   };
 
@@ -56,11 +63,12 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
         </DropdownButton>
 
         <InputGroup.Append>
-          <Button variant="outline-secondary" onClick={submit} disabled={!valid}>
+          <Button variant="outline-secondary" onClick={submit}>
             {submitText}
           </Button>
         </InputGroup.Append>
       </InputGroup>
+      <Form.Text style={{ color: "var(--danger)" }}>{submitError}</Form.Text>
     </>
   );
 };

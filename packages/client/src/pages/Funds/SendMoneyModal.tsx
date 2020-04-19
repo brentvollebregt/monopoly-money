@@ -23,17 +23,21 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const submit = () => {
-    if (amount === "") {
+    const numericalAmount = parseInt(amount, 10);
+    if (isNaN(numericalAmount)) {
       setSubmitError("Please provide an amount");
-    } else if (parseInt(amount, 10) > balance) {
+    } else if (numericalAmount <= 0) {
+      setSubmitError("You must provide sum larger than $0");
+    } else if (numericalAmount > balance) {
       setSubmitError(`You do not have enough money (${formatCurrency(balance)})`);
     } else {
-      setSubmitError(null);
       proposeTransaction(
         playerId,
         recipient === "freeParking" ? "freeParking" : recipient.playerId,
         parseInt(amount, 10)
       );
+      setAmount("");
+      setSubmitError(null);
       onClose();
     }
   };

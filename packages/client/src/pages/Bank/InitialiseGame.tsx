@@ -38,11 +38,14 @@ const ValueModal: React.FC<IValueModalProps> = ({ submitAmount, onClose }) => {
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const submit = () => {
-    if (amount === "") {
+    const numericalAmount = parseInt(amount, 10);
+    if (isNaN(numericalAmount)) {
       setSubmitError("Please provide an amount");
+    } else if (numericalAmount <= 0) {
+      setSubmitError("You must provide sum larger than $0");
     } else {
       setSubmitError(null);
-      submitAmount(parseInt(amount, 10));
+      submitAmount(numericalAmount);
     }
   };
 

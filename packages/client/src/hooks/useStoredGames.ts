@@ -39,8 +39,6 @@ const useStoredGames = (getStatuses: boolean = true) => {
   );
   const [gameStatuses, setGameStatuses] = useState<IStoredGameInLocalStorageWithStatus[]>([]);
 
-  console.log({ storedGames, gameStatuses });
-
   // Sync storedGames and gameStatuses and fire off requests
   useEffect(() => {
     // If we don't want to fetch the statuses, exit early

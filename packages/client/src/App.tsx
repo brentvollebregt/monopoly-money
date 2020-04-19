@@ -20,7 +20,7 @@ const wrapRoute = (route: string, child: JSX.Element) => (
 );
 
 const App: React.FC = () => {
-  const { storeGame } = useStoredGames();
+  const { storeGame } = useStoredGames(false);
   const { game, authInfo, initialize, clear } = useGameHandler();
   const path = usePath();
 

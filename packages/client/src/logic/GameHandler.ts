@@ -27,7 +27,7 @@ class GameHandler {
   public userToken: string;
   public playerId: string;
   private onGameStateChange: (gameEnded: boolean) => void;
-  private onDisplayMessage: (message: string) => void;
+  private onDisplayMessage: (title: string, message: string, gameState: IGameState) => void;
   private events: GameEvent[] = [];
   private webSocket: WebSocket;
   private gameState: IGameState = defaultGameState;
@@ -37,7 +37,7 @@ class GameHandler {
     userToken: string,
     playerId: string,
     onGameStateChange: (gameEnded: boolean) => void,
-    onDisplayMessage: (message: string) => void
+    onDisplayMessage: (title: string, message: string, gameState: IGameState) => void
   ) {
     this.gameId = gameId;
     this.userToken = userToken;
@@ -147,13 +147,27 @@ class GameHandler {
     this.webSocket.close();
     switch (reason) {
       case "end":
-        this.onDisplayMessage("The game has been ended by the banker");
+        this.onDisplayMessage(
+          "Game Ended",
+          "The game has been ended by the banker.",
+          this.gameState
+        );
         break;
       case "removed":
-        this.onDisplayMessage("You have been removed from the game");
+        // Calculate the game state before the player was removed
+        const previousGameState = calculateGameState(this.events.slice(0, -1), defaultGameState);
+        this.onDisplayMessage(
+          "Removed From Game",
+          "You have been intentionally removed from the game by the banker.",
+          previousGameState
+        );
         break;
       case "unexpectedWebSocketClosure":
-        this.onDisplayMessage("Unexpectedly disconnection from the server");
+        this.onDisplayMessage(
+          "Disconnection from the server",
+          "Unexpectedly disconnection from the server. Please make sure you are connected to the internet",
+          this.gameState
+        );
         break;
     }
   };

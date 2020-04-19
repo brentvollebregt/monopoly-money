@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
-import cogoToast from "cogo-toast";
+import React, { useState } from "react";
 import GameHandler from "../logic/GameHandler";
 import { GameEvent, IGameState, GameEntity } from "@monopoly-money/game-state";
+import { useForceUpdate } from "./useForceUpdate";
+import useMessageModal from "./useMessageModal";
+import { formatCurrency } from "../utils";
 
 export interface IGameHandlerAuthInfo {
   gameId: string;
@@ -23,28 +25,39 @@ export interface IGameHandlerState extends IGameState {
   };
 }
 
-const onDisplayMessage = (message: string) => {
-  const { hide } = cogoToast.info(message, {
-    position: "bottom-center",
-    hideAfter: 10,
-    onClick: () => hide && hide()
-  });
-};
-
 const useGameHandler = (): {
   game: IGameHandlerState | null;
   authInfo: IGameHandlerAuthInfo | null;
   initialize: (auth: IGameHandlerAuthInfo) => void;
   clear: () => void;
 } => {
+  const forceUpdate = useForceUpdate(); // Used to trigger updates from the GameHandler
   const [gameHandler, setGameHandler] = useState<GameHandler | null>(null);
+  const showMessage = useMessageModal();
 
-  // Used to trigger updates from the GameHandler
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
+  const onDisplayMessage = (title: string, message: string, gameState: IGameState) => {
+    showMessage({
+      title,
+      body: (
+        <>
+          <p>{message}</p>
+          <p className="mb-0">Here was the games progress:</p>
+          <ul className="mb-1">
+            {gameState.players.map((player) => (
+              <li key={player.playerId}>
+                {player.name}: {formatCurrency(player.balance)}
+              </li>
+            ))}
+            <li>Free Parking: {formatCurrency(gameState.freeParkingBalance)}</li>
+          </ul>
+          <small>(Provided just in the case you need to re-create the game)</small>
+        </>
+      )
+    });
+  };
 
   // Create / destroy the game handler when new new auth is provided
-  const initialize = ({ gameId, userToken, playerId }: IGameHandlerAuthInfo) => {
+  const initializeGame = ({ gameId, userToken, playerId }: IGameHandlerAuthInfo) => {
     // If auth has been provided, setup the game handler
     const onGameStateChange = (gameEnded: boolean) => {
       if (gameEnded) {
@@ -59,7 +72,7 @@ const useGameHandler = (): {
   };
 
   // Clear the current game
-  const clear = () => {
+  const clearGame = () => {
     if (gameHandler !== null) {
       gameHandler.gameEnd(null);
     }
@@ -67,8 +80,8 @@ const useGameHandler = (): {
   };
 
   return {
-    initialize,
-    clear,
+    initialize: initializeGame,
+    clear: clearGame,
     authInfo:
       gameHandler === null
         ? null

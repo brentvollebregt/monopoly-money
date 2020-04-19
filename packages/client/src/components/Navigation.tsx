@@ -6,7 +6,9 @@ import { ReactComponent as BankIcon } from "../img/bank.svg";
 import { ReactComponent as FundsIcon } from "../img/funds.svg";
 import { ReactComponent as ListIcon } from "../img/list.svg";
 import { ReactComponent as SettingsIcon } from "../img/settings.svg";
+import { ReactComponent as HelpIcon } from "../img/help.svg";
 import { routePaths } from "../constants";
+import config from "../config";
 import "./Navigation.scss";
 
 interface INavigationProps {
@@ -48,6 +50,12 @@ const Navigation: React.FC<INavigationProps> = ({ inGame, isBanker }) => {
       active: inGame && isBanker,
       title: "Settings",
       icon: SettingsIcon
+    },
+    {
+      path: routePaths.help,
+      active: config.toggles.showHelpLinkInNavigation,
+      title: "Help",
+      icon: HelpIcon
     }
   ];
 
@@ -65,7 +73,7 @@ const Navigation: React.FC<INavigationProps> = ({ inGame, isBanker }) => {
             style={{ cursor: "pointer" }}
           />
         </Navbar.Brand>
-        <Nav className="mr-auto">
+        <Nav className="mr-auto" style={{ overflowY: "auto" }}>
           {navbarLinks
             .filter((link) => link.active)
             .map((link) => {

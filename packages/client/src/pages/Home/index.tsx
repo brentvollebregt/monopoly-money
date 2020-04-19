@@ -1,7 +1,7 @@
 import React from "react";
 import bannerImage from "../../img/banner.png";
 import { Button, Card, Badge } from "react-bootstrap";
-import { navigate, useTitle } from "hookrouter";
+import { navigate } from "hookrouter";
 import useStoredGames from "../../hooks/useStoredGames";
 import "./Home.scss";
 import { DateTime } from "luxon";
@@ -12,7 +12,6 @@ interface IHomeProps {
 }
 
 const Home: React.FC<IHomeProps> = ({ onGameSetup }) => {
-  useTitle("Monopoly Money");
   const { storedGames } = useStoredGames();
 
   const newGame = () => navigate("/new-game");

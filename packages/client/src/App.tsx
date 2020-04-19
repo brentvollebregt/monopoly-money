@@ -9,6 +9,7 @@ import Bank from "./pages/Bank";
 import History from "./pages/History";
 import Settings from "./pages/Settings";
 import Join from "./pages/Join";
+import Help from "./pages/Help";
 import { routePaths } from "./constants";
 import useStoredGames from "./hooks/useStoredGames";
 import useGameHandler from "./hooks/useGameHandler";
@@ -125,7 +126,8 @@ const App: React.FC = () => {
                 proposeGameEnd={game.actions.proposeGameEnd}
               />
             )
-        : () => <NotFound />
+        : () => <NotFound />,
+    [routePaths.help]: () => wrapRoute(routePaths.help, <Help />)
   };
 
   const routeResult = useRoutes(routes);

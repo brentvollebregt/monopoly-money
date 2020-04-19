@@ -9,7 +9,8 @@ export const routePaths = {
   funds: "/funds",
   bank: "/bank",
   history: "/history",
-  settings: "/settings"
+  settings: "/settings",
+  help: "/help"
 };
 
 export const pageMeta: Record<string, IPageMeta> = {
@@ -35,7 +36,6 @@ export const pageMeta: Record<string, IPageMeta> = {
   },
   [routePaths.bank]: {
     titlePrefix: "Bank",
-    description: "TODO",
     index: false
   },
   [routePaths.history]: {
@@ -44,6 +44,10 @@ export const pageMeta: Record<string, IPageMeta> = {
   },
   [routePaths.settings]: {
     titlePrefix: "Settings",
+    index: false
+  },
+  [routePaths.help]: {
+    titlePrefix: "Help",
     index: false
   }
 };

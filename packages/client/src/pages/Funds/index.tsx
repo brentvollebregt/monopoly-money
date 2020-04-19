@@ -24,7 +24,9 @@ const Funds: React.FC<IFundsProps> = ({
   freeParkingBalance,
   proposeTransaction
 }) => {
-  const [recipient, setRecipient] = useState<IGameStatePlayer | "freeParking" | null>(null);
+  const [recipient, setRecipient] = useState<IGameStatePlayer | "freeParking" | "bank" | null>(
+    null
+  );
   const [showSendMoneyModal, hideSendMoneyModal] = useModal(
     () => (
       <>
@@ -88,19 +90,35 @@ const Funds: React.FC<IFundsProps> = ({
           ))}
       </div>
 
-      <Card className="mt-1 text-center">
-        <Card.Body className="p-3">
-          <div>Free Parking: {formatCurrency(freeParkingBalance)}</div>
-          <Button
-            size="sm"
-            variant="outline-dark"
-            className="mt-2"
-            onClick={() => setRecipient("freeParking")}
-          >
-            Send Money
-          </Button>
-        </Card.Body>
-      </Card>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridGap: 10 }}>
+        <Card className="mt-1 text-center">
+          <Card.Body className="p-3">
+            <div>Free Parking</div>
+            <div>{formatCurrency(freeParkingBalance)}</div>
+            <Button
+              size="sm"
+              variant="outline-dark"
+              className="mt-2"
+              onClick={() => setRecipient("freeParking")}
+            >
+              Send Money
+            </Button>
+          </Card.Body>
+        </Card>
+        <Card className="mt-1 text-center">
+          <Card.Body className="p-3">
+            <div>Bank</div>
+            <Button
+              size="sm"
+              variant="outline-dark"
+              className="mt-2"
+              onClick={() => setRecipient("bank")}
+            >
+              Send Money
+            </Button>
+          </Card.Body>
+        </Card>
+      </div>
     </div>
   );
 };

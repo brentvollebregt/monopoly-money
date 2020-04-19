@@ -7,7 +7,7 @@ import NumberFormat, { NumberFormatValues } from "react-number-format";
 interface ISendMoneyModalProps {
   balance: number;
   playerId: string;
-  recipient: "freeParking" | IGameStatePlayer;
+  recipient: "freeParking" | "bank" | IGameStatePlayer;
   proposeTransaction: (from: GameEntity, to: GameEntity, amount: number) => void;
   onClose: () => void;
 }
@@ -33,7 +33,7 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
     } else {
       proposeTransaction(
         playerId,
-        recipient === "freeParking" ? "freeParking" : recipient.playerId,
+        recipient === "freeParking" || recipient === "bank" ? recipient : recipient.playerId,
         parseInt(amount, 10)
       );
       setAmount("");
@@ -47,12 +47,20 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
     onClose();
   };
 
+  const getRecipientName = () => {
+    if (recipient === "freeParking") {
+      return "Free Parking";
+    } else if (recipient === "bank") {
+      return "Bank";
+    } else {
+      return recipient.name;
+    }
+  };
+
   return (
     <Modal show={true} onHide={cancel} size="lg" centered className="send-money-modal">
       <Modal.Header closeButton>
-        <Modal.Title>
-          Transfer Funds to {recipient === "freeParking" ? "Free Parking" : recipient.name}
-        </Modal.Title>
+        <Modal.Title>Transfer Funds to {getRecipientName()}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <InputGroup>

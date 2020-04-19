@@ -55,7 +55,7 @@ const useStoredGames = (getStatuses: boolean = true) => {
 
     // Remove games from gameStatuses that are not in storedGames
     const storedGameIds = (storedGames ?? []).map((g) => g.gameId);
-    setGameStatuses((current) => current.filter((g) => storedGameIds.indexOf(g.gameId) !== 1));
+    setGameStatuses((current) => current.filter((g) => storedGameIds.indexOf(g.gameId) !== -1));
 
     // Pre-populate statuses with null
     setGameStatuses((current) => [

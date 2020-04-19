@@ -38,12 +38,12 @@ export const authMessage: MessageHandler = (ws, userData, message) => {
     // If the game does no longer exist or the user is not in the game, end the connection
     if (!gameStore.doesGameExist(message.gameId)) {
       ws.close();
-      return false;
+      return;
     }
     const game = gameStore.getGame(message.gameId);
     if (!game.isUserInGame(message.userToken)) {
       ws.close();
-      return false;
+      return;
     }
 
     // Setup user data

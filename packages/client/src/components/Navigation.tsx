@@ -8,7 +8,6 @@ import { ReactComponent as ListIcon } from "../img/list.svg";
 import { ReactComponent as SettingsIcon } from "../img/settings.svg";
 import { ReactComponent as HelpIcon } from "../img/help.svg";
 import { routePaths } from "../constants";
-import config from "../config";
 import "./Navigation.scss";
 
 interface INavigationProps {
@@ -53,7 +52,7 @@ const Navigation: React.FC<INavigationProps> = ({ inGame, isBanker }) => {
     },
     {
       path: routePaths.help,
-      active: config.toggles.showHelpLinkInNavigation,
+      active: true,
       title: "Help",
       icon: HelpIcon
     }

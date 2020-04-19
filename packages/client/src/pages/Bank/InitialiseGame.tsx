@@ -76,7 +76,7 @@ const ValueModal: React.FC<IValueModalProps> = ({ submitAmount, onClose }) => {
             className="form-control"
           />
           <Button variant="success" className="remove-left-border-radius" onClick={submit}>
-            Send
+            Initialise
           </Button>
         </InputGroup>
         <Form.Text style={{ color: "var(--danger)" }}>{submitError}</Form.Text>

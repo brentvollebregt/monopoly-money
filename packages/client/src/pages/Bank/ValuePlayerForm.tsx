@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { InputGroup, Button, FormControl, DropdownButton, Dropdown } from "react-bootstrap";
+import { InputGroup, Button, DropdownButton, Dropdown } from "react-bootstrap";
+import NumberFormat, { NumberFormatValues } from "react-number-format";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
 
 interface IValuePlayerFormProps {
@@ -21,12 +22,6 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
 
   const valid = amount !== "" && selectedPlayer !== null;
 
-  const onAmountUpdate = (event: React.FormEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget;
-    const int = parseInt(value ?? "", 10);
-    setAmount(isNaN(int) ? "" : `${int}`);
-  };
-
   const submit = () => {
     if (selectedPlayer !== null) {
       onSubmit(parseInt(amount, 10), selectedPlayer.playerId);
@@ -39,15 +34,14 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
     <>
       <label htmlFor={`${identifier}-value`}>{label}</label>
       <InputGroup>
-        <FormControl
-          type="number"
+        <NumberFormat
+          thousandSeparator={true}
+          prefix="$"
           id={`${identifier}-value`}
           value={amount}
-          onChange={onAmountUpdate}
-          className="with-dollar-sign-input-icon"
+          onValueChange={({ value }: NumberFormatValues) => setAmount(value)}
+          className="form-control"
         />
-        <span className="dollar-sign-input-icon">$</span>
-
         <DropdownButton
           variant="outline-secondary"
           id={`${identifier}-player`}

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { InputGroup, Button, Modal, FormControl, Form } from "react-bootstrap";
+import { InputGroup, Button, Modal, Form } from "react-bootstrap";
 import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 import { useModal } from "react-modal-hook";
+import NumberFormat, { NumberFormatValues } from "react-number-format";
 
 interface IInitialiseGameProps {
   players: IGameStatePlayer[];
@@ -50,12 +51,6 @@ const ValueModal: React.FC<IValueModalProps> = ({ submitAmount, onClose }) => {
     onClose();
   };
 
-  const onAmountUpdate = (event: React.FormEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget;
-    const int = parseInt(value ?? "", 10);
-    setAmount(isNaN(int) ? "" : `${int}`);
-  };
-
   return (
     <Modal show={true} onHide={cancel} size="lg" centered className="send-money-modal">
       <Modal.Header closeButton>
@@ -70,15 +65,13 @@ const ValueModal: React.FC<IValueModalProps> = ({ submitAmount, onClose }) => {
           <InputGroup.Prepend>
             <InputGroup.Text>Amount</InputGroup.Text>
           </InputGroup.Prepend>
-          <div className="d-flex">
-            <FormControl
-              type="number"
-              value={amount}
-              onChange={onAmountUpdate}
-              className="remove-left-border-radius remove-right-border-radius with-dollar-sign-input-icon"
-            />
-            <span className="dollar-sign-input-icon">$</span>
-          </div>
+          <NumberFormat
+            thousandSeparator={true}
+            prefix="$"
+            value={amount}
+            onValueChange={({ value }: NumberFormatValues) => setAmount(value)}
+            className="form-control"
+          />
           <Button variant="success" className="remove-left-border-radius" onClick={submit}>
             Send
           </Button>

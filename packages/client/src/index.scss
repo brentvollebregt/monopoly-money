@@ -24,19 +24,3 @@ body {
   border-bottom-right-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
-
-$dollar-sign-width: 25px;
-
-.with-dollar-sign-input-icon {
-  padding-left: $dollar-sign-width !important;
-}
-
-.dollar-sign-input-icon {
-  z-index: 3;
-  position: absolute;
-  transform: translate(0, -50%);
-  top: 50%;
-  pointer-events: none;
-  width: $dollar-sign-width;
-  text-align: center;
-}

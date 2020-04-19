@@ -59,7 +59,6 @@ This application was designed to have the server deployed on Heroku (with the cl
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
 - Better support for number inputs: https://www.npmjs.com/package/react-number-format
-- Game not removed from the home screen when kicked
 - When the user has a lot of dead games, useStoredGames can't remove them all at once since we can't update the local storage state using a function
 - Help button
   - Small tutorial with GIFs

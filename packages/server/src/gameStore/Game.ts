@@ -107,9 +107,15 @@ export default class Game {
       time: getCurrentTime()
     });
 
-    // If a player has been deleted, remove close and remove their websocket
-    if (event.type === "playerDelete" && event.playerId in this.subscribedWebSockets) {
+    // If a player has been deleted, close their websocket and remove their user token
+    if (event.type === "playerDelete") {
       this.removePlayerWebSocket(event.playerId);
+      const userToken = Object.keys(this.userTokenToPlayers).find(
+        (token) => this.userTokenToPlayers[token] === event.playerId
+      );
+      if (userToken !== undefined) {
+        delete this.userTokenToPlayers[userToken];
+      }
     }
 
     // If all bankers have removed themselves, end the game

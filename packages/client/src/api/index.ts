@@ -49,7 +49,7 @@ export const getGameStatus = async (
   gameId: string,
   userToken: string,
   abortController: AbortController | undefined
-): Promise<IGameState | "DoesNotExist"> => {
+): Promise<IGameState | "DoesNotExist" | "Unauthorized"> => {
   const response = await fetch(`${config.api.root}/api/game/${gameId}`, {
     method: "GET",
     headers: {
@@ -62,6 +62,8 @@ export const getGameStatus = async (
     return response.json() as Promise<IGameState>;
   } else if (response.status === 404) {
     return Promise.resolve("DoesNotExist") as Promise<"DoesNotExist">;
+  } else if (response.status === 401) {
+    return Promise.resolve("Unauthorized") as Promise<"Unauthorized">;
   } else {
     throw new Error(`Server Error (HTTP${response.status})`);
   }

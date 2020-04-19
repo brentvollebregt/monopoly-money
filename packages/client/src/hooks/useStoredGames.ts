@@ -67,8 +67,8 @@ const useStoredGames = (getStatuses: boolean = true) => {
     gamesWithRequiredStatuses.forEach((game) => {
       getGameStatus(game.gameId, game.userToken, abortController)
         .then((status) => {
-          if (status === "DoesNotExist") {
-            // Remove the game if it no longer exists
+          if (status === "DoesNotExist" || status === "Unauthorized") {
+            // Remove the game if it no longer exists or you are not allowed to join
             setStoredGames((storedGames ?? []).filter((g) => g.gameId !== game.gameId));
           } else {
             // Add the status

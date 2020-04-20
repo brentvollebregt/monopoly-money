@@ -58,6 +58,7 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
+- Remove send money buttons?
 - Help button
   - Small tutorial with GIFs
   - Layout: Title, description, GIF (repeat)

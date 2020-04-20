@@ -18,7 +18,8 @@ export const calculateGameState = (events: GameEvent[], currentState: IGameState
               playerId: event.playerId,
               name: event.name,
               banker: false,
-              balance: 0
+              balance: 0,
+              connected: false
             }
           ]
         };
@@ -119,6 +120,18 @@ export const calculateGameState = (events: GameEvent[], currentState: IGameState
         return {
           ...state,
           open: event.open
+        };
+
+      case "playerConnect":
+        return {
+          ...state,
+          players: [
+            ...state.players.filter((p) => p.playerId !== event.playerId),
+            {
+              ...state.players.find((p) => p.playerId === event.playerId)!,
+              connected: event.connected
+            }
+          ]
         };
     }
   }, currentState);

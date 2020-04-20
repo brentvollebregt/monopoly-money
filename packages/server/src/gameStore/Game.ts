@@ -6,7 +6,8 @@ import {
   IPlayerBankerStatusChangeEvent,
   defaultGameState,
   IGameState,
-  calculateGameState
+  calculateGameState,
+  IPlayerConnectEvent
 } from "@monopoly-money/game-state";
 import { generateTimeBasedId, generateRandomId, getCurrentTime } from "./utils";
 import {
@@ -81,6 +82,18 @@ export default class Game {
     this.pushEvent(event);
   };
 
+  // Record a players websocket connection in-game
+  public playerConnectionStatusChange = (playerId: string, connected: boolean) => {
+    const event: IPlayerConnectEvent = {
+      type: "playerConnect",
+      time: getCurrentTime(),
+      actionedBy: playerId,
+      playerId,
+      connected
+    };
+    this.pushEvent(event);
+  };
+
   // Subscribe a websocket to get any event updates
   public subscribeWebSocketToEvents = (ws: websocket, playerId: string) => {
     // Add to subscription list
@@ -92,6 +105,9 @@ export default class Game {
       events: this.events
     };
     ws.send(JSON.stringify(outgoingMessage));
+
+    // Tell listeners that this player is now connected
+    this.playerConnectionStatusChange(playerId, true);
   };
 
   // Get the game state
@@ -131,6 +147,9 @@ export default class Game {
       this.subscribedWebSockets[playerId].close();
       delete this.subscribedWebSockets[playerId];
     }
+
+    // Tell listeners that this player is now disconnected
+    this.playerConnectionStatusChange(playerId, false);
   };
 
   // End a game

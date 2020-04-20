@@ -8,6 +8,7 @@ export interface IGameStatePlayer {
   name: string;
   banker: boolean;
   balance: number;
+  connected: boolean;
 }
 
 export interface IGameState {
@@ -24,7 +25,8 @@ export type GameEvent =
   | IPlayerNameChangeEvent
   | IPlayerBankerStatusChangeEvent
   | ITransactionEvent
-  | IGameOpenStateChangeEvent;
+  | IGameOpenStateChangeEvent
+  | IPlayerConnectEvent;
 
 export interface IGameEvent {
   time: string; // ISO string
@@ -64,4 +66,10 @@ export interface ITransactionEvent extends IGameEvent {
 export interface IGameOpenStateChangeEvent extends IGameEvent {
   type: "gameOpenStateChange";
   open: boolean;
+}
+
+export interface IPlayerConnectEvent extends IGameEvent {
+  type: "playerConnect";
+  playerId: PlayerId;
+  connected: boolean;
 }

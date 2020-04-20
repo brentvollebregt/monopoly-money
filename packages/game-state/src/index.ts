@@ -10,7 +10,8 @@ import {
   IPlayerNameChangeEvent,
   IPlayerBankerStatusChangeEvent,
   ITransactionEvent,
-  IGameOpenStateChangeEvent
+  IGameOpenStateChangeEvent,
+  IPlayerConnectEvent
 } from "./types";
 
 export {
@@ -26,5 +27,6 @@ export {
   IPlayerNameChangeEvent,
   IPlayerBankerStatusChangeEvent,
   ITransactionEvent,
-  IGameOpenStateChangeEvent
+  IGameOpenStateChangeEvent,
+  IPlayerConnectEvent
 };

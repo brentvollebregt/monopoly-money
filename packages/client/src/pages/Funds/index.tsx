@@ -74,6 +74,7 @@ const Funds: React.FC<IFundsProps> = ({
           .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
           .map((player) => (
             <Card key={player.name} className="text-center">
+              <div className={`m-2 connection-dot ${player.connected ? "connected" : ""}`} />
               <Card.Body className="p-3">
                 <div>{player.name}</div>
                 <div>{formatCurrency(player.balance)}</div>

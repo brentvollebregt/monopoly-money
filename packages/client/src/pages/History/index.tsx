@@ -23,17 +23,19 @@ const History: React.FC<IHistoryProps> = ({ events }) => {
 
   return (
     <div className="history">
-      {details.reverse().map((eventDetail) => (
-        <div key={eventDetail.id} className="event mb-2">
-          <div className="bar" style={{ background: `var(--${eventDetail.colour})` }} />
-          <div className="event-details">
-            <div className="title">
-              <small>{eventDetail.title}</small>
+      {details.reverse().map((eventDetail) =>
+        eventDetail === null ? null : (
+          <div key={eventDetail.id} className="event mb-2">
+            <div className="bar" style={{ background: `var(--${eventDetail.colour})` }} />
+            <div className="event-details">
+              <div className="title">
+                <small>{eventDetail.title}</small>
+              </div>
+              <div className="detail">{eventDetail.detail}</div>
             </div>
-            <div className="detail">{eventDetail.detail}</div>
           </div>
-        </div>
-      ))}
+        )
+      )}
     </div>
   );
 };
@@ -47,12 +49,7 @@ const getEventDetails = (
   title: string;
   detail: string;
   colour: "blue" | "red" | "orange" | "yellow" | "green" | "cyan"; // https://getbootstrap.com/docs/4.0/getting-started/theming/#all-colors
-} => {
-  const actioningPlayer =
-    event.type !== "playerJoin"
-      ? previousState.players.find((p) => p.playerId === event.actionedBy)
-      : previousState.players.find((p) => p.playerId === event.actionedBy);
-
+} | null => {
   switch (event.type) {
     case "playerJoin": {
       const player = nextState.players.find((p) => p.playerId === event.playerId)!;
@@ -131,6 +128,18 @@ const getEventDetails = (
         detail: `The game is now ${event.open ? "open" : "closed"} to new players`,
         colour: "blue"
       };
+    }
+
+    case "playerConnect": {
+      // Don't show these as they will pollute the history
+      // const playerName = previousState.players.find((p) => p.playerId === event.playerId)!.name;
+      // return {
+      //   id: `${event.type + event.time}`,
+      //   title: "Player's Connection",
+      //   detail: `${playerName} ${event.connected ? "connected to" : "disconnected from"} the game`,
+      //   colour: "teal"
+      // };
+      return null;
     }
   }
 };

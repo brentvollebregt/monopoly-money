@@ -5,7 +5,9 @@ import { useModal } from "react-modal-hook";
 import RenamePlayerModal from "./RenamePlayerModal";
 import DeletePlayerModal from "./DeletePlayerModal";
 import EndGameConfirmDialog from "./EndGameConfirmDialog";
-import { formatCurrency } from "../../utils";
+import { formatCurrency, sortPlayersByName } from "../../utils";
+import "./Settings.scss";
+import ConnectedStateDot from "../../components/ConnectedStateDot";
 
 interface ISettingsProps {
   isGameOpen: boolean;
@@ -63,18 +65,22 @@ const Settings: React.FC<ISettingsProps> = ({
   );
 
   return (
-    <div>
+    <div className="settings">
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
+            <th></th>
             <th>Name</th>
             <th>Balance</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {players.map((player) => (
-            <tr key={player.playerId}>
+          {sortPlayersByName(players).map((player) => (
+            <tr key={player.playerId} className="player-row">
+              <td>
+                <ConnectedStateDot connected={player.connected} />
+              </td>
               <td>{player.name}</td>
               <td>{formatCurrency(player.balance)}</td>
               <td>

@@ -5,7 +5,8 @@ import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 import SendMoneyModal from "./SendMoneyModal";
 import { useModal } from "react-modal-hook";
 import GameCode from "./GameCode";
-import { formatCurrency } from "../../utils";
+import { formatCurrency, sortPlayersByName } from "../../utils";
+import ConnectedStateDot from "../../components/ConnectedStateDot";
 
 interface IFundsProps {
   gameId: string;
@@ -69,26 +70,23 @@ const Funds: React.FC<IFundsProps> = ({
       </Card>
 
       <div className="balance-grid">
-        {players
-          .filter((p) => p.playerId !== playerId)
-          .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-          .map((player) => (
-            <Card key={player.name} className="text-center">
-              <div className={`m-2 connection-dot ${player.connected ? "connected" : ""}`} />
-              <Card.Body className="p-3">
-                <div>{player.name}</div>
-                <div>{formatCurrency(player.balance)}</div>
-                <Button
-                  size="sm"
-                  variant="outline-dark"
-                  className="mt-2"
-                  onClick={() => setRecipient(player)}
-                >
-                  Send Money
-                </Button>
-              </Card.Body>
-            </Card>
-          ))}
+        {sortPlayersByName(players.filter((p) => p.playerId !== playerId)).map((player) => (
+          <Card key={player.name} className="text-center">
+            <ConnectedStateDot connected={player.connected} className="m-2" />
+            <Card.Body className="p-3">
+              <div>{player.name}</div>
+              <div>{formatCurrency(player.balance)}</div>
+              <Button
+                size="sm"
+                variant="outline-dark"
+                className="mt-2"
+                onClick={() => setRecipient(player)}
+              >
+                Send Money
+              </Button>
+            </Card.Body>
+          </Card>
+        ))}
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridGap: 10 }}>

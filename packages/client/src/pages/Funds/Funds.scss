@@ -4,17 +4,8 @@
     grid-template-columns: 1fr 1fr;
     grid-gap: 0.25rem;
 
-    .connection-dot {
-      height: 15px;
-      width: 15px;
-      border: 2px solid var(--gray);
+    .connected-state-dot {
       position: absolute;
-      border-radius: 50%;
-
-      &.connected {
-        background: var(--green);
-        border: none;
-      }
     }
   }
 }

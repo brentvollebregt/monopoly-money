@@ -59,7 +59,6 @@ This application was designed to have the server deployed on Heroku (with the cl
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
 - Put connection dot in settings table
-- BUG: Server dies when deleting a player
 - In history on player rename, show actioner
 - Number pad entry into game (restrict to 6 numbers)
 - Show times in history

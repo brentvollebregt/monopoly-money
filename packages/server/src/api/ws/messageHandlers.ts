@@ -28,6 +28,9 @@ export const onMessageStreamClosed = (ws: websocket, userData: IUserData) => {
     const game = gameStore.getGame(userData.gameId);
     const playerId = game.getPlayerId(userData.userToken);
     game.removePlayerWebSocket(playerId);
+
+    // Tell the game that this player is now disconnected
+    game.playerConnectionStatusChange(playerId, false);
   }
 };
 
@@ -95,6 +98,10 @@ export const proposeEvent: MessageHandler = (ws, { gameId, userToken }, message)
           return; // Only a banker or the player themselves can remove a player from the game
         }
         break;
+      case "playerConnect":
+        if (event.playerId !== playerId) {
+          return; // Players can only update their own connection status
+        }
     }
 
     game.addEvent(event, playerId);

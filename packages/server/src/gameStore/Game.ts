@@ -84,14 +84,18 @@ export default class Game {
 
   // Record a players websocket connection in-game
   public playerConnectionStatusChange = (playerId: string, connected: boolean) => {
-    const event: IPlayerConnectEvent = {
-      type: "playerConnect",
-      time: getCurrentTime(),
-      actionedBy: playerId,
-      playerId,
-      connected
-    };
-    this.pushEvent(event);
+    // Verify the player is still in the game (will not be if they were kicked)
+    if (this.gameState.players.find((p) => p.playerId) !== undefined) {
+      // If the player is still in the game, update their state
+      const event: IPlayerConnectEvent = {
+        type: "playerConnect",
+        time: getCurrentTime(),
+        actionedBy: playerId,
+        playerId,
+        connected
+      };
+      this.pushEvent(event);
+    }
   };
 
   // Subscribe a websocket to get any event updates
@@ -147,9 +151,6 @@ export default class Game {
       this.subscribedWebSockets[playerId].close();
       delete this.subscribedWebSockets[playerId];
     }
-
-    // Tell listeners that this player is now disconnected
-    this.playerConnectionStatusChange(playerId, false);
   };
 
   // End a game

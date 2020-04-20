@@ -58,7 +58,21 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
+- Put connection dot in settings table
+- BUG: Server dies when deleting a player
+- In history on player rename, show actioner
+- Number pad entry into game (restrict to 6 numbers)
+- Show times in history
+- Some symbol instead of (actioned by)
 - Remove send money buttons?
+- Passing go button in banker [settings, player dropdown, send]
+  - Settings is a localstorage value of the amount to send
+  - The past go amount is shown above: "Past Go (\$2,000,000)"
+- Multiplier buttons
+  - "M" and "K" buttons to multiply by 1,000,000 and 1,000
+- Show most recent transactions on from/to tiles
+  - Coloured values in brackets - e.g. (-\$500,000)
+  - Timeout? Use a hook? The hook can look at the most recent transaction time and set a timeout when to remove them or not to display at all?
 - Help button
   - Small tutorial with GIFs
   - Layout: Title, description, GIF (repeat)

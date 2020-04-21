@@ -8,6 +8,7 @@ import {
 import "./History.scss";
 import { formatCurrency } from "../../utils";
 import { bankName, freeParkingName } from "../../constants";
+import { DateTime } from "luxon";
 
 interface IHistoryProps {
   events: GameEvent[];
@@ -29,8 +30,14 @@ const History: React.FC<IHistoryProps> = ({ events }) => {
           <div key={eventDetail.id} className="event mb-2">
             <div className="bar" style={{ background: `var(--${eventDetail.colour})` }} />
             <div className="event-details">
-              <div className="title">
+              <div className="top">
                 <small>{eventDetail.title}</small>
+                <small>
+                  {eventDetail.actionedBy !== null && (
+                    <span className="mr-2">(✍️ {eventDetail.actionedBy})</span>
+                  )}
+                  {eventDetail.time}
+                </small>
               </div>
               <div className="detail">{eventDetail.detail}</div>
             </div>
@@ -41,22 +48,31 @@ const History: React.FC<IHistoryProps> = ({ events }) => {
   );
 };
 
+interface IEventDetail {
+  id: string;
+  title: string;
+  actionedBy: string | null;
+  time: string;
+  detail: string;
+  colour: "blue" | "red" | "orange" | "yellow" | "green" | "cyan"; // https://getbootstrap.com/docs/4.0/getting-started/theming/#all-colors
+}
+
 const getEventDetails = (
   event: GameEvent,
   previousState: IGameState,
   nextState: IGameState
-): {
-  id: string;
-  title: string;
-  detail: string;
-  colour: "blue" | "red" | "orange" | "yellow" | "green" | "cyan"; // https://getbootstrap.com/docs/4.0/getting-started/theming/#all-colors
-} | null => {
+): IEventDetail | null => {
+  const defaults = {
+    id: `${event.type + event.time}`,
+    time: DateTime.fromISO(event.time).toFormat("H:mm a")
+  };
   switch (event.type) {
     case "playerJoin": {
       const player = nextState.players.find((p) => p.playerId === event.playerId)!;
       return {
-        id: `${event.type + event.time}`,
+        ...defaults,
         title: "Player Join",
+        actionedBy: null,
         detail: `${player.name} joined`,
         colour: "cyan"
       };
@@ -64,9 +80,11 @@ const getEventDetails = (
 
     case "playerBankerStatusChange": {
       const player = nextState.players.find((p) => p.playerId === event.playerId)!;
+      const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
       return {
-        id: `${event.type + event.time}`,
+        ...defaults,
         title: "Player Banker Status Change",
+        actionedBy: actionedBy.name,
         detail: `${player.name} was made a banker`,
         colour: "yellow"
       };
@@ -86,14 +104,11 @@ const getEventDetails = (
           ? freeParkingName
           : nextState.players.find((p) => p.playerId === event.from)!.name;
       const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
-      const actionedByNote =
-        actionedBy.playerId === event.from ? "" : `(actioned by ${actionedBy.name})`;
       return {
-        id: `${event.type + event.time}`,
+        ...defaults,
         title: `Transaction`,
-        detail: `${playerGiving} → ${playerReceiving} (${formatCurrency(
-          event.amount
-        )}) ${actionedByNote}`,
+        actionedBy: actionedBy.playerId === event.from ? null : actionedBy.name,
+        detail: `${playerGiving} → ${playerReceiving} (${formatCurrency(event.amount)})`,
         colour: "green"
       };
     }
@@ -104,9 +119,11 @@ const getEventDetails = (
       )!.name;
       const playerNameAfterRename = nextState.players.find((p) => p.playerId === event.playerId)!
         .name;
+      const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
       return {
-        id: `${event.type + event.time}`,
+        ...defaults,
         title: "Player Name Change",
+        actionedBy: actionedBy.playerId === event.playerId ? null : actionedBy.name,
         detail: `${playerNameBeforeRename} was renamed to ${playerNameAfterRename}`,
         colour: "orange"
       };
@@ -114,18 +131,22 @@ const getEventDetails = (
 
     case "playerDelete": {
       const playerName = previousState.players.find((p) => p.playerId === event.playerId)!.name;
+      const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
       return {
-        id: `${event.type + event.time}`,
+        ...defaults,
         title: "Player Removal",
+        actionedBy: actionedBy.playerId === event.playerId ? null : actionedBy.name,
         detail: `${playerName} was removed from the game`,
         colour: "red"
       };
     }
 
     case "gameOpenStateChange": {
+      const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
       return {
-        id: `${event.type + event.time}`,
+        ...defaults,
         title: "Game Open State Change",
+        actionedBy: actionedBy.name,
         detail: `The game is now ${event.open ? "open" : "closed"} to new players`,
         colour: "blue"
       };

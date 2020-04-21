@@ -5,6 +5,11 @@
 
     .event-details {
       padding-left: 8px;
+
+      .top {
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
 }

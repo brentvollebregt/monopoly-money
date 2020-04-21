@@ -58,10 +58,7 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
-- In history on player rename, show actioner
 - Number pad entry into game (restrict to 6 numbers)
-- Show times in history
-- Some symbol instead of (actioned by)
 - Remove send money buttons?
 - Passing go button in banker [settings, player dropdown, send]
   - Settings is a localstorage value of the amount to send
@@ -71,6 +68,8 @@ The base of this application is completed, there are just a few more cosmetic go
 - Show most recent transactions on from/to tiles
   - Coloured values in brackets - e.g. (-\$500,000)
   - Timeout? Use a hook? The hook can look at the most recent transaction time and set a timeout when to remove them or not to display at all?
+  - Or show a heading at the top e.g. Brent => Bank (\$2,000,000) in green for 5 seconds
+    - Hold place to not move stuff up and down
 - Help button
   - Small tutorial with GIFs
   - Layout: Title, description, GIF (repeat)

@@ -3,6 +3,7 @@ import { useTitle } from "hookrouter";
 import { Form, Button } from "react-bootstrap";
 import { createGame, joinGame } from "../../api";
 import useStoredGames from "../../hooks/useStoredGames";
+import NumberFormat, { NumberFormatValues } from "react-number-format";
 
 interface IJoinProps {
   newGame: boolean;
@@ -22,10 +23,6 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
 
   // If the game is already stored, join with what we have
   const isAStoredGame = storedGames.map((g) => g.gameId).indexOf(gameId) !== -1;
-
-  const onGameIdChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setGameId(event.currentTarget.value ?? "");
-  };
 
   const onNameChange = (event: React.FormEvent<HTMLInputElement>) => {
     setName(event.currentTarget.value);
@@ -88,11 +85,13 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
       {!newGame && (
         <Form.Group>
           <Form.Label>Game Id</Form.Label>
-          <Form.Control
+          <NumberFormat
+            allowNegative={false}
+            format="######"
             placeholder="123456"
             value={gameId}
-            className="text-center"
-            onChange={onGameIdChange}
+            onValueChange={({ value }: NumberFormatValues) => setGameId(value)}
+            className="form-control text-center"
           />
           <Form.Text style={{ color: "var(--danger)" }}>{gameError}</Form.Text>
         </Form.Group>

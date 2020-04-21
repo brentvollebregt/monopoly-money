@@ -69,6 +69,7 @@ const ValueModal: React.FC<IValueModalProps> = ({ submitAmount, onClose }) => {
             <InputGroup.Text>Amount</InputGroup.Text>
           </InputGroup.Prepend>
           <NumberFormat
+            allowNegative={false}
             thousandSeparator={true}
             prefix="$"
             value={amount}

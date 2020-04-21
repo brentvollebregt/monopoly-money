@@ -64,7 +64,7 @@ const getEventDetails = (
 ): IEventDetail | null => {
   const defaults = {
     id: `${event.type + event.time}`,
-    time: DateTime.fromISO(event.time).toFormat("H:mm a")
+    time: DateTime.fromISO(event.time).toFormat("h:mm a")
   };
   switch (event.type) {
     case "playerJoin": {

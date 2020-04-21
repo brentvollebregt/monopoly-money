@@ -70,7 +70,7 @@ const Funds: React.FC<IFundsProps> = ({
         )}
       </Card>
 
-      <div className="balance-grid">
+      <div className="mb-1 balance-grid">
         {sortPlayersByName(players.filter((p) => p.playerId !== playerId)).map((player) => (
           <Card key={player.name} className="text-center">
             <ConnectedStateDot connected={player.connected} className="m-2" />
@@ -90,8 +90,8 @@ const Funds: React.FC<IFundsProps> = ({
         ))}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridGap: 10 }}>
-        <Card className="mt-1 text-center">
+      <div className="balance-grid">
+        <Card className="text-center">
           <Card.Body className="p-3">
             <div>{freeParkingName}</div>
             <div>{formatCurrency(freeParkingBalance)}</div>

@@ -68,6 +68,7 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
             <InputGroup.Text>Amount</InputGroup.Text>
           </InputGroup.Prepend>
           <NumberFormat
+            allowNegative={false}
             thousandSeparator={true}
             prefix="$"
             value={amount}

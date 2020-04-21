@@ -42,6 +42,7 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
       <label htmlFor={`${identifier}-value`}>{label}</label>
       <InputGroup>
         <NumberFormat
+          allowNegative={false}
           thousandSeparator={true}
           prefix="$"
           id={`${identifier}-value`}

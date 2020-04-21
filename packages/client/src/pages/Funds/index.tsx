@@ -7,6 +7,7 @@ import { useModal } from "react-modal-hook";
 import GameCode from "./GameCode";
 import { formatCurrency, sortPlayersByName } from "../../utils";
 import ConnectedStateDot from "../../components/ConnectedStateDot";
+import { bankName, freeParkingName } from "../../constants";
 
 interface IFundsProps {
   gameId: string;
@@ -92,7 +93,7 @@ const Funds: React.FC<IFundsProps> = ({
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridGap: 10 }}>
         <Card className="mt-1 text-center">
           <Card.Body className="p-3">
-            <div>🚗 Free Parking</div>
+            <div>{freeParkingName}</div>
             <div>{formatCurrency(freeParkingBalance)}</div>
             <Button
               size="sm"
@@ -106,7 +107,7 @@ const Funds: React.FC<IFundsProps> = ({
         </Card>
         <Card className="mt-1 text-center">
           <Card.Body className="p-3">
-            <div>🏦 Bank</div>
+            <div>{bankName}</div>
             <Button
               size="sm"
               variant="outline-dark"

@@ -7,6 +7,7 @@ import {
 } from "@monopoly-money/game-state";
 import "./History.scss";
 import { formatCurrency } from "../../utils";
+import { bankName, freeParkingName } from "../../constants";
 
 interface IHistoryProps {
   events: GameEvent[];
@@ -74,15 +75,15 @@ const getEventDetails = (
     case "transaction": {
       const playerReceiving =
         event.to === "bank"
-          ? "Bank"
+          ? bankName
           : event.to === "freeParking"
-          ? "Free Parking"
+          ? freeParkingName
           : nextState.players.find((p) => p.playerId === event.to)!.name;
       const playerGiving =
         event.from === "bank"
-          ? "Bank"
+          ? bankName
           : event.from === "freeParking"
-          ? "Free Parking"
+          ? freeParkingName
           : nextState.players.find((p) => p.playerId === event.from)!.name;
       const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
       const actionedByNote =

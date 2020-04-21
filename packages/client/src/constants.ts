@@ -2,6 +2,9 @@ import { IPageMeta } from "./components/MetaTags";
 
 export const siteUrl = "https://monopoly-money.nitratine.net";
 
+export const bankName = "🏦 Bank";
+export const freeParkingName = "🚗 Free Parking";
+
 export const routePaths = {
   home: "/",
   join: "/join",

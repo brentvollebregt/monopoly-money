@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputGroup, Button, DropdownButton, Dropdown, Form } from "react-bootstrap";
+import { InputGroup, Button, DropdownButton, Dropdown, Form, ButtonGroup } from "react-bootstrap";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
 
@@ -21,6 +21,13 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
   const [selectedPlayer, setSelectedPlayer] = useState<IGameStatePlayer | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  const multiply = (multiplier: number) => {
+    const value = parseInt(amount, 10);
+    if (!isNaN(value)) {
+      setAmount(`${multiplier * value}`);
+    }
+  };
+
   const submit = () => {
     const numericalAmount = parseInt(amount, 10);
     if (isNaN(numericalAmount)) {
@@ -39,7 +46,10 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
 
   return (
     <>
-      <label htmlFor={`${identifier}-value`}>{label}</label>
+      <label htmlFor={`${identifier}-value`} className="mb-1">
+        {label}
+      </label>
+
       <InputGroup>
         <NumberFormat
           allowNegative={false}
@@ -50,10 +60,25 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
           onValueChange={({ value }: NumberFormatValues) => setAmount(value)}
           className="form-control"
         />
+
+        <InputGroup.Append>
+          <Button variant="warning" onClick={() => multiply(1000000)}>
+            M
+          </Button>
+          <Button variant="primary" onClick={() => multiply(1000)}>
+            K
+          </Button>
+          <Button variant="danger" onClick={() => setAmount("")}>
+            C
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
+
+      <ButtonGroup className="mt-1 player-and-submit-group">
         <DropdownButton
+          as={ButtonGroup}
           variant="outline-secondary"
           id={`${identifier}-player`}
-          className="mid-dropdown"
           title={selectedPlayer?.name ?? "Select Player"}
         >
           {players.map((player) => (
@@ -63,12 +88,11 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
           ))}
         </DropdownButton>
 
-        <InputGroup.Append>
-          <Button variant="outline-secondary" onClick={submit}>
-            {submitText}
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
+        <Button variant="outline-secondary" onClick={submit}>
+          {submitText}
+        </Button>
+      </ButtonGroup>
+
       <Form.Text style={{ color: "var(--danger)" }}>{submitError}</Form.Text>
     </>
   );

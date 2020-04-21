@@ -1,5 +1,6 @@
 .bank {
-  .mid-dropdown button {
-    border-radius: 0;
+  .player-and-submit-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }

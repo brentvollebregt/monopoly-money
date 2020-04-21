@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputGroup, Button, DropdownButton, Dropdown } from "react-bootstrap";
+import { InputGroup, Button, DropdownButton, Dropdown, ButtonGroup } from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
 import { formatCurrency } from "../../utils";
 
@@ -27,14 +27,15 @@ const GiveFreeParking: React.FC<IGiveFreeParkingProps> = ({
 
   return (
     <>
-      <label htmlFor={`free-parking-player`}>
+      <label htmlFor="free-parking-player" className="mb-1">
         Give Free Parking ({formatCurrency(freeParkingBalance)})
       </label>
-      <InputGroup>
+
+      <ButtonGroup className="mt-1 player-and-submit-group">
         <DropdownButton
-          as={InputGroup.Prepend}
+          as={ButtonGroup}
           variant="outline-secondary"
-          id={`free-parking-player`}
+          id="free-parking-player"
           title={selectedPlayer?.name ?? "Select Player"}
         >
           {players.map((player) => (
@@ -44,12 +45,10 @@ const GiveFreeParking: React.FC<IGiveFreeParkingProps> = ({
           ))}
         </DropdownButton>
 
-        <InputGroup.Append>
-          <Button variant="outline-secondary" onClick={submit} disabled={!valid}>
-            Give
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
+        <Button variant="outline-secondary" onClick={submit} disabled={!valid}>
+          Give
+        </Button>
+      </ButtonGroup>
     </>
   );
 };

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button } from "react-bootstrap";
-import "./Funds.scss";
+import { Card } from "react-bootstrap";
+import { useModal } from "react-modal-hook";
 import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 import SendMoneyModal from "./SendMoneyModal";
-import { useModal } from "react-modal-hook";
 import GameCode from "./GameCode";
 import { formatCurrency, sortPlayersByName } from "../../utils";
-import ConnectedStateDot from "../../components/ConnectedStateDot";
 import { bankName, freeParkingName } from "../../constants";
+import PlayerCard from "./PlayerCard";
+import "./Funds.scss";
 
 interface IFundsProps {
   gameId: string;
@@ -72,53 +72,29 @@ const Funds: React.FC<IFundsProps> = ({
 
       <div className="mb-1 balance-grid">
         {sortPlayersByName(players.filter((p) => p.playerId !== playerId)).map((player) => (
-          <Card key={player.name} className="text-center">
-            <ConnectedStateDot connected={player.connected} className="m-2" />
-            <Card.Body className="p-3">
-              <div>{player.name}</div>
-              <div>{formatCurrency(player.balance)}</div>
-              <Button
-                size="sm"
-                variant="outline-dark"
-                className="mt-2"
-                onClick={() => setRecipient(player)}
-              >
-                Send Money
-              </Button>
-            </Card.Body>
-          </Card>
+          <PlayerCard
+            key={player.playerId}
+            name={player.name}
+            connected={player.connected}
+            balance={player.balance}
+            onClick={() => setRecipient(player)}
+          />
         ))}
       </div>
 
       <div className="balance-grid">
-        <Card className="text-center">
-          <Card.Body className="p-3">
-            <div>{freeParkingName}</div>
-            <div>{formatCurrency(freeParkingBalance)}</div>
-            <Button
-              size="sm"
-              variant="outline-dark"
-              className="mt-2"
-              onClick={() => setRecipient("freeParking")}
-            >
-              Send Money
-            </Button>
-          </Card.Body>
-        </Card>
-        <Card className="text-center">
-          <Card.Body className="p-3">
-            <div>{bankName}</div>
-            <div>∞</div>
-            <Button
-              size="sm"
-              variant="outline-dark"
-              className="mt-2"
-              onClick={() => setRecipient("bank")}
-            >
-              Send Money
-            </Button>
-          </Card.Body>
-        </Card>
+        <PlayerCard
+          name={freeParkingName}
+          connected={null}
+          balance={freeParkingBalance}
+          onClick={() => setRecipient("freeParking")}
+        />
+        <PlayerCard
+          name={bankName}
+          connected={null}
+          balance={Number.POSITIVE_INFINITY}
+          onClick={() => setRecipient("bank")}
+        />
       </div>
     </div>
   );

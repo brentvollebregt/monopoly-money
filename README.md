@@ -63,8 +63,6 @@ The base of this application is completed, there are just a few more cosmetic go
   - Timeout? Use a hook? The hook can look at the most recent transaction time and set a timeout when to remove them or not to display at all?
   - Or show a heading at the top e.g. Brent => Bank (\$2,000,000) in green for 5 seconds
     - Hold place to not move stuff up and down
-- Remove send money buttons
-  - Replace with a tile click
 - Help button
   - Small tutorial with GIFs
   - Layout: Title, description, GIF (repeat)

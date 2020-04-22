@@ -105,9 +105,10 @@ const Funds: React.FC<IFundsProps> = ({
             </Button>
           </Card.Body>
         </Card>
-        <Card className="mt-1 text-center">
+        <Card className="text-center">
           <Card.Body className="p-3">
             <div>{bankName}</div>
+            <div>∞</div>
             <Button
               size="sm"
               variant="outline-dark"

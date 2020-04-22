@@ -98,7 +98,7 @@ export const proposeEvent: MessageHandler = (ws, { gameId, userToken }, message)
           return; // Only a banker or the player themselves can remove a player from the game
         }
         break;
-      case "playerConnect":
+      case "playerConnectionChange":
         if (event.playerId !== playerId) {
           return; // Players can only update their own connection status
         }

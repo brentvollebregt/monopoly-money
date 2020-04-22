@@ -7,7 +7,7 @@ import {
   defaultGameState,
   IGameState,
   calculateGameState,
-  IPlayerConnectEvent
+  IPlayerConnectionChangeEvent
 } from "@monopoly-money/game-state";
 import { generateTimeBasedId, generateRandomId, getCurrentTime } from "./utils";
 import {
@@ -87,8 +87,8 @@ export default class Game {
     // Verify the player is still in the game (will not be if they were kicked)
     if (this.gameState.players.find((p) => p.playerId) !== undefined) {
       // If the player is still in the game, update their state
-      const event: IPlayerConnectEvent = {
-        type: "playerConnect",
+      const event: IPlayerConnectionChangeEvent = {
+        type: "playerConnectionChange",
         time: getCurrentTime(),
         actionedBy: playerId,
         playerId,

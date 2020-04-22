@@ -11,7 +11,7 @@ import {
   IPlayerBankerStatusChangeEvent,
   ITransactionEvent,
   IGameOpenStateChangeEvent,
-  IPlayerConnectEvent
+  IPlayerConnectionChangeEvent
 } from "./types";
 
 export {
@@ -28,5 +28,5 @@ export {
   IPlayerBankerStatusChangeEvent,
   ITransactionEvent,
   IGameOpenStateChangeEvent,
-  IPlayerConnectEvent
+  IPlayerConnectionChangeEvent
 };

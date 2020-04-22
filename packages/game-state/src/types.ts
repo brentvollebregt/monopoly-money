@@ -26,7 +26,7 @@ export type GameEvent =
   | IPlayerBankerStatusChangeEvent
   | ITransactionEvent
   | IGameOpenStateChangeEvent
-  | IPlayerConnectEvent;
+  | IPlayerConnectionChangeEvent;
 
 export interface IGameEvent {
   time: string; // ISO string
@@ -68,8 +68,8 @@ export interface IGameOpenStateChangeEvent extends IGameEvent {
   open: boolean;
 }
 
-export interface IPlayerConnectEvent extends IGameEvent {
-  type: "playerConnect";
+export interface IPlayerConnectionChangeEvent extends IGameEvent {
+  type: "playerConnectionChange";
   playerId: PlayerId;
   connected: boolean;
 }

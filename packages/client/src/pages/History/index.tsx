@@ -152,7 +152,7 @@ const getEventDetails = (
       };
     }
 
-    case "playerConnect": {
+    case "playerConnectionChange": {
       // Don't show these as they will pollute the history
       // const playerName = previousState.players.find((p) => p.playerId === event.playerId)!.name;
       // return {

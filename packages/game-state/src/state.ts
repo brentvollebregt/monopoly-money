@@ -122,7 +122,7 @@ export const calculateGameState = (events: GameEvent[], currentState: IGameState
           open: event.open
         };
 
-      case "playerConnect":
+      case "playerConnectionChange":
         return {
           ...state,
           players: [

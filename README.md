@@ -58,9 +58,6 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
-- Multiplier buttons
-  - [ M ][ k ] [ Clear ] (or C?)
-  - "M" and "K" buttons to multiply by 1,000,000 and 1,000
 - Show most recent transactions on from/to tiles
   - Coloured values in brackets - e.g. (-\$500,000)
   - Timeout? Use a hook? The hook can look at the most recent transaction time and set a timeout when to remove them or not to display at all?

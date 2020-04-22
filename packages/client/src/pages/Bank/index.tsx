@@ -4,6 +4,7 @@ import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 import "./Bank.scss";
 import GiveFreeParking from "./GiveFreeParking";
 import InitialiseGame from "./InitialiseGame";
+import PlayerPassedGo from "./PlayerPassedGo";
 
 interface IBankProps {
   players: IGameStatePlayer[];
@@ -44,6 +45,15 @@ const Bank: React.FC<IBankProps> = ({
           players={players}
           onSubmit={(value: number, playerId: string) =>
             proposeTransaction(playerId, "bank", value)
+          }
+        />
+      </div>
+
+      <div className="mb-3">
+        <PlayerPassedGo
+          players={players}
+          onSubmit={(value: number, playerId: string) =>
+            proposeTransaction("bank", playerId, value)
           }
         />
       </div>

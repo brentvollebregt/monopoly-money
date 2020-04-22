@@ -84,6 +84,7 @@ const ValueModal: React.FC<IValueModalProps> = ({ submitAmount, onClose }) => {
             value={amount}
             onValueChange={({ value }: NumberFormatValues) => setAmount(value)}
             className="form-control"
+            autoComplete="on"
           />
 
           <InputGroup.Append>

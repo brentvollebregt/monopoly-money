@@ -92,6 +92,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
             value={gameId}
             onValueChange={({ value }: NumberFormatValues) => setGameId(value)}
             className="form-control text-center"
+            autoComplete="off"
           />
           <Form.Text style={{ color: "var(--danger)" }}>{gameError}</Form.Text>
         </Form.Group>
@@ -112,6 +113,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
             onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) =>
               event.key === "Enter" && onSubmit()
             }
+            autoComplete="on"
           />
           <Form.Text style={{ color: "var(--danger)" }}>{nameError}</Form.Text>
         </Form.Group>

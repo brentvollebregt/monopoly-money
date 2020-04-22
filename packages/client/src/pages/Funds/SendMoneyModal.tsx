@@ -85,6 +85,7 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
             value={amount}
             onValueChange={({ value }: NumberFormatValues) => setAmount(value)}
             className="form-control"
+            autoComplete="off"
           />
 
           <InputGroup.Append>

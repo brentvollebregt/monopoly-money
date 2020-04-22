@@ -59,6 +59,7 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
           value={amount}
           onValueChange={({ value }: NumberFormatValues) => setAmount(value)}
           className="form-control"
+          autoComplete="off"
         />
 
         <InputGroup.Append>

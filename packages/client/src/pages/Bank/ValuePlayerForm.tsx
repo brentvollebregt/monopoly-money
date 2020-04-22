@@ -28,6 +28,12 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
     }
   };
 
+  const clear = () => {
+    setAmount("");
+    setSelectedPlayer(null);
+    setSubmitError(null);
+  };
+
   const submit = () => {
     const numericalAmount = parseInt(amount, 10);
     if (isNaN(numericalAmount)) {
@@ -69,7 +75,7 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
           <Button variant="primary" onClick={() => multiply(1000)}>
             K
           </Button>
-          <Button variant="danger" onClick={() => setAmount("")}>
+          <Button variant="danger" onClick={() => clear()}>
             C
           </Button>
         </InputGroup.Append>

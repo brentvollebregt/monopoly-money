@@ -39,17 +39,6 @@ const Bank: React.FC<IBankProps> = ({
       </div>
 
       <div className="mb-3">
-        <ValuePlayerForm
-          label="Take Money From Player"
-          submitText="Take"
-          players={players}
-          onSubmit={(value: number, playerId: string) =>
-            proposeTransaction(playerId, "bank", value)
-          }
-        />
-      </div>
-
-      <div className="mb-3">
         <PlayerPassedGo
           players={players}
           onSubmit={(value: number, playerId: string) =>
@@ -64,6 +53,17 @@ const Bank: React.FC<IBankProps> = ({
           freeParkingBalance={freeParkingBalance}
           onSubmit={(playerId: string) =>
             proposeTransaction("freeParking", playerId, freeParkingBalance)
+          }
+        />
+      </div>
+
+      <div className="mb-3">
+        <ValuePlayerForm
+          label="Take Money From Player"
+          submitText="Take"
+          players={players}
+          onSubmit={(value: number, playerId: string) =>
+            proposeTransaction(playerId, "bank", value)
           }
         />
       </div>

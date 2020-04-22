@@ -3,6 +3,7 @@ import { Button, Modal, InputGroup, Form } from "react-bootstrap";
 import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 import { formatCurrency } from "../../utils";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
+import { bankName, freeParkingName } from "../../constants";
 
 interface ISendMoneyModalProps {
   balance: number;
@@ -21,6 +22,13 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
 }) => {
   const [amount, setAmount] = useState("");
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const multiply = (multiplier: number) => {
+    const value = parseInt(amount, 10);
+    if (!isNaN(value)) {
+      setAmount(`${multiplier * value}`);
+    }
+  };
 
   const submit = () => {
     const numericalAmount = parseInt(amount, 10);
@@ -49,9 +57,9 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
 
   const getRecipientName = () => {
     if (recipient === "freeParking") {
-      return "Free Parking";
+      return freeParkingName;
     } else if (recipient === "bank") {
-      return "Bank";
+      return bankName;
     } else {
       return recipient.name;
     }
@@ -60,13 +68,16 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
   return (
     <Modal show={true} onHide={cancel} size="lg" centered className="send-money-modal">
       <Modal.Header closeButton>
-        <Modal.Title>Transfer Funds to {getRecipientName()}</Modal.Title>
+        <Modal.Title>Transfer Funds</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <p className="text-center">💵 → {getRecipientName()}</p>
+
         <InputGroup>
           <InputGroup.Prepend>
             <InputGroup.Text>Amount</InputGroup.Text>
           </InputGroup.Prepend>
+
           <NumberFormat
             allowNegative={false}
             thousandSeparator={true}
@@ -75,10 +86,21 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
             onValueChange={({ value }: NumberFormatValues) => setAmount(value)}
             className="form-control"
           />
-          <Button variant="success" className="remove-left-border-radius" onClick={submit}>
-            Send
-          </Button>
+
+          <InputGroup.Append>
+            <Button variant="warning" onClick={() => multiply(1000000)}>
+              M
+            </Button>
+            <Button variant="primary" onClick={() => multiply(1000)}>
+              K
+            </Button>
+          </InputGroup.Append>
         </InputGroup>
+
+        <Button block variant="success" className="mt-1" onClick={submit}>
+          Send
+        </Button>
+
         <Form.Text style={{ color: "var(--danger)" }}>{submitError}</Form.Text>
       </Modal.Body>
     </Modal>

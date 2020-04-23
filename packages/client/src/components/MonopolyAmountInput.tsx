@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { InputGroup, Button } from "react-bootstrap";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
 
@@ -10,6 +10,7 @@ interface IMonopolyAmountInputProps {
 
 const MonopolyAmountInput: React.FC<IMonopolyAmountInputProps> = ({ amount, setAmount, id }) => {
   const [inputValue, setInputValue] = useState("");
+  const numberInputRef = useRef<HTMLInputElement>(null);
 
   // When the external amount changes, update the internal
   useEffect(() => {
@@ -26,6 +27,14 @@ const MonopolyAmountInput: React.FC<IMonopolyAmountInputProps> = ({ amount, setA
     if (!isNaN(value)) {
       setInputValue(`${multiplier * value}`);
     }
+
+    // Refocus the number input. Since useState is async, we need to wait for the value to be updated
+    setTimeout(() => {
+      if (numberInputRef.current !== null) {
+        numberInputRef.current.focus();
+        numberInputRef.current.setSelectionRange(-1, -1);
+      }
+    }, 50);
   };
 
   return (
@@ -45,6 +54,7 @@ const MonopolyAmountInput: React.FC<IMonopolyAmountInputProps> = ({ amount, setA
         onValueChange={({ value }: NumberFormatValues) => setInputValue(value)}
         className="form-control text-center"
         autoComplete="off"
+        getInputRef={numberInputRef}
       />
 
       <InputGroup.Append>

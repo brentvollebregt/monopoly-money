@@ -5,7 +5,7 @@ import NumberFormat, { NumberFormatValues } from "react-number-format";
 interface IMonopolyAmountInputProps {
   amount: number | null;
   setAmount: (amount: number | null) => void;
-  id: string;
+  id?: string;
 }
 
 const MonopolyAmountInput: React.FC<IMonopolyAmountInputProps> = ({ amount, setAmount, id }) => {

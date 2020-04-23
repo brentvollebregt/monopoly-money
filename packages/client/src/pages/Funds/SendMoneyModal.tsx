@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Button, Modal, InputGroup, Form } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 import { formatCurrency } from "../../utils";
-import NumberFormat, { NumberFormatValues } from "react-number-format";
 import { bankName, freeParkingName } from "../../constants";
+import MonopolyAmountInput from "../../components/MonopolyAmountInput";
 
 interface ISendMoneyModalProps {
   balance: number;
@@ -20,37 +20,28 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
   proposeTransaction,
   onClose
 }) => {
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState<number | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const multiply = (multiplier: number) => {
-    const value = parseInt(amount, 10);
-    if (!isNaN(value)) {
-      setAmount(`${multiplier * value}`);
-    }
-  };
-
   const submit = () => {
-    const numericalAmount = parseInt(amount, 10);
-    if (isNaN(numericalAmount)) {
+    if (amount === null) {
       setSubmitError("Please provide an amount");
-    } else if (numericalAmount <= 0) {
+    } else if (amount <= 0) {
       setSubmitError("You must provide sum larger than $0");
-    } else if (numericalAmount > balance) {
+    } else if (amount > balance) {
       setSubmitError(`You do not have enough money (${formatCurrency(balance)})`);
     } else {
       proposeTransaction(
         playerId,
         recipient === "freeParking" || recipient === "bank" ? recipient : recipient.playerId,
-        parseInt(amount, 10)
+        amount
       );
-      setAmount("");
-      setSubmitError(null);
-      onClose();
+      close();
     }
   };
 
-  const cancel = () => {
+  const close = () => {
+    setAmount(null);
     setSubmitError(null);
     onClose();
   };
@@ -66,37 +57,14 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
   };
 
   return (
-    <Modal show={true} onHide={cancel} size="lg" centered className="send-money-modal">
+    <Modal show={true} onHide={close} size="lg" centered className="send-money-modal">
       <Modal.Header closeButton>
         <Modal.Title>Transfer Funds</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p className="text-center">💵 → {getRecipientName()}</p>
 
-        <InputGroup>
-          <InputGroup.Prepend>
-            <InputGroup.Text>Amount</InputGroup.Text>
-          </InputGroup.Prepend>
-
-          <NumberFormat
-            allowNegative={false}
-            thousandSeparator={true}
-            prefix="$"
-            value={amount}
-            onValueChange={({ value }: NumberFormatValues) => setAmount(value)}
-            className="form-control"
-            autoComplete="off"
-          />
-
-          <InputGroup.Append>
-            <Button variant="warning" onClick={() => multiply(1000000)}>
-              M
-            </Button>
-            <Button variant="primary" onClick={() => multiply(1000)}>
-              K
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
+        <MonopolyAmountInput amount={amount} setAmount={setAmount} />
 
         <Button block variant="success" className="mt-1" onClick={submit}>
           Send

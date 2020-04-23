@@ -15,7 +15,7 @@ const MessageModal: React.FC<IMessageModalProps> = ({ title, body, onClose }) =>
       </Modal.Header>
       <Modal.Body>{body}</Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={onClose}>
+        <Button block variant="primary" onClick={onClose}>
           Ok
         </Button>
       </Modal.Footer>

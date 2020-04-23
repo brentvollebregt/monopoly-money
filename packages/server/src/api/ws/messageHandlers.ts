@@ -83,7 +83,8 @@ export const proposeEvent: MessageHandler = (ws, { gameId, userToken }, message)
         } else if (
           event.from !== "bank" &&
           event.from !== "freeParking" &&
-          event.from !== playerId
+          event.from !== playerId &&
+          !isPlayerBanker
         ) {
           return; // If a user is not a banker, they cannot send money from anyone but themselves
         }

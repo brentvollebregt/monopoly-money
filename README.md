@@ -58,11 +58,6 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
-- Modify most recent transactions
-  - Appears right at the bottom and fades away after 10 seconds
-  - The stack up underneath the earliest
-  - Use useEffects to watch for events change and create tiles
-  - Provide function to useState
 - Help button
   - Small tutorial with GIFs
   - Layout: Title, description, GIF (repeat)

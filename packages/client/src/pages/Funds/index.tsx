@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { useModal } from "react-modal-hook";
-import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
+import { IGameStatePlayer, GameEntity, GameEvent } from "@monopoly-money/game-state";
 import SendMoneyModal from "./SendMoneyModal";
 import GameCode from "./GameCode";
 import { formatCurrency, sortPlayersByName } from "../../utils";
 import { bankName, freeParkingName } from "../../constants";
 import PlayerCard from "./PlayerCard";
 import "./Funds.scss";
+import RecentTransactions from "./RecentTransactions";
 
 interface IFundsProps {
   gameId: string;
@@ -16,6 +17,7 @@ interface IFundsProps {
   players: IGameStatePlayer[];
   freeParkingBalance: number;
   proposeTransaction: (from: GameEntity, to: GameEntity, amount: number) => void;
+  events: GameEvent[];
 }
 
 const Funds: React.FC<IFundsProps> = ({
@@ -24,7 +26,8 @@ const Funds: React.FC<IFundsProps> = ({
   isGameOpen,
   players,
   freeParkingBalance,
-  proposeTransaction
+  proposeTransaction,
+  events
 }) => {
   const [recipient, setRecipient] = useState<IGameStatePlayer | "freeParking" | "bank" | null>(
     null
@@ -61,6 +64,10 @@ const Funds: React.FC<IFundsProps> = ({
   return (
     <div className="funds">
       {isGameOpen && <GameCode gameId={gameId} isBanker={isBanker} />}
+
+      <div className="mb-2">
+        <RecentTransactions amountToShow={2} events={events} players={players} />
+      </div>
 
       <Card className="mb-1 text-center">
         {me !== undefined && (

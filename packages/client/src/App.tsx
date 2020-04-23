@@ -90,6 +90,7 @@ const App: React.FC = () => {
                 players={game.players}
                 freeParkingBalance={game.freeParkingBalance}
                 proposeTransaction={game.actions.proposeTransaction}
+                events={game.events}
               />
             )
         : () => <NotFound />,

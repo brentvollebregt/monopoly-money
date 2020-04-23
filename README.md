@@ -58,11 +58,11 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
 
-- Show most recent transactions on from/to tiles
-  - Coloured values in brackets - e.g. (-\$500,000)
-  - Timeout? Use a hook? The hook can look at the most recent transaction time and set a timeout when to remove them or not to display at all?
-  - Or show a heading at the top e.g. Brent => Bank (\$2,000,000) in green for 5 seconds
-    - Hold place to not move stuff up and down
+- Modify most recent transactions
+  - Appears right at the bottom and fades away after 10 seconds
+  - The stack up underneath the earliest
+  - Use useEffects to watch for events change and create tiles
+  - Provide function to useState
 - Help button
   - Small tutorial with GIFs
   - Layout: Title, description, GIF (repeat)

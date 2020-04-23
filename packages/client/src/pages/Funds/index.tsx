@@ -65,10 +65,6 @@ const Funds: React.FC<IFundsProps> = ({
     <div className="funds">
       {isGameOpen && <GameCode gameId={gameId} isBanker={isBanker} />}
 
-      <div className="mb-2">
-        <RecentTransactions amountToShow={2} events={events} players={players} />
-      </div>
-
       <Card className="mb-1 text-center">
         {me !== undefined && (
           <Card.Body className="p-3">
@@ -102,6 +98,10 @@ const Funds: React.FC<IFundsProps> = ({
           balance={Number.POSITIVE_INFINITY}
           onClick={() => setRecipient("bank")}
         />
+      </div>
+
+      <div className="mt-2">
+        <RecentTransactions events={events} players={players} />
       </div>
     </div>
   );

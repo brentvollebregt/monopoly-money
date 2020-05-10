@@ -29,11 +29,19 @@ When running the client in development mode using `npm run client:dev`, the clie
 
 > `launch.json` also offers the ability to connect and debug the the server when running `npm run client:dev`.
 
+## Screenshots
+
+| <!-- -->                                                                                                                            | <!-- -->                                                                                                                            | <!-- -->                                                                                                                            |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| [![TODO](https://nitratine.net/posts/monopoly-money/screenshot-1.png)](https://nitratine.net/posts/monopoly-money/screenshot-1.png) | [![TODO](https://nitratine.net/posts/monopoly-money/screenshot-2.png)](https://nitratine.net/posts/monopoly-money/screenshot-2.png) | [![TODO](https://nitratine.net/posts/monopoly-money/screenshot-3.png)](https://nitratine.net/posts/monopoly-money/screenshot-3.png) |
+| [![TODO](https://nitratine.net/posts/monopoly-money/screenshot-4.png)](https://nitratine.net/posts/monopoly-money/screenshot-4.png) | [![TODO](https://nitratine.net/posts/monopoly-money/screenshot-5.png)](https://nitratine.net/posts/monopoly-money/screenshot-5.png) | [![TODO](https://nitratine.net/posts/monopoly-money/screenshot-6.png)](https://nitratine.net/posts/monopoly-money/screenshot-6.png) |
+
 ## 📝 Features
 
 - Multiple games can be hosted on the server at once
-- Each player uses their own device; everyone joins one game.
-- Send money between players quickly
+- Each player uses their own device; everyone joins one game
+- Send money between players with ease - no need to sort out change
+- Realtime - players get notified when an event occurs immediately.
 - The person that created the game is the banker. This person can:
   - Give money to players from the bank (and take money)
   - Give free parking to players

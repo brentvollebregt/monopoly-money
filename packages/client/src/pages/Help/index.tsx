@@ -33,9 +33,9 @@ const Help: React.FC = () => {
 
       <h5>Transferring Funds to Other Players, Free Parking and the Bank</h5>
       <p>
-        To transfer funds to another person/entity, select "Send Money" under their tile on the
-        funds page. Enter the amount you want to send and then press "Send" to complete the
-        transaction.
+        To transfer funds to another person/entity, click the tile associated with the target
+        player/entity on the funds page. A dialog should appear which will allow you to input an
+        amount to transfer. Press "Send" to complete the transaction.
       </p>
 
       <h5>Viewing Previous Transactions</h5>
@@ -79,6 +79,17 @@ const Help: React.FC = () => {
         accidentally gives too much money to a player.
       </p>
 
+      <h5>Players Passing GO</h5>
+      <p>
+        Instead of repeatedly inputting the passing GO reward, a dropdown is displayed on the bank
+        page under the "Player Passed Go ($[amount])" header. Selecting a player and then pressing
+        "Give" will give the player the amount displayed above.
+      </p>
+      <p>
+        To change the amount given to a player, press the settings button to the right, input a new
+        amount and press "Set".
+      </p>
+
       <h5>Giving Free Parking to a Player</h5>
       <p>
         To give free parking to a player, select the player in the dropdown under the "Give Free
@@ -94,9 +105,9 @@ const Help: React.FC = () => {
       <h5>Removing a Player</h5>
       <p>
         You can remove a player from the game the settings page by clicking the trash button in the
-        same row as they target player. Confirming this action will remove the player.
+        same row as they target player. Confirming this action will remove the player from the
+        current game.
       </p>
-      <p></p>
 
       <h5>Closing the Game to New Players</h5>
       <p>

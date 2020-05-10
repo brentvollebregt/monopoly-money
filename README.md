@@ -45,7 +45,7 @@ When running the client in development mode using `npm run client:dev`, the clie
 
 ## ❓ Why?
 
-If you have every played the credit card edition of Monopoly, you will appreciate how much faster the game moves without having to count cash. This webapp substitutes the need for cash in a game of monopoly for a mobile-banking-like solution where players can easily send each other virtual currency.
+If you have ever played the credit card edition of Monopoly, you will appreciate how much faster the game moves without having to count cash. This webapp substitutes the need for cash in a game of monopoly for a mobile-banking-like solution where players can easily send each other virtual currency.
 
 ## 🌐 Deployment
 
@@ -56,14 +56,7 @@ This application was designed to have the server deployed on Heroku (with the cl
 
 ## 🚧 TODO
 
-The base of this application is completed, there are just a few more cosmetic goals I'm aiming for:
-
-- Help button
-  - Small tutorial with GIFs
-  - Layout: Title, description, GIF (repeat)
-- Put the current version at the bottom of help
 - Screenshots on Nitratine and then link in the README
-- useStoredGames spams the server when you have many stored games that aren't on the server anymore
 
 ### 💡 Potential Future Ideas
 

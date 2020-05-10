@@ -106,9 +106,31 @@ const Home: React.FC<IHomeProps> = ({ onGameSetup }) => {
           exchange money.
         </p>
 
-        {/* TODO Screenshot of everyone's balances */}
-
-        {/* TODO Screenshot of history */}
+        <div
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gridGap: 6 }}
+          className="mt-5"
+        >
+          <img
+            src="https://nitratine.net/posts/monopoly-money/screenshot-1.png"
+            alt="Funds page with game id"
+            className="w-100"
+          />
+          <img
+            src="https://nitratine.net/posts/monopoly-money/screenshot-2.png"
+            alt="Transfering funds"
+            className="w-100"
+          />
+          <img
+            src="https://nitratine.net/posts/monopoly-money/screenshot-3.png"
+            alt="Game history"
+            className="w-100"
+          />
+          <img
+            src="https://nitratine.net/posts/monopoly-money/screenshot-4.png"
+            alt="Bankers actions page"
+            className="w-100"
+          />
+        </div>
       </div>
     </div>
   );

@@ -62,11 +62,7 @@ This application was designed to have the server deployed on Heroku (with the cl
 - When deploying with Heroku, make sure to set `NPM_CONFIG_PRODUCTION` to `false` in config vars otherwise packages will not be installed correctly.
 - The client deployment workflow can be found in [main.yml](./.github/workflows/main.yml).
 
-## 🚧 TODO
-
-- Screenshots on Nitratine and then link in the README
-
-### 💡 Potential Future Ideas
+## 💡 Potential Future Ideas
 
 - Requests
   - Game event

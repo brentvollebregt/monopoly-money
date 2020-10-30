@@ -6,6 +6,10 @@ import useStoredGames from "../../hooks/useStoredGames";
 import "./Home.scss";
 import { DateTime } from "luxon";
 import { formatCurrency } from "../../utils";
+import Screenshot1Image from "../../img/screenshots/screenshot-1.png";
+import Screenshot2Image from "../../img/screenshots/screenshot-2.png";
+import Screenshot3Image from "../../img/screenshots/screenshot-3.png";
+import Screenshot4Image from "../../img/screenshots/screenshot-4.png";
 
 interface IHomeProps {
   onGameSetup: (gameId: string, userToken: string, playerId: string) => void;
@@ -110,26 +114,10 @@ const Home: React.FC<IHomeProps> = ({ onGameSetup }) => {
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gridGap: 6 }}
           className="mt-5"
         >
-          <img
-            src="https://nitratine.net/posts/monopoly-money/screenshot-1.png"
-            alt="Funds page with game id"
-            className="w-100"
-          />
-          <img
-            src="https://nitratine.net/posts/monopoly-money/screenshot-2.png"
-            alt="Transfering funds"
-            className="w-100"
-          />
-          <img
-            src="https://nitratine.net/posts/monopoly-money/screenshot-3.png"
-            alt="Game history"
-            className="w-100"
-          />
-          <img
-            src="https://nitratine.net/posts/monopoly-money/screenshot-4.png"
-            alt="Bankers actions page"
-            className="w-100"
-          />
+          <img src={Screenshot1Image} alt="Funds page with game id" className="w-100" />
+          <img src={Screenshot2Image} alt="Transfering funds" className="w-100" />
+          <img src={Screenshot3Image} alt="Game history" className="w-100" />
+          <img src={Screenshot4Image} alt="Bankers actions page" className="w-100" />
         </div>
       </div>
     </div>

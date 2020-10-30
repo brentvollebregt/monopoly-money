@@ -14,7 +14,9 @@
      - Examples are at: `packages/server/.env.example` and `packages/client/.env.example`
      - Copy these using `cp .env.example .env` and populate them both.
 4. Build dependencies using `npm run build`.
-5. Execute `npm start` to start the server
+5. Execute `npm start` to start the server.
+
+> You may need to set `CI=false` when building to ignore the warnings from the frontend project.
 
 The environment variables that can be used are (can also be found in .env.example files):
 

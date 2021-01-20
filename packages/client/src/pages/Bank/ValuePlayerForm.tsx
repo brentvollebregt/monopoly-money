@@ -26,6 +26,8 @@ const ValuePlayerForm: React.FC<IValuePlayerFormProps> = ({
       setSubmitError("Please provide an amount");
     } else if (amount <= 0) {
       setSubmitError("You must provide sum larger than $0");
+    } else if (!Number.isInteger(amount)) {
+      setSubmitError("The amount must be a whole number");
     } else if (selectedPlayer === null) {
       setSubmitError("No player is selected");
     } else {

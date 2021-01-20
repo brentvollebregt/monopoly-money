@@ -19,11 +19,11 @@ const MonopolyAmountInput: React.FC<IMonopolyAmountInputProps> = ({ amount, setA
 
   // When the internal amount changes, update the external
   useEffect(() => {
-    setAmount(inputValue === "" ? null : parseInt(inputValue, 10));
+    setAmount(inputValue === "" ? null : parseFloat(inputValue));
   }, [inputValue]);
 
   const multiply = (multiplier: number) => {
-    const value = parseInt(inputValue, 10);
+    const value = parseFloat(inputValue);
     if (!isNaN(value)) {
       setInputValue(`${multiplier * value}`);
     }

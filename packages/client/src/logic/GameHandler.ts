@@ -166,7 +166,7 @@ class GameHandler {
       case "unexpectedWebSocketClosure":
         ReactGA.event({
           category: "Network",
-          action: 'Unexpectedly disconnection from server"',
+          action: "Unexpected server disconnection",
           nonInteraction: true
         });
         this.onDisplayMessage(

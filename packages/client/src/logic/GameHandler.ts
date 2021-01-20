@@ -1,3 +1,4 @@
+import ReactGA from "react-ga";
 import {
   GameEvent,
   IGameState,
@@ -163,6 +164,11 @@ class GameHandler {
         );
         break;
       case "unexpectedWebSocketClosure":
+        ReactGA.event({
+          category: "Network",
+          action: 'Unexpectedly disconnection from server"',
+          nonInteraction: true
+        });
         this.onDisplayMessage(
           "Disconnection from the server",
           "Unexpectedly disconnection from the server. Please make sure you are connected to the internet",

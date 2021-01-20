@@ -28,7 +28,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
-    console.log("logged", path);
   }, [path]);
 
   // If the user has gone to a non-game route, clear the game state

@@ -18,9 +18,10 @@
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.9.0",
-    "react-number-format": "^4.4.1",
+    "react-ga": "^3.3.0",
     "react-metatags-hook": "^1.1.2",
     "react-modal-hook": "^3.0.0",
+    "react-number-format": "^4.4.1",
     "react-scripts": "^3.4.0",
     "typescript": "^3.8.3",
     "use-clipboard-copy": "^0.1.2"

@@ -4,6 +4,14 @@ import "./index.scss";
 import { ModalProvider } from "react-modal-hook";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import ReactGA from "react-ga";
+import Config from "./config";
+
+if (Config.googleAnalyticsTrackingId !== undefined) {
+  ReactGA.initialize(Config.googleAnalyticsTrackingId, {
+    // debug: true
+  });
+}
 
 ReactDOM.render(
   <ModalProvider>

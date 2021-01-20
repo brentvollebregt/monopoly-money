@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useRoutes, navigate, usePath } from "hookrouter";
+import ReactGA from "react-ga";
 import Navigation from "./components/Navigation";
 import MetaTags from "./components/MetaTags";
 import PageSizeWrapper from "./components/PageSizeWrapper";
@@ -24,6 +25,11 @@ const App: React.FC = () => {
   const { storeGame } = useStoredGames(false);
   const { game, authInfo, initialize, clear } = useGameHandler();
   const path = usePath();
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+    console.log("logged", path);
+  }, [path]);
 
   // If the user has gone to a non-game route, clear the game state
   useEffect(() => {

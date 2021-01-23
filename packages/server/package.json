@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "build/index.js",
   "scripts": {
-    "dev": "ts-node-dev --inspect --respawn --transpileOnly src/index.ts",
+    "dev": "ts-node-dev src/index.ts -- --inspect --respawn --transpileOnly",
     "build": "tsc",
     "start": "node ."
   },

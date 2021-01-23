@@ -37,12 +37,7 @@ const RenamePlayerModal: React.FC<IRenamePlayerModalProps> = ({
           <InputGroup.Prepend>
             <InputGroup.Text>Name</InputGroup.Text>
           </InputGroup.Prepend>
-          <FormControl
-            value={name}
-            onChange={(
-              e: React.FormEvent<ReplaceProps<"input", BsPrefixProps<"input"> & FormControlProps>>
-            ) => setName(e.currentTarget.value ?? "")}
-          />
+          <FormControl value={name} onChange={(e) => setName(e.currentTarget.value)} />
           <Button variant="success" onClick={submit} className="remove-left-border-radius">
             Rename
           </Button>

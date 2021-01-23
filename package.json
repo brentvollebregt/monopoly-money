@@ -21,7 +21,6 @@
   "devDependencies": {
     "tslint": "^5.20.0"
   },
-  "dependencies": {},
   "workspaces": [
     "./packages/*"
   ],

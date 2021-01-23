@@ -25,12 +25,6 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
   // If the game is already stored, join with what we have
   const isAStoredGame = storedGames.map((g) => g.gameId).indexOf(gameId) !== -1;
 
-  const onNameChange = (
-    event: React.FormEvent<ReplaceProps<"input", BsPrefixProps<"input"> & FormControlProps>>
-  ) => {
-    setName(event.currentTarget.value ?? "");
-  };
-
   const onSubmit = () => {
     if (isAStoredGame) {
       const storedGame = storedGames.find((g) => g.gameId === gameId)!;
@@ -112,7 +106,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
             placeholder="Name"
             value={name}
             className="text-center"
-            onChange={onNameChange}
+            onChange={(e) => setName(e.currentTarget.value)}
             onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) =>
               event.key === "Enter" && onSubmit()
             }

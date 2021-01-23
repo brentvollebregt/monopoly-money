@@ -52,7 +52,7 @@ const MonopolyAmountInput: React.FC<IMonopolyAmountInputProps> = ({ amount, setA
         id={id}
         value={inputValue}
         onValueChange={({ value }: NumberFormatValues) => setInputValue(value)}
-        className="form-control text-center"
+        className="form-control text-center w-100"
         autoComplete="off"
         getInputRef={numberInputRef}
       />

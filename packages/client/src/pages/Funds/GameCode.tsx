@@ -23,8 +23,8 @@ const GameCode: React.FC<IGameCodeProps> = ({ gameId, isBanker }) => {
         {gameId}
       </h1>
       <Overlay target={copyTooltipTarget.current} show={clipboard.copied} placement="bottom">
-        {(props: any) => (
-          <Tooltip id="overlay-example" {...(props as any)}>
+        {(props) => (
+          <Tooltip id="overlay-example" {...props}>
             Copied to clipboard
           </Tooltip>
         )}

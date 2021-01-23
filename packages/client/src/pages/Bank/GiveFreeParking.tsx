@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputGroup, Button, DropdownButton, Dropdown, ButtonGroup } from "react-bootstrap";
+import { Button, DropdownButton, Dropdown, ButtonGroup } from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
 import { formatCurrency } from "../../utils";
 

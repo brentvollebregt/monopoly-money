@@ -11,7 +11,7 @@ const GameCode: React.FC<IGameCodeProps> = ({ gameId, isBanker }) => {
   const clipboard = useClipboard({
     copiedTimeout: 1000
   });
-  const copyTooltipTarget = useRef<HTMLHeadingElement>();
+  const copyTooltipTarget = useRef<HTMLHeadingElement>(null);
 
   const gameIdClicked = () => {
     clipboard.copy(gameId);
@@ -19,11 +19,15 @@ const GameCode: React.FC<IGameCodeProps> = ({ gameId, isBanker }) => {
 
   return (
     <div className="text-center">
-      <h1 ref={copyTooltipTarget as any} onClick={gameIdClicked}>
+      <h1 ref={copyTooltipTarget} onClick={gameIdClicked}>
         {gameId}
       </h1>
-      <Overlay target={copyTooltipTarget.current} show={clipboard.copied} placement="bottom">
-        {(props) => (
+      <Overlay
+        target={copyTooltipTarget.current ?? undefined}
+        show={clipboard.copied}
+        placement="bottom"
+      >
+        {(props: any) => (
           <Tooltip id="overlay-example" {...(props as any)}>
             Copied to clipboard
           </Tooltip>

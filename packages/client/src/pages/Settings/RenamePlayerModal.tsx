@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, Modal, InputGroup, FormControl, Form } from "react-bootstrap";
+import { Button, Modal, InputGroup, FormControl, Form, FormControlProps } from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
+import { ReplaceProps, BsPrefixProps } from "react-bootstrap/helpers";
 
 interface IRenamePlayerModalProps {
   player: IGameStatePlayer;
@@ -38,7 +39,9 @@ const RenamePlayerModal: React.FC<IRenamePlayerModalProps> = ({
           </InputGroup.Prepend>
           <FormControl
             value={name}
-            onChange={(e: React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value)}
+            onChange={(
+              e: React.FormEvent<ReplaceProps<"input", BsPrefixProps<"input"> & FormControlProps>>
+            ) => setName(e.currentTarget.value ?? "")}
           />
           <Button variant="success" onClick={submit} className="remove-left-border-radius">
             Rename

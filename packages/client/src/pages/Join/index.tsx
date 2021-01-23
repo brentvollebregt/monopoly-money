@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useTitle } from "hookrouter";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, FormControlProps } from "react-bootstrap";
 import { createGame, joinGame } from "../../api";
 import useStoredGames from "../../hooks/useStoredGames";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
+import { BsPrefixProps, ReplaceProps } from "react-bootstrap/helpers";
 
 interface IJoinProps {
   newGame: boolean;
@@ -24,8 +25,10 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
   // If the game is already stored, join with what we have
   const isAStoredGame = storedGames.map((g) => g.gameId).indexOf(gameId) !== -1;
 
-  const onNameChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setName(event.currentTarget.value);
+  const onNameChange = (
+    event: React.FormEvent<ReplaceProps<"input", BsPrefixProps<"input"> & FormControlProps>>
+  ) => {
+    setName(event.currentTarget.value ?? "");
   };
 
   const onSubmit = () => {

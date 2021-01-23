@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 
 export const useForceUpdate = () => {
   // Used to trigger manual updates
-  const [, updateState] = useState();
+  const [, updateState] = useState<Record<string, string>>();
   const forceUpdate = useCallback(() => updateState({}), []);
   return forceUpdate;
 };

@@ -6,9 +6,6 @@
   "homepage": "https://github.com/brentvollebregt/monopoly-money#readme",
   "main": "packages/server/build/index.js",
   "scripts": {
-    "lerna": "lerna",
-    "bootstrap": "lerna bootstrap --hoist",
-    "postinstall": "npm run bootstrap",
     "start": "node packages/server/build",
     "build": "cd packages/game-state && npm run build && cd ../server && npm run build && cd ../client && npm run build && cd ../../ && node postbuild.js",
     "client:dev": "cd packages/client && npm start",
@@ -22,8 +19,10 @@
     "url": "https://github.com/brentvollebregt/monopoly-money/issues"
   },
   "devDependencies": {
-    "lerna": "^3.20.2",
     "tslint": "^5.20.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "workspaces": [
+    "./packages/*"
+  ]
 }

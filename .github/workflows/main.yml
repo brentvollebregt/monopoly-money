@@ -15,12 +15,16 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: "10.x"
+          node-version: "14.x"
 
-      - name: Install Dependencies and Build
-        run: |
-          npm install
-          npm run build
+      - name: Install npm 7
+        run: npm install -g npm@7
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
         env:
           REACT_APP_API_ROOT: https://monopoly-money-server.herokuapp.com
           REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: UA-117153268-5

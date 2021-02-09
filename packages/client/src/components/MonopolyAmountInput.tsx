@@ -55,6 +55,7 @@ const MonopolyAmountInput: React.FC<IMonopolyAmountInputProps> = ({ amount, setA
         className="form-control text-center w-100"
         autoComplete="off"
         getInputRef={numberInputRef}
+        inputMode="decimal"
       />
 
       <InputGroup.Append>

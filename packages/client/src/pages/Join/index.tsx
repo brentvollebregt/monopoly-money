@@ -90,6 +90,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
             onValueChange={({ value }: NumberFormatValues) => setGameId(value)}
             className="form-control text-center"
             autoComplete="off"
+            inputMode="decimal"
           />
           <Form.Text style={{ color: "var(--danger)" }}>{gameError}</Form.Text>
         </Form.Group>

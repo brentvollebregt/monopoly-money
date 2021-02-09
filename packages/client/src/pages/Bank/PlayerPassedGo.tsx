@@ -55,6 +55,7 @@ const PlayerPassedGo: React.FC<IPlayerPassedGoProps> = ({ players, onSubmit }) =
               className="form-control"
               autoComplete="off"
               decimalScale={0}
+              inputMode="decimal"
             />
             <Button
               variant="success"

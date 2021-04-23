@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useRoutes, navigate, usePath } from "hookrouter";
-import ReactGA from "react-ga";
 import Navigation from "./components/Navigation";
 import MetaTags from "./components/MetaTags";
 import PageSizeWrapper from "./components/PageSizeWrapper";
@@ -14,6 +13,7 @@ import Help from "./pages/Help";
 import { routePaths } from "./constants";
 import useStoredGames from "./hooks/useStoredGames";
 import useGameHandler from "./hooks/useGameHandler";
+import { trackPageView } from "./utils";
 
 const wrapRoute = (route: string, child: JSX.Element) => (
   <MetaTags route={route}>
@@ -27,7 +27,7 @@ const App: React.FC = () => {
   const path = usePath();
 
   useEffect(() => {
-    ReactGA.pageview(window.location.pathname + window.location.search);
+    trackPageView();
   }, [path]);
 
   // If the user has gone to a non-game route, clear the game state

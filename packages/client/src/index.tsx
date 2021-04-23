@@ -1,17 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.scss";
 import { ModalProvider } from "react-modal-hook";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-import ReactGA from "react-ga";
-import Config from "./config";
 
-if (Config.googleAnalyticsTrackingId !== undefined) {
-  ReactGA.initialize(Config.googleAnalyticsTrackingId, {
-    // debug: true
-  });
-}
+import App from "./App";
+import { configureGTag } from "./utils";
+import * as serviceWorker from "./serviceWorker";
+import "./index.scss";
+
+configureGTag();
 
 ReactDOM.render(
   <ModalProvider>

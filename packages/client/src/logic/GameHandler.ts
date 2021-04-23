@@ -1,4 +1,3 @@
-import ReactGA from "react-ga";
 import {
   GameEvent,
   IGameState,
@@ -17,6 +16,7 @@ import {
   IProposeEventMessage,
   IProposeEndGameMessage
 } from "@monopoly-money/server/build/api/dto";
+import { trackUnexpectedServerDisconnection } from "../utils";
 
 export interface IGameHandlerState {
   events: GameEvent[];
@@ -164,11 +164,7 @@ class GameHandler {
         );
         break;
       case "unexpectedWebSocketClosure":
-        ReactGA.event({
-          category: "Network",
-          action: "Unexpected server disconnection",
-          nonInteraction: true
-        });
+        trackUnexpectedServerDisconnection();
         this.onDisplayMessage(
           "Disconnection from the server",
           "Unexpectedly disconnection from the server. Please make sure you are connected to the internet",

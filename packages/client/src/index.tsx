@@ -3,11 +3,8 @@ import ReactDOM from "react-dom";
 import { ModalProvider } from "react-modal-hook";
 
 import App from "./App";
-import { configureGTag } from "./utils";
 import * as serviceWorker from "./serviceWorker";
 import "./index.scss";
-
-configureGTag();
 
 ReactDOM.render(
   <ModalProvider>

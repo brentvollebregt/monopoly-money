@@ -16,12 +16,6 @@ const getWindowWithGTag = () => {
   return (window as unknown) as WindowWithGTag;
 };
 
-export const configureGTag = () => {
-  getWindowWithGTag().gtag("config", Config.googleAnalyticsTrackingId, {
-    send_page_view: false
-  });
-};
-
 export const trackPageView = () => {
   getWindowWithGTag().gtag("event", "page_view", {
     page_location: window.location.origin + window.location.pathname,

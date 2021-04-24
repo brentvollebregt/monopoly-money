@@ -1,5 +1,4 @@
 import { IGameStatePlayer } from "@monopoly-money/game-state";
-import Config from "./config";
 
 export const formatCurrency = (value: number) => `$${value.toLocaleString()}`;
 

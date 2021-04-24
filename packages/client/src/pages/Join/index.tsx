@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { useTitle } from "hookrouter";
-import { Form, Button, FormControlProps } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { createGame, joinGame } from "../../api";
 import useStoredGames from "../../hooks/useStoredGames";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
-import { BsPrefixProps, ReplaceProps } from "react-bootstrap/helpers";
 
 interface IJoinProps {
   newGame: boolean;
@@ -13,7 +11,6 @@ interface IJoinProps {
 
 const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
   const title = newGame ? "Create Game" : "Join Game";
-  useTitle(`${title} - Monopoly Money`);
 
   const { storedGames } = useStoredGames(false);
   const [loading, setLoading] = useState(false);

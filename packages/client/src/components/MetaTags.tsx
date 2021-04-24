@@ -15,7 +15,10 @@ interface IProps extends React.PropsWithChildren<{}> {
 
 const MetaTags: React.FC<IProps> = ({ route, children }) => {
   const configPageMeta = pageMeta[route];
-  const title = `${configPageMeta.titlePrefix} Monopoly Money`;
+  const title =
+    configPageMeta.titlePrefix !== ""
+      ? `${configPageMeta.titlePrefix} - Monopoly Money`
+      : "Monopoly Money";
 
   useMetaTags({
     title,

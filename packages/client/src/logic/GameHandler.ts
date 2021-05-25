@@ -14,7 +14,8 @@ import {
   IAuthMessage,
   OutgoingMessage,
   IProposeEventMessage,
-  IProposeEndGameMessage
+  IProposeEndGameMessage,
+  IHeartBeatMessage
 } from "@monopoly-money/server/build/api/dto";
 import { trackUnexpectedServerDisconnection } from "../utils";
 
@@ -32,6 +33,7 @@ class GameHandler {
   private events: GameEvent[] = [];
   private webSocket: WebSocket;
   private gameState: IGameState = defaultGameState;
+  private heartBeatTimeout: NodeJS.Timeout | null = null;
 
   constructor(
     gameId: string,
@@ -69,7 +71,24 @@ class GameHandler {
         this.gameEnd("unexpectedWebSocketClosure");
         this.onGameStateChange(true);
       }
+
+      if (this.heartBeatTimeout !== null) {
+        clearTimeout(this.heartBeatTimeout);
+      }
     });
+
+    // Start a heart beat back to the server (to keep WebSocket connections alive on Heroku: https://devcenter.heroku.com/articles/websockets#timeouts)
+    this.heartBeatTimeout = setInterval(
+      this.pingServer.bind(this),
+      1000 * config.heartBeatTimeoutSeconds
+    );
+  }
+
+  private pingServer() {
+    const message: IHeartBeatMessage = {
+      type: "heartBeat"
+    };
+    this.webSocket.send(JSON.stringify(message));
   }
 
   // Get data to be used to display the UI

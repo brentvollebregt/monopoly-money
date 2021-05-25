@@ -125,3 +125,10 @@ export const proposeEndGame: MessageHandler = (ws, { gameId, userToken }, messag
     }
   }
 };
+
+export const heartBeat: MessageHandler = (ws, { gameId, userToken }, message) => {
+  if (message.type === "heartBeat") {
+    // No operations required
+    return;
+  }
+};

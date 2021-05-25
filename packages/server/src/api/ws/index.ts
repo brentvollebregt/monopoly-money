@@ -6,13 +6,14 @@ import {
   authMessage,
   proposeEvent,
   proposeEndGame,
+  heartBeat,
   onMessageStreamClosed
 } from "./messageHandlers";
 import { IncomingMessage } from "../dto";
 import { IUserData } from "../types";
 
 // Functions that take a message and decide whether to act on it
-const messageHandlers: MessageHandler[] = [authMessage, proposeEvent, proposeEndGame];
+const messageHandlers: MessageHandler[] = [authMessage, proposeEvent, proposeEndGame, heartBeat];
 
 // Setup the websocket API
 const setupWebsocketAPI = (server: http.Server | https.Server) => {

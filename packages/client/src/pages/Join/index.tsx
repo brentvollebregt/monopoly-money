@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { createGame, joinGame } from "../../api";
 import useStoredGames from "../../hooks/useStoredGames";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
+import Config from "../../config";
 
 interface IJoinProps {
   newGame: boolean;
@@ -18,6 +19,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
   const [name, setName] = useState("");
   const [gameError, setGameError] = useState<string | null>(null);
   const [nameError, setNameError] = useState<string | null>(null);
+  const [hasServerError, setHasServerError] = useState(false);
 
   // If the game is already stored, join with what we have
   const isAStoredGame = storedGames.map((g) => g.gameId).indexOf(gameId) !== -1;
@@ -40,7 +42,10 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
         .then((result) => {
           onGameSetup(result.gameId, result.userToken, result.playerId);
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          console.log(error);
+          setHasServerError(true);
+        })
         .finally(() => setLoading(false));
     } else {
       // Validity check
@@ -67,7 +72,10 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
             onGameSetup(result.gameId, result.userToken, result.playerId);
           }
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          console.log(error);
+          setHasServerError(true);
+        })
         .finally(() => setLoading(false));
     }
   };
@@ -117,6 +125,17 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
       <Button block variant="primary" onClick={onSubmit} disabled={loading}>
         {newGame ? "Create" : "Join"}
       </Button>
+
+      {hasServerError && (
+        <p style={{ color: "var(--danger)" }} className="mt-2">
+          {Config.api.unreachableErrorMessage.split("\n").map((line, i, arr) => (
+            <React.Fragment key={line}>
+              {line}
+              {i !== arr.length - 1 && <br />}
+            </React.Fragment>
+          ))}
+        </p>
+      )}
     </div>
   );
 };

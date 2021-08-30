@@ -13,6 +13,7 @@ export interface IGameStatePlayer {
 
 export interface IGameState {
   players: IGameStatePlayer[];
+  useFreeParking: boolean;
   freeParkingBalance: number;
   open: boolean;
 }
@@ -26,6 +27,7 @@ export type GameEvent =
   | IPlayerBankerStatusChangeEvent
   | ITransactionEvent
   | IGameOpenStateChangeEvent
+  | IUseFreeParkingChangeEvent
   | IPlayerConnectionChangeEvent;
 
 export interface IGameEvent {
@@ -66,6 +68,11 @@ export interface ITransactionEvent extends IGameEvent {
 export interface IGameOpenStateChangeEvent extends IGameEvent {
   type: "gameOpenStateChange";
   open: boolean;
+}
+
+export interface IUseFreeParkingChangeEvent extends IGameEvent {
+  type: "useFreeParkingChange";
+  useFreeParking: boolean;
 }
 
 export interface IPlayerConnectionChangeEvent extends IGameEvent {

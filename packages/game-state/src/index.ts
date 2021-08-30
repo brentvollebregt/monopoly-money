@@ -11,6 +11,7 @@ import {
   IPlayerBankerStatusChangeEvent,
   ITransactionEvent,
   IGameOpenStateChangeEvent,
+  IUseFreeParkingChangeEvent,
   IPlayerConnectionChangeEvent
 } from "./types";
 
@@ -28,5 +29,6 @@ export {
   IPlayerBankerStatusChangeEvent,
   ITransactionEvent,
   IGameOpenStateChangeEvent,
+  IUseFreeParkingChangeEvent,
   IPlayerConnectionChangeEvent
 };

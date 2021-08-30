@@ -93,6 +93,7 @@ const App: React.FC = () => {
                 playerId={game.playerId}
                 isGameOpen={game.open}
                 players={game.players}
+                useFreeParking={game.useFreeParking}
                 freeParkingBalance={game.freeParkingBalance}
                 proposeTransaction={game.actions.proposeTransaction}
                 events={game.events}
@@ -106,6 +107,7 @@ const App: React.FC = () => {
               routePaths.bank,
               <Bank
                 players={game.players}
+                useFreeParking={game.useFreeParking}
                 freeParkingBalance={game.freeParkingBalance}
                 hasATransactionBeenMade={
                   game.events.filter((e) => e.type === "transaction").length > 0
@@ -125,10 +127,12 @@ const App: React.FC = () => {
               routePaths.settings,
               <Settings
                 isGameOpen={game.open}
+                useFreeParking={game.useFreeParking}
                 players={game.players}
                 proposePlayerNameChange={game.actions.proposePlayerNameChange}
                 proposePlayerDelete={game.actions.proposePlayerDelete}
                 proposeGameOpenStateChange={game.actions.proposeGameOpenStateChange}
+                proposeUseFreeParkingChange={game.actions.proposeUseFreeParkingChange}
                 proposeGameEnd={game.actions.proposeGameEnd}
               />
             )

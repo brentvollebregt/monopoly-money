@@ -11,19 +11,23 @@ import ConnectedStateDot from "../../components/ConnectedStateDot";
 
 interface ISettingsProps {
   isGameOpen: boolean;
+  useFreeParking: boolean;
   players: IGameStatePlayer[];
   proposePlayerNameChange: (playerId: string, name: string) => void;
   proposePlayerDelete: (playerId: string) => void;
   proposeGameOpenStateChange: (open: boolean) => void;
+  proposeUseFreeParkingChange: (useFreeParking: boolean) => void;
   proposeGameEnd: () => void;
 }
 
 const Settings: React.FC<ISettingsProps> = ({
   isGameOpen,
+  useFreeParking,
   players,
   proposePlayerNameChange,
   proposePlayerDelete,
   proposeGameOpenStateChange,
+  proposeUseFreeParkingChange,
   proposeGameEnd
 }) => {
   const [actioningPlayer, setActioningPlayer] = useState<IGameStatePlayer | null>(null);
@@ -116,6 +120,10 @@ const Settings: React.FC<ISettingsProps> = ({
           ))}
         </tbody>
       </Table>
+
+      <Button block variant="info" onClick={() => proposeUseFreeParkingChange(!useFreeParking)}>
+        {useFreeParking ? "Disable" : "Enable"} the Free Parking House Rule
+      </Button>
 
       <Button block variant="primary" onClick={() => proposeGameOpenStateChange(!isGameOpen)}>
         {isGameOpen ? "Close" : "Open"} Game To New Players

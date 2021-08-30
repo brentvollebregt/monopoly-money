@@ -8,6 +8,7 @@ import PlayerPassedGo from "./PlayerPassedGo";
 
 interface IBankProps {
   players: IGameStatePlayer[];
+  useFreeParking: boolean;
   freeParkingBalance: number;
   hasATransactionBeenMade: boolean;
   proposeTransaction: (from: GameEntity, to: GameEntity, amount: number) => void;
@@ -15,6 +16,7 @@ interface IBankProps {
 
 const Bank: React.FC<IBankProps> = ({
   players,
+  useFreeParking,
   freeParkingBalance,
   hasATransactionBeenMade,
   proposeTransaction
@@ -47,6 +49,7 @@ const Bank: React.FC<IBankProps> = ({
         />
       </div>
 
+      {useFreeParking &&
       <div className="mb-4">
         <GiveFreeParking
           players={players}
@@ -56,6 +59,7 @@ const Bank: React.FC<IBankProps> = ({
           }
         />
       </div>
+      }
 
       <div className="mb-4">
         <ValuePlayerForm

@@ -152,6 +152,17 @@ const getEventDetails = (
       };
     }
 
+    case "useFreeParkingChange": {
+      const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
+      return {
+        ...defaults,
+        title: "Use Free Parking State Change",
+        actionedBy: actionedBy.name,
+        detail: `The Free Parking house rule is now ${event.useFreeParking ? "enabled" : "disabled"}`,
+        colour: "blue"
+      };
+    }
+
     case "playerConnectionChange": {
       // Don't show these as they will pollute the history
       // const playerName = previousState.players.find((p) => p.playerId === event.playerId)!.name;

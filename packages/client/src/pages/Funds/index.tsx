@@ -15,6 +15,7 @@ interface IFundsProps {
   playerId: string;
   isGameOpen: boolean;
   players: IGameStatePlayer[];
+  useFreeParking: boolean;
   freeParkingBalance: number;
   proposeTransaction: (from: GameEntity, to: GameEntity, amount: number) => void;
   events: GameEvent[];
@@ -25,6 +26,7 @@ const Funds: React.FC<IFundsProps> = ({
   playerId,
   isGameOpen,
   players,
+  useFreeParking,
   freeParkingBalance,
   proposeTransaction,
   events
@@ -86,12 +88,14 @@ const Funds: React.FC<IFundsProps> = ({
       </div>
 
       <div className="balance-grid">
+        {useFreeParking &&
         <PlayerCard
           name={freeParkingName}
           connected={null}
           balance={freeParkingBalance}
           onClick={() => setRecipient("freeParking")}
         />
+        }
         <PlayerCard
           name={bankName}
           connected={null}

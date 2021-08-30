@@ -7,7 +7,8 @@ import {
   ITransactionEvent,
   IPlayerNameChangeEvent,
   IPlayerDeleteEvent,
-  IGameOpenStateChangeEvent
+  IGameOpenStateChangeEvent,
+  IUseFreeParkingChangeEvent
 } from "@monopoly-money/game-state";
 import config from "../config";
 import {
@@ -150,6 +151,17 @@ class GameHandler {
       actionedBy: "", // Will be filled in by the server
       type: "gameOpenStateChange",
       open
+    };
+    this.submitEvent(event);
+  }
+
+  // Enable / disable Free Parking house rule
+  public proposeUseFreeParkingChange(useFreeParking: boolean) {
+    const event: IUseFreeParkingChangeEvent = {
+      time: "", // Will be filled in by the server
+      actionedBy: "", // Will be filled in by the server
+      type: "useFreeParkingChange",
+      useFreeParking
     };
     this.submitEvent(event);
   }

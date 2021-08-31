@@ -8,24 +8,28 @@ export const sortPlayersByName = (players: IGameStatePlayer[]) =>
 // gtag.js integration
 
 interface WindowWithGTag extends Window {
-  gtag: (...args: any) => void;
+  gtag: ((...args: any) => void) | undefined;
 }
 
 const getWindowWithGTag = () => {
-  return (window as unknown) as WindowWithGTag;
+  return window as unknown as WindowWithGTag;
 };
 
 export const trackPageView = () => {
-  getWindowWithGTag().gtag("event", "page_view", {
-    page_location: window.location.origin + window.location.pathname,
-    page_path: window.location.pathname,
-    page_title: document.title
-  });
+  if (getWindowWithGTag().gtag !== undefined) {
+    getWindowWithGTag().gtag!("event", "page_view", {
+      page_location: window.location.origin + window.location.pathname,
+      page_path: window.location.pathname,
+      page_title: document.title
+    });
+  }
 };
 
 export const trackUnexpectedServerDisconnection = () => {
-  getWindowWithGTag().gtag("event", "Unexpected server disconnection", {
-    event_category: "Network",
-    non_interaction: true
-  });
+  if (getWindowWithGTag().gtag !== undefined) {
+    getWindowWithGTag().gtag!("event", "Unexpected server disconnection", {
+      event_category: "Network",
+      non_interaction: true
+    });
+  }
 };

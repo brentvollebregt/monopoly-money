@@ -132,6 +132,17 @@ const Settings: React.FC<ISettingsProps> = ({
       <Button block variant="danger" onClick={() => showEndGameConfirmModal()}>
         End Game
       </Button>
+
+      <div className="mt-5 text-center">
+        <div>
+          <small>Find this app helpful?</small>
+        </div>
+        <a href="https://www.buymeacoffee.com/brentvollebregt" target="_blank">
+          <Button block variant="warning">
+            🍺 Buy a beer to say thanks 🍺
+          </Button>
+        </a>
+      </div>
     </div>
   );
 };

@@ -88,14 +88,14 @@ const Funds: React.FC<IFundsProps> = ({
       </div>
 
       <div className="balance-grid">
-        {useFreeParking &&
-        <PlayerCard
-          name={freeParkingName}
-          connected={null}
-          balance={freeParkingBalance}
-          onClick={() => setRecipient("freeParking")}
-        />
-        }
+        {useFreeParking && (
+          <PlayerCard
+            name={freeParkingName}
+            connected={null}
+            balance={freeParkingBalance}
+            onClick={() => setRecipient("freeParking")}
+          />
+        )}
         <PlayerCard
           name={bankName}
           connected={null}

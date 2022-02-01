@@ -49,17 +49,17 @@ const Bank: React.FC<IBankProps> = ({
         />
       </div>
 
-      {useFreeParking &&
-      <div className="mb-4">
-        <GiveFreeParking
-          players={players}
-          freeParkingBalance={freeParkingBalance}
-          onSubmit={(playerId: string) =>
-            proposeTransaction("freeParking", playerId, freeParkingBalance)
-          }
-        />
-      </div>
-      }
+      {useFreeParking && (
+        <div className="mb-4">
+          <GiveFreeParking
+            players={players}
+            freeParkingBalance={freeParkingBalance}
+            onSubmit={(playerId: string) =>
+              proposeTransaction("freeParking", playerId, freeParkingBalance)
+            }
+          />
+        </div>
+      )}
 
       <div className="mb-4">
         <ValuePlayerForm

@@ -158,7 +158,9 @@ const getEventDetails = (
         ...defaults,
         title: "Use Free Parking State Change",
         actionedBy: actionedBy.name,
-        detail: `The Free Parking house rule is now ${event.useFreeParking ? "enabled" : "disabled"}`,
+        detail: `The Free Parking house rule is now ${
+          event.useFreeParking ? "enabled" : "disabled"
+        }`,
         colour: "blue"
       };
     }

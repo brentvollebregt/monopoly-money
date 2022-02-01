@@ -12,7 +12,7 @@ interface WindowWithGTag extends Window {
 }
 
 const getWindowWithGTag = () => {
-  return window as unknown as WindowWithGTag;
+  return (window as unknown) as WindowWithGTag;
 };
 
 export const trackPageView = () => {

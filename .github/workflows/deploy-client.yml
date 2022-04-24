@@ -1,4 +1,4 @@
-name: Build and Deploy Client to gh-pages
+name: Deploy Client to gh-pages
 
 on:
   workflow_dispatch:
@@ -38,3 +38,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./packages/client/build
+          PUBLISH_BRANCH: gh-pages
+          cname: monopoly-money.nitratine.net
+          force_orphan: true # Only keep latest commit in gh-pages (to keep repo size down)

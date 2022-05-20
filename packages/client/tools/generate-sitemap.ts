@@ -3,9 +3,7 @@ import { Readable } from "stream";
 import fs from "fs";
 import { routePaths, siteUrl } from "../src/constants";
 
-export const rootDestinations = Object.values(routePaths)
-  .filter((p) => p !== "/")
-  .map((p) => p.replace(/^\//g, ""));
+export const rootDestinations = Object.values(routePaths);
 
 const links = rootDestinations.map((dest) => ({ url: `${dest}`, priority: 0.8 }));
 

@@ -6,7 +6,7 @@
     "@rehooks/local-storage": "^2.4.0",
     "@types/hookrouter": "^2.2.5",
     "@types/luxon": "^1.25.1",
-    "@types/node": "^12.19.15",
+    "@types/node": "15.6.1",
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
     "bootstrap": "^4.6.0",
@@ -25,8 +25,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "ts-node -O {\\\"module\\\":\\\"commonjs\\\"} tools/generate-sitemap.ts",
     "build": "react-scripts build",
-    "postbuild": "node postbuild.js"
+    "postbuild": "ts-node -O {\\\"module\\\":\\\"commonjs\\\"} tools/copy-index.ts"
   },
   "eslintConfig": {
     "extends": [

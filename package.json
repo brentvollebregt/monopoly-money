@@ -27,5 +27,9 @@
   "engines": {
     "node": "14.x",
     "npm": "7.x"
+  },
+  "dependencies": {
+    "sitemap": "^7.1.1",
+    "ts-node": "^10.7.0"
   }
 }

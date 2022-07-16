@@ -65,7 +65,7 @@ const ValueModal: React.FC<IValueModalProps> = ({ submitAmount, onClose }) => {
           again.
         </p>
 
-        <MonopolyAmountInput amount={amount} setAmount={setAmount} />
+        <MonopolyAmountInput amount={amount} setAmount={setAmount} autoFocus={true} />
 
         <Button block variant="success" className="mt-1" onClick={submit}>
           Initialise

@@ -66,7 +66,7 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
       <Modal.Body>
         <p className="text-center">💵 → {getRecipientName()}</p>
 
-        <MonopolyAmountInput amount={amount} setAmount={setAmount} />
+        <MonopolyAmountInput amount={amount} setAmount={setAmount} autoFocus={true} />
 
         <Button block variant="success" className="mt-1" onClick={submit}>
           Send

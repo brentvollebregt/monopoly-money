@@ -6,11 +6,23 @@ interface IMonopolyAmountInputProps {
   amount: number | null;
   setAmount: (amount: number | null) => void;
   id?: string;
+  autoFocus?: boolean;
 }
 
-const MonopolyAmountInput: React.FC<IMonopolyAmountInputProps> = ({ amount, setAmount, id }) => {
+const MonopolyAmountInput: React.FC<IMonopolyAmountInputProps> = ({
+  amount,
+  setAmount,
+  id,
+  autoFocus = false
+}) => {
   const [inputValue, setInputValue] = useState("");
   const numberInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (autoFocus && numberInputRef.current !== null) {
+      numberInputRef.current.focus();
+    }
+  }, [numberInputRef]);
 
   // When the external amount changes, update the internal
   useEffect(() => {

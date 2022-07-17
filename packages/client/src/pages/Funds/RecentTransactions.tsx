@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   GameEvent,
   ITransactionEvent,
@@ -9,7 +9,7 @@ import { freeParkingName, bankName } from "../../constants";
 import { formatCurrency } from "../../utils";
 import { DateTime } from "luxon";
 
-const visibilityDurationMilliseconds = 10000;
+const visibilityDurationMilliseconds = 40_000;
 
 interface IRecentTransactionsProps {
   events: GameEvent[];
@@ -52,11 +52,37 @@ const RecentTransactions: React.FC<IRecentTransactionsProps> = ({ events, player
     <div className="recent-transactions text-center">
       {displayedTransactions.map((t) => (
         <small key={t.time} className="d-block">
-          {getEntityName(t.from)} → {getEntityName(t.to)} ({formatCurrency(t.amount)})
+          {getEntityName(t.from)} → {getEntityName(t.to)} ({formatCurrency(t.amount)}){" "}
+          <SecondsSinceLabel transactionTime={DateTime.fromISO(t.time)} />
         </small>
       ))}
     </div>
   );
+};
+
+interface SecondsSinceLabelProps {
+  transactionTime: DateTime;
+}
+
+const SecondsSinceLabel = ({ transactionTime }: SecondsSinceLabelProps) => {
+  const [seconds, setSeconds] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout>();
+
+  // Check duration since every 5s and round down to nearest 5s to display
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      const secondsSince = -transactionTime.diffNow().as("seconds");
+      setSeconds(Math.floor(secondsSince / 5) * 5);
+    }, 5_000);
+
+    return () => {
+      if (intervalRef.current !== undefined) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [intervalRef]);
+
+  return <span className="text-muted">({seconds}s ago)</span>;
 };
 
 export default RecentTransactions;

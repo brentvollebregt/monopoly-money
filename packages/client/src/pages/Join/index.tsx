@@ -4,6 +4,7 @@ import { createGame, joinGame } from "../../api";
 import useStoredGames from "../../hooks/useStoredGames";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
 import Config from "../../config";
+import { getGameIdFromQueryString } from "../../utils";
 
 interface IJoinProps {
   newGame: boolean;
@@ -15,7 +16,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
 
   const { storedGames } = useStoredGames(false);
   const [loading, setLoading] = useState(false);
-  const [gameId, setGameId] = useState("");
+  const [gameId, setGameId] = useState(getGameIdFromQueryString() ?? "");
   const [name, setName] = useState("");
   const [gameError, setGameError] = useState<string | null>(null);
   const [nameError, setNameError] = useState<string | null>(null);

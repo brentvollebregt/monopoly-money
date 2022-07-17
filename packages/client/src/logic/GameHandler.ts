@@ -198,7 +198,7 @@ class GameHandler {
         trackUnexpectedServerDisconnection();
         this.onDisplayMessage(
           "Disconnection from the server",
-          "Unexpectedly disconnection from the server. Please make sure you are connected to the internet",
+          "Unexpectedly disconnection from the server. Please make sure you are connected to the internet.",
           this.gameState
         );
         break;

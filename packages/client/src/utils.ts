@@ -1,4 +1,5 @@
 import { IGameStatePlayer } from "@monopoly-money/game-state";
+import { routePaths } from "./constants";
 
 export const formatCurrency = (value: number) => `$${value.toLocaleString()}`;
 
@@ -12,7 +13,7 @@ interface WindowWithGTag extends Window {
 }
 
 const getWindowWithGTag = () => {
-  return (window as unknown) as WindowWithGTag;
+  return window as unknown as WindowWithGTag;
 };
 
 export const trackPageView = () => {
@@ -32,4 +33,16 @@ export const trackUnexpectedServerDisconnection = () => {
       non_interaction: true
     });
   }
+};
+
+const queryStringGameIdName = "gameId";
+
+export const getGameIdFromQueryString = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const gameId = urlParams.get(queryStringGameIdName);
+  return gameId;
+};
+
+export const getShareGameLink = (gameId: string) => {
+  return `${window.location.origin}${routePaths.join}?${queryStringGameIdName}=${gameId}`;
 };

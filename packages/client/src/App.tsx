@@ -46,7 +46,7 @@ const App: React.FC = () => {
 
   // Navigate home when a game is ended
   useEffect(() => {
-    if (game === null) {
+    if (game === null && path !== routePaths.join) {
       navigate("/");
     }
   }, [game]);

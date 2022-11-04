@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
 
@@ -27,7 +27,7 @@ jobs:
         run: npm run build
         env:
           SKIP_PREFLIGHT_CHECK: true
-          REACT_APP_API_ROOT: https://monopoly-money-server.onrender.com
+          REACT_APP_API_ROOT: https://monopoly-money.fly.dev
           REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: G-3SFPXD2CWJ
           REACT_APP_API_UNREACHABLE_ERROR_MESSAGE: "Unable to communicate with server.\nSince this is publicly hosted, we may have run out of minutes on the server.\nThis should be running again next month when the time is reset."
           CI: false

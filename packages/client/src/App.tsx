@@ -21,6 +21,14 @@ const wrapRoute = (route: string, child: JSX.Element) => (
   </MetaTags>
 );
 
+/** Takes a route and returns all variants */
+const getExtendedRoutes = (route: string) => {
+  if (route.endsWith("/")) {
+    return [route];
+  }
+  return [route, `${route}/`];
+};
+
 const App: React.FC = () => {
   const { storeGame } = useStoredGames(false);
   const { game, authInfo, initialize, clear } = useGameHandler();
@@ -32,21 +40,30 @@ const App: React.FC = () => {
 
   // If the user has gone to a non-game route, clear the game state
   useEffect(() => {
-    if (path === routePaths.home || path === routePaths.join || path === routePaths.newGame) {
+    const nonGameRoutes = [
+      ...getExtendedRoutes(routePaths.home),
+      ...getExtendedRoutes(routePaths.join),
+      ...getExtendedRoutes(routePaths.newGame)
+    ];
+    if (nonGameRoutes.includes(path)) {
       onGameDestroy();
     }
   }, [path]);
 
   // If the user has gone to a route that we don't manage, go home
   useEffect(() => {
-    if (Object.values(routePaths).indexOf(path) === -1) {
+    const allRoutes = Object.values(routePaths)
+      .map((r) => getExtendedRoutes(r))
+      .flat();
+    if (!allRoutes.includes(path)) {
+      console.log("exec1");
       navigate("/");
     }
   }, [path]);
 
   // Navigate home when a game is ended
   useEffect(() => {
-    if (game === null && path !== routePaths.join) {
+    if (game === null && !getExtendedRoutes(routePaths.join).includes(path)) {
       navigate("/");
     }
   }, [game]);
@@ -140,7 +157,18 @@ const App: React.FC = () => {
     [routePaths.help]: () => wrapRoute(routePaths.help, <Help />)
   };
 
-  const routeResult = useRoutes(routes);
+  const routesWithTrailingSlashes = Object.keys(routes).reduce((acc, route) => {
+    const extendedRoutes = getExtendedRoutes(route);
+    return {
+      ...acc,
+      ...extendedRoutes.reduce(
+        (acc1, extendedRoute) => ({ ...acc1, [extendedRoute]: routes[route] }),
+        {}
+      )
+    };
+  }, {} as { [key: string]: () => JSX.Element });
+
+  const routeResult = useRoutes(routesWithTrailingSlashes);
 
   return (
     <>

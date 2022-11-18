@@ -5,7 +5,14 @@ import { useModal } from "react-modal-hook";
 import RenamePlayerModal from "./RenamePlayerModal";
 import DeletePlayerModal from "./DeletePlayerModal";
 import EndGameConfirmDialog from "./EndGameConfirmDialog";
-import { formatCurrency, sortPlayersByName } from "../../utils";
+import {
+  formatCurrency,
+  sortPlayersByName,
+  trackFreeParkingDisabled,
+  trackFreeParkingEnabled,
+  trackNewPlayersAllowed,
+  trackNewPlayersNotAllowed
+} from "../../utils";
 import "./Settings.scss";
 import ConnectedStateDot from "../../components/ConnectedStateDot";
 
@@ -68,6 +75,24 @@ const Settings: React.FC<ISettingsProps> = ({
     [actioningPlayer]
   );
 
+  const toggleFreeParking = () => {
+    if (useFreeParking) {
+      trackFreeParkingDisabled();
+    } else {
+      trackFreeParkingEnabled();
+    }
+    proposeUseFreeParkingChange(!useFreeParking);
+  };
+
+  const toggleNewPlayersAllowed = () => {
+    if (isGameOpen) {
+      trackNewPlayersNotAllowed();
+    } else {
+      trackNewPlayersAllowed();
+    }
+    proposeGameOpenStateChange(!isGameOpen);
+  };
+
   return (
     <div className="settings">
       <Table striped bordered hover size="sm">
@@ -121,11 +146,11 @@ const Settings: React.FC<ISettingsProps> = ({
         </tbody>
       </Table>
 
-      <Button block variant="info" onClick={() => proposeUseFreeParkingChange(!useFreeParking)}>
+      <Button block variant="info" onClick={toggleFreeParking}>
         {useFreeParking ? "Disable" : "Enable"} the Free Parking House Rule
       </Button>
 
-      <Button block variant="primary" onClick={() => proposeGameOpenStateChange(!isGameOpen)}>
+      <Button block variant="primary" onClick={toggleNewPlayersAllowed}>
         {isGameOpen ? "Close" : "Open"} Game To New Players
       </Button>
 

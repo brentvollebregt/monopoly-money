@@ -16,24 +16,49 @@ const getWindowWithGTag = () => {
   return window as unknown as WindowWithGTag;
 };
 
-export const trackPageView = () => {
+// These events are purely here for me to understand how the application is used
+
+const tryToTrackGAEvent = (eventName: string, eventParams?: object) => {
   if (getWindowWithGTag().gtag !== undefined) {
-    getWindowWithGTag().gtag!("event", "page_view", {
-      page_location: window.location.origin + window.location.pathname,
-      page_path: window.location.pathname,
-      page_title: document.title
-    });
+    if (eventParams !== undefined) {
+      getWindowWithGTag().gtag!("event", eventName, eventParams);
+    } else {
+      getWindowWithGTag().gtag!("event", eventName);
+    }
   }
 };
 
-export const trackUnexpectedServerDisconnection = () => {
-  if (getWindowWithGTag().gtag !== undefined) {
-    getWindowWithGTag().gtag!("event", "Unexpected server disconnection", {
-      event_category: "Network",
-      non_interaction: true
-    });
-  }
-};
+export const trackPageView = () =>
+  tryToTrackGAEvent("page_view", {
+    page_location: window.location.origin + window.location.pathname,
+    page_path: window.location.pathname,
+    page_title: document.title
+  });
+
+export const trackUnexpectedServerDisconnection = () =>
+  tryToTrackGAEvent("Unexpected server disconnection", {
+    event_category: "Network",
+    non_interaction: true
+  });
+
+export const trackGameCreated = () => tryToTrackGAEvent("Game created");
+
+export const trackGameJoined = () => tryToTrackGAEvent("Game joined");
+
+export const trackGameCodeClick = () => tryToTrackGAEvent("Game code clicked");
+
+export const trackInitialisedPlayerBalances = (amount: number) =>
+  tryToTrackGAEvent("Initialised player balances", { initialisedAmount: amount });
+
+export const trackFreeParkingDisabled = () => tryToTrackGAEvent("Free parking disabled");
+
+export const trackFreeParkingEnabled = () => tryToTrackGAEvent("Free parking enabled");
+
+export const trackNewPlayersNotAllowed = () => tryToTrackGAEvent("New players not allowed");
+
+export const trackNewPlayersAllowed = () => tryToTrackGAEvent("New players allowed");
+
+export const trackEndGame = () => tryToTrackGAEvent("Ended game");
 
 const queryStringGameIdName = "gameId";
 

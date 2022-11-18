@@ -3,6 +3,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 import { useModal } from "react-modal-hook";
 import MonopolyAmountInput from "../../components/MonopolyAmountInput";
+import { trackInitialisedPlayerBalances } from "../../utils";
 
 interface IInitialiseGameProps {
   players: IGameStatePlayer[];
@@ -45,6 +46,7 @@ const ValueModal: React.FC<IValueModalProps> = ({ submitAmount, onClose }) => {
     } else {
       submitAmount(amount);
       close();
+      trackInitialisedPlayerBalances(amount);
     }
   };
 

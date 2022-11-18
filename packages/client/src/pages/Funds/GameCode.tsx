@@ -3,7 +3,7 @@ import { useClipboard } from "use-clipboard-copy";
 import { Button, Overlay, Tooltip } from "react-bootstrap";
 import QRCode from "react-qr-code";
 import useMessageModal from "../../hooks/useMessageModal";
-import { getShareGameLink } from "../../utils";
+import { getShareGameLink, trackGameCodeClick } from "../../utils";
 
 interface IGameCodeProps {
   gameId: string;
@@ -19,6 +19,7 @@ const GameCode: React.FC<IGameCodeProps> = ({ gameId, isBanker }) => {
       body: <ShareGameModalContent gameId={gameId} />,
       closeButtonText: null
     });
+    trackGameCodeClick();
   };
 
   return (

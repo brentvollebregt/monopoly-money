@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
+import { trackEndGame } from "../../utils";
 
 interface IEndGameConfirmDialogProps {
   proposeGameEnd: () => void;
@@ -29,6 +30,7 @@ const EndGameConfirmDialog: React.FC<IEndGameConfirmDialogProps> = ({
           onClick={() => {
             proposeGameEnd();
             onClose();
+            trackEndGame();
           }}
         >
           End Game

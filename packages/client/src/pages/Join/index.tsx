@@ -4,7 +4,7 @@ import { createGame, joinGame } from "../../api";
 import useStoredGames from "../../hooks/useStoredGames";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
 import Config from "../../config";
-import { getGameIdFromQueryString } from "../../utils";
+import { getGameIdFromQueryString, trackGameCreated, trackGameJoined } from "../../utils";
 
 interface IJoinProps {
   newGame: boolean;
@@ -42,6 +42,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
       createGame(name)
         .then((result) => {
           onGameSetup(result.gameId, result.userToken, result.playerId);
+          trackGameCreated();
         })
         .catch((error) => {
           console.log(error);
@@ -71,6 +72,7 @@ const Join: React.FC<IJoinProps> = ({ newGame, onGameSetup }) => {
             setGameError("That game is not open. Ask the banker to open the game.");
           } else {
             onGameSetup(result.gameId, result.userToken, result.playerId);
+            trackGameJoined();
           }
         })
         .catch((error) => {

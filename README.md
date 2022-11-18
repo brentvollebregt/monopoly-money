@@ -48,7 +48,8 @@ When running the client in development mode using `npm run client:dev`, the clie
   - Give money to players from the bank (and take money)
   - Give free parking to players
   - Update player names
-  - Delete players
+  - Remove players
+  - Toggle whether free parking can be used or not
   - Stop new people from joining the game
   - End the game completely
 - History is recorded of each game event that can be viewed by all players
@@ -59,19 +60,7 @@ If you have ever played the credit card edition of Monopoly, you will appreciate
 
 ## 🌐 Deployment
 
-This application was designed to have the server deployed on Heroku (with the client) and a separate client on GitHub Pages.
+This application was designed to have the server deployed on fly.io (with the client) and a separate (main) client on GitHub Pages.
 
-- When deploying with Heroku, make sure to set `NPM_CONFIG_PRODUCTION` to `false` in config vars otherwise packages will not be installed correctly.
-- The client deployment workflow can be found in [main.yml](./.github/workflows/main.yml).
-
-## 💡 Potential Future Ideas
-
-- Requests
-  - Game event
-  - Bank and players can get them
-  - Shows at the top of funds / top of bank page
-  - Can approve or decline
-  - Approval triggers a payment
-  - Doesn't how show in history
-  - This request is then removed in the game state when approved, declined.
-  - Hold down on players tile?
+- The server deployment workflow can be found in [deploy-server.yml](./.github/workflows/deploy-server.yml).
+- The client deployment workflow can be found in [deploy-client.yml](./.github/workflows/deploy-client.yml).

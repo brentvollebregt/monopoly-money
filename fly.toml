@@ -1,43 +1,43 @@
-# fly.toml file generated for monopoly-money on 2022-11-04T23:28:25+13:00
+# fly.toml app configuration file generated for monopoly-money on 2023-07-12T17:54:27+12:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
 app = "monopoly-money"
+primary_region = "syd"
 kill_signal = "SIGINT"
-kill_timeout = 5
-processes = []
+kill_timeout = "5s"
+
+[experimental]
+  auto_rollback = true
 
 [env]
   PORT = "8080"
   REACT_APP_API_ROOT = "https://monopoly-money.fly.dev"
-  REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID = "G-3SFPXD2CWJ"
   REACT_APP_API_UNREACHABLE_ERROR_MESSAGE = "Unable to communicate with server.\nSince this is publicly hosted, we may have run out of minutes on the server.\nThis should be running again next month when the time is reset."
+  REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID = "G-3SFPXD2CWJ"
   SERVER_ALLOWED_ORIGINS = "https://monopoly-money.nitratine.net,https://monopoly-money.fly.dev"
 
-[experimental]
-  allowed_public_ports = []
-  auto_rollback = true
-
 [[services]]
-  http_checks = []
+  protocol = "tcp"
   internal_port = 8080
   processes = ["app"]
-  protocol = "tcp"
-  script_checks = []
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
   [services.concurrency]
+    type = "connections"
     hard_limit = 25
     soft_limit = 20
-    type = "connections"
-
-  [[services.ports]]
-    force_https = true
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
 
   [[services.tcp_checks]]
-    grace_period = "1s"
     interval = "15s"
-    restart_limit = 0
     timeout = "2s"
+    grace_period = "1s"
+    restart_limit = 0

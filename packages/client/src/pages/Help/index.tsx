@@ -6,7 +6,7 @@ const Help: React.FC = () => {
   return (
     <div className="help">
       <h3 className="text-center">Monopoly Money Help</h3>
-      <p className="lead mt-2 text-center">A small gide to Monopoly Money.</p>
+      <p className="lead mt-2 text-center">A small guide to Monopoly Money.</p>
 
       <ul>
         <li>

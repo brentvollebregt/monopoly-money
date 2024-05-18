@@ -2,7 +2,7 @@
   "name": "monopoly-money",
   "private": true,
   "description": "> TODO: description",
-  "author": "Brent Vollebregt <brent.vollebregt@gmail.com>",
+  "author": "Brent Vollebregt",
   "homepage": "https://github.com/brentvollebregt/monopoly-money#readme",
   "main": "packages/server/build/index.js",
   "scripts": {

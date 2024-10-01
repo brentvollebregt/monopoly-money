@@ -1,0 +1,26 @@
+@import "~bootstrap/scss/bootstrap";
+
+.home {
+  .banner {
+    max-width: 80%;
+    margin: auto;
+    display: block;
+  }
+
+  .new-join-button-wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .active-game-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+
+    @media (min-width: map-get($grid-breakpoints, md)) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}

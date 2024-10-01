@@ -1,0 +1,18 @@
+.funds {
+  .balance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0.25rem;
+
+    .connected-state-dot {
+      position: absolute;
+    }
+  }
+}
+
+.player-card {
+  .card-body {
+    padding-top: 1.6rem !important;
+    padding-bottom: 1.6rem !important;
+  }
+}

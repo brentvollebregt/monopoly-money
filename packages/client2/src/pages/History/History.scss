@@ -1,0 +1,15 @@
+.history {
+  .event {
+    display: grid;
+    grid-template-columns: 8px 1fr;
+
+    .event-details {
+      padding-left: 8px;
+
+      .top {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+}

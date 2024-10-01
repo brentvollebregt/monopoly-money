@@ -1,0 +1,11 @@
+.connected-state-dot {
+  height: 15px;
+  width: 15px;
+  border: 2px solid var(--gray);
+  border-radius: 50%;
+
+  &.connected {
+    background: var(--green);
+    border: none;
+  }
+}

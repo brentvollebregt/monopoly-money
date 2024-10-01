@@ -1,0 +1,10 @@
+.help {
+  h4:before {
+    // Fix header hiding under navigation when jumping to in page links
+    display: block;
+    content: " ";
+    margin-top: -60px;
+    height: 60px;
+    visibility: hidden;
+  }
+}

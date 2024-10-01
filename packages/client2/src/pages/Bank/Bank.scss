@@ -1,0 +1,11 @@
+.bank {
+  .player-and-submit-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .settings-and-player-and-submit-group {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+  }
+}

@@ -1,6 +1,6 @@
 FROM debian:bullseye as builder
 
-ARG NODE_VERSION=16.13.1
+ARG NODE_VERSION=20.17.0
 
 RUN apt-get update; apt install -y curl
 RUN curl https://get.volta.sh | bash

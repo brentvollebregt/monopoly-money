@@ -5,6 +5,7 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig({
   plugins: [react(), svgr()],
   build: {
+    outDir: "build",
     // Since we are using workspaces, we also need to include files outside of this projects root
     commonjsOptions: { include: [/packages\/game-state/, /node_modules/] }
   },

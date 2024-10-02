@@ -11,6 +11,6 @@
     "build": "tsc"
   },
   "dependencies": {
-    "typescript": "^3.8.3"
+    "typescript": "^5.5.3"
   }
 }

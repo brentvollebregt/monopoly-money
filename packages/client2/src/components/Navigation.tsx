@@ -2,11 +2,11 @@ import React from "react";
 import { navigate, usePath } from "hookrouter";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import BannerImage from "../img/banner.png";
-import BankIcon from "../img/bank.svg";
-import FundsIcon from "../img/funds.svg";
-import ListIcon from "../img/list.svg";
-import SettingsIcon from "../img/settings.svg";
-import HelpIcon from "../img/help.svg";
+import BankIcon from "../img/bank.svg?react";
+import FundsIcon from "../img/funds.svg?react";
+import ListIcon from "../img/list.svg?react";
+import SettingsIcon from "../img/settings.svg?react";
+import HelpIcon from "../img/help.svg?react";
 import { routePaths } from "../constants";
 import "./Navigation.scss";
 
@@ -18,7 +18,7 @@ interface INavigationProps {
 interface INavbarLink {
   active: boolean;
   title: string;
-  icon: React.FunctionComponent<React.SVGProps<SVGElement>>;
+  icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   path: string;
 }
 

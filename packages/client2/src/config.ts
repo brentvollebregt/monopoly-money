@@ -1,9 +1,9 @@
 export default {
   api: {
-    root: process.env.REACT_APP_API_ROOT ? process.env.REACT_APP_API_ROOT : window.location.origin,
+    root: import.meta.env.VITE_API_ROOT ? import.meta.env.VITE_API_ROOT : window.location.origin,
     unreachableErrorMessage:
-      process.env.REACT_APP_API_UNREACHABLE_ERROR_MESSAGE ?? "Unable to communicate with server"
+      import.meta.env.VITE_API_UNREACHABLE_ERROR_MESSAGE ?? "Unable to communicate with server"
   },
-  googleAnalyticsTrackingId: process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID,
+  googleAnalyticsTrackingId: import.meta.env.VITE_GOOGLE_ANALYTICS_TRACKING_ID,
   heartBeatTimeoutSeconds: 10
 };

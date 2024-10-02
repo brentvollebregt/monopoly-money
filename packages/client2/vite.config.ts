@@ -8,5 +8,11 @@ export default defineConfig({
   build: {
     // Since we are using workspaces, we also need to include files outside of this projects root
     commonjsOptions: { include: [/packages\/game-state/, /node_modules/] }
+  },
+  server: {
+    port: 3000
+  },
+  preview: {
+    port: 3000
   }
 });

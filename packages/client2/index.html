@@ -13,7 +13,6 @@
     <link rel="manifest" href="/manifest.json" />
     <title>Monopoly Money</title>
 
-    <% if (process.env.VITE_GOOGLE_ANALYTICS_TRACKING_ID !== undefined) { %>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
@@ -28,7 +27,6 @@
 
       gtag("config", "%VITE_GOOGLE_ANALYTICS_TRACKING_ID%", { send_page_view: false });
     </script>
-    <% } %>
   </head>
   <body>
     <div id="root"></div>

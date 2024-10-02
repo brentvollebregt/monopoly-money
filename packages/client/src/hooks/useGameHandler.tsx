@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import GameHandler from "../logic/GameHandler";
 import { GameEvent, IGameState, GameEntity } from "@monopoly-money/game-state";
 import { useForceUpdate } from "./useForceUpdate";
@@ -107,9 +107,8 @@ const useGameHandler = (): {
               proposePlayerNameChange: gameHandler.proposePlayerNameChange.bind(gameHandler),
               proposePlayerDelete: gameHandler.proposePlayerDelete.bind(gameHandler),
               proposeGameOpenStateChange: gameHandler.proposeGameOpenStateChange.bind(gameHandler),
-              proposeUseFreeParkingChange: gameHandler.proposeUseFreeParkingChange.bind(
-                gameHandler
-              ),
+              proposeUseFreeParkingChange:
+                gameHandler.proposeUseFreeParkingChange.bind(gameHandler),
               proposeGameEnd: gameHandler.proposeGameEnd.bind(gameHandler)
             }
           }

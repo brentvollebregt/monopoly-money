@@ -60,7 +60,12 @@ const SendMoneyModal: React.FC<ISendMoneyModalProps> = ({
 
   return (
     <Modal show={true} onHide={close} size="lg" centered className="send-money-modal">
-      <Modal.Header closeButton>
+      <Modal.Header
+        closeButton
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+        placeholder={undefined}
+      >
         <Modal.Title>Transfer Funds</Modal.Title>
       </Modal.Header>
       <Modal.Body>

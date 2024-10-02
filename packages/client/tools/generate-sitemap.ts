@@ -1,6 +1,6 @@
 import { SitemapStream, streamToPromise } from "sitemap";
 import { Readable } from "stream";
-import fs from "fs";
+import * as fs from "fs";
 import { routePaths, siteUrl } from "../src/constants";
 
 export const rootDestinations = Object.values(routePaths);

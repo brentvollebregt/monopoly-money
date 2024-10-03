@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "--prebuild": "ts-node -O {\\\"module\\\":\\\"commonjs\\\"} tools/generate-sitemap.ts",
+    "prebuild": "ts-node -O {\\\"module\\\":\\\"commonjs\\\",\\\"jsx\\\":\\\"react\\\"} tools/generate-sitemap.ts",
     "build": "tsc -b && vite build",
-    "--postbuild": "ts-node -O {\\\"module\\\":\\\"commonjs\\\"} tools/copy-index.ts",
+    "postbuild": "ts-node -O {\\\"module\\\":\\\"commonjs\\\",\\\"jsx\\\":\\\"react\\\"} tools/copy-index.ts",
     "lint": "eslint .",
     "preview": "vite preview"
   },

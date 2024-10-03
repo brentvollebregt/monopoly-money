@@ -32,7 +32,6 @@ const getGameStatusFromCache = (gameId: string) => {
 };
 
 const useStoredGames = (getStatuses: boolean = true) => {
-  const [abortController] = useState(() => new AbortController());
   const [storedGames, setStoredGames] = useLocalStorage<IStoredGameInLocalStorage[]>(
     storedGamesLocalStorageKey,
     []
@@ -49,7 +48,7 @@ const useStoredGames = (getStatuses: boolean = true) => {
 
     // Identify games we need to fetch statuses for
     const gamesWithStatusesOrRequesting = gameStatuses.map((g) => g.gameId);
-    const gamesWithRequiredStatuses = (storedGames ?? []).filter(
+    const gamesToGetStatusesFor = (storedGames ?? []).filter(
       (g) => gamesWithStatusesOrRequesting.indexOf(g.gameId) === -1
     );
 
@@ -58,14 +57,21 @@ const useStoredGames = (getStatuses: boolean = true) => {
     setGameStatuses((current) => current.filter((g) => storedGameIds.indexOf(g.gameId) !== -1));
 
     // Pre-populate statuses with null
-    setGameStatuses((current) => [
-      ...current,
-      ...gamesWithRequiredStatuses.map((g) => ({ ...g, status: getGameStatusFromCache(g.gameId) }))
-    ]);
+    setGameStatuses((current) => {
+      const gameIdsToAdd = gamesToGetStatusesFor.map((g) => g.gameId);
+      return [
+        ...current.filter((g) => !gameIdsToAdd.includes(g.gameId)),
+        ...gamesToGetStatusesFor.map((g) => ({
+          ...g,
+          status: getGameStatusFromCache(g.gameId)
+        }))
+      ];
+    });
 
     // Fire off requests for statuses
-    gamesWithRequiredStatuses.forEach((game) => {
-      getGameStatus(game.gameId, game.userToken, abortController)
+    // TODO This is firing off twice for each game. setGameStatuses is not adding the games with `null` statuses before this useEffect is called for a second time, leading to the below forEach execute a second time with the same array.
+    gamesToGetStatusesFor.forEach((game) => {
+      getGameStatus(game.gameId, game.userToken, undefined)
         .then((status) => {
           if (status === "DoesNotExist" || status === "Unauthorized") {
             // Remove the game if it no longer exists or you are not allowed to join
@@ -93,13 +99,6 @@ const useStoredGames = (getStatuses: boolean = true) => {
       }
     ]);
   };
-
-  // Abort all requests on unmount
-  useEffect(() => {
-    return () => {
-      abortController.abort();
-    };
-  }, []);
 
   return { storedGames: gameStatuses, storeGame };
 };

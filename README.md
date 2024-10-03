@@ -20,14 +20,14 @@
 
 The environment variables that can be used are (can also be found in .env.example files):
 
-- `REACT_APP_API_ROOT` (optional): The route that the client requests. Not setting this will default to `window.location.origin`.
+- `VITE_API_ROOT` (optional): The route that the client requests. Not setting this will default to `window.location.origin`.
 - `SERVER_ALLOWED_ORIGINS` (optional): The origins that are served by the server. Not setting this is the equivalent of setting CORS to \*.
 
 ### 🧪 Development Setup
 
-When running the client in development mode using `npm run client:dev`, the client will use the `REACT_APP_API_ROOT` environment variable value to decide where to send requests. If this is not provided, the current hosted URL will be used.
+When running the client in development mode using `npm run client:dev`, the client will use the `VITE_API_ROOT` environment variable value to decide where to send requests. If this is not provided, the current hosted URL will be used.
 
-`npm run server:dev` can also be used for development of the server; this allows for hot-reloading. Running the client using `npm run client:dev` and setting `REACT_APP_API_ROOT` to where the server is running will allow for a development setup with hot-reloading.
+`npm run server:dev` can also be used for development of the server; this allows for hot-reloading. Running the client using `npm run client:dev` and setting `VITE_API_ROOT` to where the server is running will allow for a development setup with hot-reloading.
 
 > `launch.json` also offers the ability to connect and debug the the server when running `npm run client:dev`.
 

@@ -120,6 +120,18 @@ const Home: React.FC<IHomeProps> = ({ onGameSetup }) => {
           <img src={Screenshot4Image} alt="Bankers actions page" className="w-100" />
         </div>
       </div>
+
+      <hr />
+
+      <div>
+        <h2>Host it Yourself</h2>
+        <p>Monopoly Money is open source, meaning you can host your own interrupted instance.</p>
+        <p>
+          <a href="https://github.com/brentvollebregt/monopoly-money">
+            github.com/brentvollebregt/monopoly-money
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

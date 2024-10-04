@@ -20,7 +20,7 @@ COPY . .
 # https://stackoverflow.com/a/72323758
 RUN chown -R root:root .
 
-RUN npm install && npm run build
+RUN npm ci && npm run build
 FROM debian:bullseye
 
 LABEL fly_launch_runtime="nodejs"

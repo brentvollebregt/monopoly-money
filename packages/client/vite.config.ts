@@ -1,4 +1,5 @@
 import react from "@vitejs/plugin-react";
+import path from "path";
 import { defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
 
@@ -17,5 +18,10 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ["@monopoly-money/game-state"]
+  },
+  resolve: {
+    alias: {
+      "~bootstrap": path.resolve(__dirname, "../../node_modules/bootstrap")
+    }
   }
 });

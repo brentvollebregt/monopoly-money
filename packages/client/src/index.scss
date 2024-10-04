@@ -1,12 +1,3 @@
-/* Set Theme */
-$theme-colors: (
-  // "info": tomato,
-  // "danger": teal
-);
-
-/* Import bootstrap to set changes */
-@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",

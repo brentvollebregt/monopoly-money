@@ -7,7 +7,7 @@
   "main": "packages/server/build/index.js",
   "scripts": {
     "start": "node packages/server/build",
-    "build": "npm run build -w ./packages/game-state && cd && npm run build  -w ./packages/server && npm run build  -w ./packages/client && node postbuild.js",
+    "build": "npm run build -w ./packages/game-state && npm run build  -w ./packages/server && npm run build  -w ./packages/client && node postbuild.js",
     "client:dev": "cd packages/client && npm run dev",
     "server:dev": "cd packages/server && npm run dev"
   },

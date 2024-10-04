@@ -1,16 +1,16 @@
 import * as http from "http";
 import * as https from "https";
 import * as websocket from "ws";
+import { IncomingMessage } from "../dto";
+import { IUserData } from "../types";
 import {
   MessageHandler,
   authMessage,
-  proposeEvent,
-  proposeEndGame,
   heartBeat,
-  onMessageStreamClosed
+  onMessageStreamClosed,
+  proposeEndGame,
+  proposeEvent
 } from "./messageHandlers";
-import { IncomingMessage } from "../dto";
-import { IUserData } from "../types";
 
 // Functions that take a message and decide whether to act on it
 const messageHandlers: MessageHandler[] = [authMessage, proposeEvent, proposeEndGame, heartBeat];

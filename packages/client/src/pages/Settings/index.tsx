@@ -1,10 +1,8 @@
+import { IGameStatePlayer } from "@monopoly-money/game-state";
 import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { IGameStatePlayer } from "@monopoly-money/game-state";
 import { useModal } from "react-modal-hook";
-import RenamePlayerModal from "./RenamePlayerModal";
-import DeletePlayerModal from "./DeletePlayerModal";
-import EndGameConfirmDialog from "./EndGameConfirmDialog";
+import ConnectedStateDot from "../../components/ConnectedStateDot";
 import {
   formatCurrency,
   sortPlayersByName,
@@ -13,8 +11,10 @@ import {
   trackNewPlayersAllowed,
   trackNewPlayersNotAllowed
 } from "../../utils";
+import DeletePlayerModal from "./DeletePlayerModal";
+import EndGameConfirmDialog from "./EndGameConfirmDialog";
+import RenamePlayerModal from "./RenamePlayerModal";
 import "./Settings.scss";
-import ConnectedStateDot from "../../components/ConnectedStateDot";
 
 interface ISettingsProps {
   isGameOpen: boolean;

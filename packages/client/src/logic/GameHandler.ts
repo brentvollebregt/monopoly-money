@@ -1,23 +1,23 @@
 import {
-  GameEvent,
-  IGameState,
-  defaultGameState,
   calculateGameState,
+  defaultGameState,
   GameEntity,
-  ITransactionEvent,
-  IPlayerNameChangeEvent,
-  IPlayerDeleteEvent,
+  GameEvent,
   IGameOpenStateChangeEvent,
+  IGameState,
+  IPlayerDeleteEvent,
+  IPlayerNameChangeEvent,
+  ITransactionEvent,
   IUseFreeParkingChangeEvent
 } from "@monopoly-money/game-state";
-import config from "../config";
 import {
   IAuthMessage,
-  OutgoingMessage,
-  IProposeEventMessage,
+  IHeartBeatMessage,
   IProposeEndGameMessage,
-  IHeartBeatMessage
+  IProposeEventMessage,
+  OutgoingMessage
 } from "@monopoly-money/server/build/api/dto";
+import config from "../config";
 import { trackUnexpectedServerDisconnection } from "../utils";
 
 export interface IGameHandlerState {

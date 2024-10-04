@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 interface IPageSizeWrapperProps {
   children: ReactNode;

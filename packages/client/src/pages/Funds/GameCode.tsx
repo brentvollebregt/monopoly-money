@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import { useClipboard } from "use-clipboard-copy";
 import { Button, Overlay, Tooltip } from "react-bootstrap";
 import QRCode from "react-qr-code";
+import { useClipboard } from "use-clipboard-copy";
 import useMessageModal from "../../hooks/useMessageModal";
 import { getShareGameLink, trackGameCodeClick } from "../../utils";
 

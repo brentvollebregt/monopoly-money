@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Button, DropdownButton, Dropdown, Form, ButtonGroup } from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
+import React, { useState } from "react";
+import { Button, ButtonGroup, Dropdown, DropdownButton, Form } from "react-bootstrap";
 import MonopolyAmountInput from "../../components/MonopolyAmountInput";
 
 interface IValuePlayerFormProps {

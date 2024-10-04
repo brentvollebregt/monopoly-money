@@ -1,10 +1,10 @@
+import { GameEntity, IGameStatePlayer } from "@monopoly-money/game-state";
 import React from "react";
-import ValuePlayerForm from "./ValuePlayerForm";
-import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
 import "./Bank.scss";
 import GiveFreeParking from "./GiveFreeParking";
 import InitialiseGame from "./InitialiseGame";
 import PlayerPassedGo from "./PlayerPassedGo";
+import ValuePlayerForm from "./ValuePlayerForm";
 
 interface IBankProps {
   players: IGameStatePlayer[];

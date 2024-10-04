@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Button, DropdownButton, Dropdown, ButtonGroup } from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
+import React, { useState } from "react";
+import { Button, ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import { formatCurrency } from "../../utils";
 
 interface IGiveFreeParkingProps {

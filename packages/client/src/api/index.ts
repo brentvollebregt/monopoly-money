@@ -1,10 +1,10 @@
-import config from "../config";
+import { IGameState } from "@monopoly-money/game-state";
 import {
   ICreateGameRequest,
   IJoinGameRequest,
   IJoinGameResponse
 } from "@monopoly-money/server/build/api/dto";
-import { IGameState } from "@monopoly-money/game-state";
+import config from "../config";
 
 export const createGame = (name: string): Promise<IJoinGameResponse> => {
   return fetch(`${config.api.root}/api/game`, {

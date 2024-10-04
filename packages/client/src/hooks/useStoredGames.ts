@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { DateTime } from "luxon";
-import useLocalStorage from "@rehooks/local-storage";
-import { getGameStatus } from "../api";
 import { IGameState } from "@monopoly-money/game-state";
+import useLocalStorage from "@rehooks/local-storage";
+import { DateTime } from "luxon";
+import { useEffect, useState } from "react";
+import { getGameStatus } from "../api";
 
 const storedGamesLocalStorageKey = "storedGames";
 

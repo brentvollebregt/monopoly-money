@@ -1,15 +1,15 @@
-import React from "react";
-import bannerImage from "../../img/banner.png";
-import { Button, Card, Badge } from "react-bootstrap";
 import { navigate } from "hookrouter";
-import useStoredGames from "../../hooks/useStoredGames";
-import "./Home.scss";
 import { DateTime } from "luxon";
-import { formatCurrency } from "../../utils";
+import React from "react";
+import { Badge, Button, Card } from "react-bootstrap";
+import useStoredGames from "../../hooks/useStoredGames";
+import bannerImage from "../../img/banner.png";
 import Screenshot1Image from "../../img/screenshots/screenshot-1.png";
 import Screenshot2Image from "../../img/screenshots/screenshot-2.png";
 import Screenshot3Image from "../../img/screenshots/screenshot-3.png";
 import Screenshot4Image from "../../img/screenshots/screenshot-4.png";
+import { formatCurrency } from "../../utils";
+import "./Home.scss";
 
 interface IHomeProps {
   onGameSetup: (gameId: string, userToken: string, playerId: string) => void;

@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import {
-  Button,
-  DropdownButton,
-  Dropdown,
-  ButtonGroup,
-  Form,
-  Modal,
-  InputGroup
-} from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
 import useLocalStorage from "@rehooks/local-storage";
-import { formatCurrency } from "../../utils";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  ButtonGroup,
+  Dropdown,
+  DropdownButton,
+  Form,
+  InputGroup,
+  Modal
+} from "react-bootstrap";
 import { useModal } from "react-modal-hook";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
+import { formatCurrency } from "../../utils";
 
 const passingGoRewardValueLocalStorageKey = "passingGoRewardValue";
 

@@ -1,18 +1,18 @@
+import { navigate, usePath, useRoutes } from "hookrouter";
 import React, { useEffect } from "react";
-import { useRoutes, navigate, usePath } from "hookrouter";
-import Navigation from "./components/Navigation";
 import MetaTags from "./components/MetaTags";
+import Navigation from "./components/Navigation";
 import PageSizeWrapper from "./components/PageSizeWrapper";
-import Home from "./pages/Home";
-import Funds from "./pages/Funds";
-import Bank from "./pages/Bank";
-import History from "./pages/History";
-import Settings from "./pages/Settings";
-import Join from "./pages/Join";
-import Help from "./pages/Help";
 import { routePaths } from "./constants";
-import useStoredGames from "./hooks/useStoredGames";
 import useGameHandler from "./hooks/useGameHandler";
+import useStoredGames from "./hooks/useStoredGames";
+import Bank from "./pages/Bank";
+import Funds from "./pages/Funds";
+import Help from "./pages/Help";
+import History from "./pages/History";
+import Home from "./pages/Home";
+import Join from "./pages/Join";
+import Settings from "./pages/Settings";
 import { trackPageView } from "./utils";
 
 const wrapRoute = (route: string, child: JSX.Element) => (

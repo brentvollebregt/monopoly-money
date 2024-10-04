@@ -4,8 +4,8 @@ dotenv.config(); // Setup .env
 import express from "express";
 import * as http from "http";
 import path from "path";
+import { GameRoutes, gameSubRoute, RestoreRoutes, restoreSubRoute, setupWebsocketAPI } from "./api";
 import config from "./config";
-import { setupWebsocketAPI, GameRoutes, gameSubRoute, RestoreRoutes, restoreSubRoute } from "./api";
 
 const app = express();
 const server = http.createServer(app);

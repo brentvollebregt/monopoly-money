@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Button, Modal, InputGroup, FormControl, Form } from "react-bootstrap";
 import { IGameStatePlayer } from "@monopoly-money/game-state";
+import React, { useState } from "react";
+import { Button, Form, FormControl, InputGroup, Modal } from "react-bootstrap";
 
 interface IRenamePlayerModalProps {
   player: IGameStatePlayer;

@@ -1,21 +1,21 @@
+import {
+  calculateGameState,
+  defaultGameState,
+  GameEvent,
+  IGameState,
+  IPlayerBankerStatusChangeEvent,
+  IPlayerConnectionChangeEvent,
+  IPlayerJoinEvent,
+  PlayerId
+} from "@monopoly-money/game-state";
 import * as websocket from "ws";
 import {
-  GameEvent,
-  PlayerId,
-  IPlayerJoinEvent,
-  IPlayerBankerStatusChangeEvent,
-  defaultGameState,
-  IGameState,
-  calculateGameState,
-  IPlayerConnectionChangeEvent
-} from "@monopoly-money/game-state";
-import { generateTimeBasedId, generateRandomId, getCurrentTime } from "./utils";
-import {
-  INewEventMessage,
-  IInitialEventArrayMessage,
   IGameEndMessage,
+  IInitialEventArrayMessage,
+  INewEventMessage,
   OutgoingMessage
 } from "../api/dto";
+import { generateRandomId, generateTimeBasedId, getCurrentTime } from "./utils";
 
 export default class Game {
   private events: GameEvent[] = []; // Events in this game

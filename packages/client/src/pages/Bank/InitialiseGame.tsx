@@ -1,6 +1,6 @@
+import { GameEntity, IGameStatePlayer } from "@monopoly-money/game-state";
 import React, { useState } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
-import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
+import { Button, Form, Modal } from "react-bootstrap";
 import { useModal } from "react-modal-hook";
 import MonopolyAmountInput from "../../components/MonopolyAmountInput";
 import { trackInitialisedPlayerBalances } from "../../utils";

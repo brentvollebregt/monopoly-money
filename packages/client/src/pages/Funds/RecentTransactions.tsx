@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
 import {
+  GameEntity,
   GameEvent,
-  ITransactionEvent,
   IGameStatePlayer,
-  GameEntity
+  ITransactionEvent
 } from "@monopoly-money/game-state";
-import { freeParkingName, bankName } from "../../constants";
-import { formatCurrency } from "../../utils";
 import { DateTime } from "luxon";
+import React, { useEffect, useRef, useState } from "react";
+import { bankName, freeParkingName } from "../../constants";
+import { formatCurrency } from "../../utils";
 
 const visibilityDurationMilliseconds = 40_000;
 

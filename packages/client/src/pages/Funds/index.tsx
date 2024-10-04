@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { GameEntity, GameEvent, IGameStatePlayer } from "@monopoly-money/game-state";
+import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { useModal } from "react-modal-hook";
-import { IGameStatePlayer, GameEntity, GameEvent } from "@monopoly-money/game-state";
-import SendMoneyModal from "./SendMoneyModal";
-import GameCode from "./GameCode";
-import { formatCurrency, sortPlayersByName } from "../../utils";
 import { bankName, freeParkingName } from "../../constants";
-import PlayerCard from "./PlayerCard";
+import { formatCurrency, sortPlayersByName } from "../../utils";
 import "./Funds.scss";
+import GameCode from "./GameCode";
+import PlayerCard from "./PlayerCard";
 import RecentTransactions from "./RecentTransactions";
+import SendMoneyModal from "./SendMoneyModal";
 
 interface IFundsProps {
   gameId: string;

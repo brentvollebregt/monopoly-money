@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { InputGroup, Button } from "react-bootstrap";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, InputGroup } from "react-bootstrap";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
 
 interface IMonopolyAmountInputProps {

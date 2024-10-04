@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
-import { createGame, joinGame } from "../../api";
-import useStoredGames from "../../hooks/useStoredGames";
+import { Button, Form } from "react-bootstrap";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
+import { createGame, joinGame } from "../../api";
 import Config from "../../config";
+import useStoredGames from "../../hooks/useStoredGames";
 import { getGameIdFromQueryString, trackGameCreated, trackGameJoined } from "../../utils";
 
 interface IJoinProps {

@@ -1,6 +1,6 @@
+import { IGameStatePlayer } from "@monopoly-money/game-state";
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { IGameStatePlayer } from "@monopoly-money/game-state";
 
 interface IDeletePlayerModalProps {
   player: IGameStatePlayer;

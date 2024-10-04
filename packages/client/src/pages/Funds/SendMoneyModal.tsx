@@ -1,9 +1,9 @@
+import { GameEntity, IGameStatePlayer } from "@monopoly-money/game-state";
 import React, { useState } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
-import { IGameStatePlayer, GameEntity } from "@monopoly-money/game-state";
-import { formatCurrency } from "../../utils";
-import { bankName, freeParkingName } from "../../constants";
+import { Button, Form, Modal } from "react-bootstrap";
 import MonopolyAmountInput from "../../components/MonopolyAmountInput";
+import { bankName, freeParkingName } from "../../constants";
+import { formatCurrency } from "../../utils";
 
 interface ISendMoneyModalProps {
   balance: number;

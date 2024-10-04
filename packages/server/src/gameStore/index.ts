@@ -1,5 +1,5 @@
-import { createUniqueGameId } from "./utils";
 import Game from "./Game";
+import { createUniqueGameId } from "./utils";
 
 class GameStore {
   private games: Record<string, Game> = {};

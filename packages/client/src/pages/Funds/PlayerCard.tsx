@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import { formatCurrency } from "../../utils";
 import ConnectedStateDot from "../../components/ConnectedStateDot";
+import { formatCurrency } from "../../utils";
 
 interface IPlayerCardProps {
   name: string;

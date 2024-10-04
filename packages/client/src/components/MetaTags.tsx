@@ -1,7 +1,7 @@
 import React from "react";
 import useMetaTags from "react-metatags-hook";
-import BannerImage from "../img/banner.png";
 import { pageMeta, siteUrl } from "../constants";
+import BannerImage from "../img/banner.png";
 
 export interface IPageMeta {
   titlePrefix: string;

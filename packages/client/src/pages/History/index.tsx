@@ -1,14 +1,14 @@
-import React from "react";
 import {
-  GameEvent,
   calculateGameState,
   defaultGameState,
+  GameEvent,
   IGameState
 } from "@monopoly-money/game-state";
-import "./History.scss";
-import { formatCurrency } from "../../utils";
-import { bankName, freeParkingName } from "../../constants";
 import { DateTime } from "luxon";
+import React from "react";
+import { bankName, freeParkingName } from "../../constants";
+import { formatCurrency } from "../../utils";
+import "./History.scss";
 
 interface IHistoryProps {
   events: GameEvent[];
@@ -117,8 +117,9 @@ const getEventDetails = (
       const playerNameBeforeRename = previousState.players.find(
         (p) => p.playerId === event.playerId
       )!.name;
-      const playerNameAfterRename = nextState.players.find((p) => p.playerId === event.playerId)!
-        .name;
+      const playerNameAfterRename = nextState.players.find(
+        (p) => p.playerId === event.playerId
+      )!.name;
       const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
       return {
         ...defaults,

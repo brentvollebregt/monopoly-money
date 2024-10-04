@@ -1,9 +1,9 @@
+import { GameEntity, GameEvent, IGameState } from "@monopoly-money/game-state";
 import { useState } from "react";
 import GameHandler from "../logic/GameHandler";
-import { GameEvent, IGameState, GameEntity } from "@monopoly-money/game-state";
+import { formatCurrency } from "../utils";
 import { useForceUpdate } from "./useForceUpdate";
 import useMessageModal from "./useMessageModal";
-import { formatCurrency } from "../utils";
 
 export interface IGameHandlerAuthInfo {
   gameId: string;

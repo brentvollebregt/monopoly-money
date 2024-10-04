@@ -58,7 +58,12 @@ const ValueModal: React.FC<IValueModalProps> = ({ submitAmount, onClose }) => {
 
   return (
     <Modal show={true} onHide={close} size="lg" centered className="send-money-modal">
-      <Modal.Header closeButton>
+      <Modal.Header
+        closeButton
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+        placeholder={undefined}
+      >
         <Modal.Title>Initialise Balances</Modal.Title>
       </Modal.Header>
       <Modal.Body>

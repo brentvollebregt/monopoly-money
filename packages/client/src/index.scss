@@ -5,7 +5,7 @@ $theme-colors: (
 );
 
 /* Import bootstrap to set changes */
-@import "~bootstrap/scss/bootstrap";
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
 body {
   margin: 0;

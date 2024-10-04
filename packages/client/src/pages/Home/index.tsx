@@ -56,7 +56,7 @@ const Home: React.FC<IHomeProps> = ({ onGameSetup }) => {
                     </div>
                     <div>
                       {status?.players
-                        .sort((p1, p2) => (p1.playerId === playerId ? -1 : 0))
+                        .sort((p1, _p2) => (p1.playerId === playerId ? -1 : 0))
                         .map((player) => (
                           <Badge
                             key={player.playerId}

@@ -16,7 +16,12 @@ const MessageModal: React.FC<IMessageModalProps> = ({
 }) => {
   return (
     <Modal show={true} onHide={onClose} size="lg" centered className="send-money-modal">
-      <Modal.Header closeButton>
+      <Modal.Header
+        closeButton
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+        placeholder={undefined}
+      >
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{body}</Modal.Body>

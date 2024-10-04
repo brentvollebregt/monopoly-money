@@ -30,13 +30,17 @@ const PlayerPassedGo: React.FC<IPlayerPassedGoProps> = ({ players, onSubmit }) =
   );
   const [passingGoReward, setPassingGoReward] = useState<number>(storedPassingGoReward ?? 2000000);
 
-  const [updatePassingGoRewardModalValue, setUpdatePassingGoRewardModalValue] = useState<number>(
-    passingGoReward
-  );
+  const [updatePassingGoRewardModalValue, setUpdatePassingGoRewardModalValue] =
+    useState<number>(passingGoReward);
   const [showUpdatePassingGoRewardModal, hideUpdatePassingGoRewardModal] = useModal(
     () => (
       <Modal show={true} onHide={hideUpdatePassingGoRewardModal} size="lg" centered>
-        <Modal.Header closeButton>
+        <Modal.Header
+          closeButton
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+          placeholder={undefined}
+        >
           <Modal.Title>Update Player Passing Go Reward</Modal.Title>
         </Modal.Header>
         <Modal.Body>

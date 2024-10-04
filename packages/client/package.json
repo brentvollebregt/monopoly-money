@@ -1,50 +1,45 @@
 {
-  "name": "client2",
-  "version": "0.1.0",
+  "name": "@monopoly-money/client",
   "private": true,
-  "dependencies": {
-    "@rehooks/local-storage": "^2.4.0",
-    "@types/hookrouter": "^2.2.5",
-    "@types/luxon": "^1.25.1",
-    "@types/node": "15.6.1",
-    "@types/react": "^16.14.2",
-    "@types/react-dom": "^16.9.10",
-    "bootstrap": "^4.6.0",
-    "hookrouter": "1.2.3",
-    "luxon": "^1.25.0",
-    "react": "^17.0.1",
-    "react-bootstrap": "^1.4.3",
-    "react-dom": "^17.0.1",
-    "react-metatags-hook": "^1.3.1",
-    "react-modal-hook": "^3.0.0",
-    "react-number-format": "^4.4.4",
-    "react-qr-code": "^2.0.7",
-    "react-scripts": "4.0.1",
-    "sass": "1.49.4",
-    "typescript": "^4.1.3",
-    "use-clipboard-copy": "^0.1.2"
-  },
+  "version": "0.0.0",
   "scripts": {
-    "start": "react-scripts start",
-    "prebuild": "ts-node -O {\\\"module\\\":\\\"commonjs\\\"} tools/generate-sitemap.ts",
-    "build": "react-scripts build",
-    "postbuild": "ts-node -O {\\\"module\\\":\\\"commonjs\\\"} tools/copy-index.ts"
+    "dev": "vite",
+    "prebuild": "ts-node -O {\\\"module\\\":\\\"commonjs\\\",\\\"jsx\\\":\\\"react\\\"} tools/generate-sitemap.ts",
+    "build": "tsc -b && vite build",
+    "postbuild": "ts-node -O {\\\"module\\\":\\\"commonjs\\\",\\\"jsx\\\":\\\"react\\\"} tools/copy-index.ts",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@eslint/js": "^9.9.0",
+    "@rehooks/local-storage": "2.4.0",
+    "@types/hookrouter": "2.2.5",
+    "@types/luxon": "1.25.1",
+    "@types/node": "15.6.1",
+    "@types/react-dom": "^18.3.0",
+    "@types/react": "^18.3.3",
+    "@vitejs/plugin-react": "^4.3.1",
+    "bootstrap": "4.6.2",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0",
+    "hookrouter": "1.2.3",
+    "luxon": "1.25.0",
+    "react-bootstrap": "1.6.7",
+    "react-dom": "^18.3.1",
+    "react-metatags-hook": "1.3.1",
+    "react-modal-hook": "3.0.0",
+    "react-number-format": "4.4.4",
+    "react-qr-code": "2.0.7",
+    "react": "^18.3.1",
+    "sass-embedded": "^1.79.4",
+    "sitemap": "^7.1.1",
+    "ts-node": "^10.7.0",
+    "typescript-eslint": "^8.0.1",
+    "typescript": "^5.5.3",
+    "use-clipboard-copy": "0.1.2",
+    "vite-plugin-svgr": "^4.2.0",
+    "vite": "^5.4.1"
   }
 }

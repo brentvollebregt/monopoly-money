@@ -28,7 +28,12 @@ const RenamePlayerModal: React.FC<IRenamePlayerModalProps> = ({
 
   return (
     <Modal show={true} onHide={onClose} size="lg" centered>
-      <Modal.Header closeButton>
+      <Modal.Header
+        closeButton
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+        placeholder={undefined}
+      >
         <Modal.Title>Change Player Name</Modal.Title>
       </Modal.Header>
       <Modal.Body>

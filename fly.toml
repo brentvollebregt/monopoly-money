@@ -13,9 +13,9 @@ kill_timeout = "5s"
 
 [env]
   PORT = "8080"
-  REACT_APP_API_ROOT = "https://monopoly-money.fly.dev"
-  REACT_APP_API_UNREACHABLE_ERROR_MESSAGE = "Unable to communicate with server.\nSince this is publicly hosted, we may have run out of minutes on the server.\nThis should be running again next month when the time is reset."
-  REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID = "G-3SFPXD2CWJ"
+  VITE_API_ROOT = "https://monopoly-money.fly.dev"
+  VITE_API_UNREACHABLE_ERROR_MESSAGE = "Unable to communicate with server.\nSince this is publicly hosted, we may have run out of minutes on the server.\nThis should be running again next month when the time is reset."
+  VITE_GOOGLE_ANALYTICS_TRACKING_ID = "G-3SFPXD2CWJ"
   SERVER_ALLOWED_ORIGINS = "https://monopoly-money.nitratine.net,https://monopoly-money.fly.dev"
 
 [[services]]

@@ -15,7 +15,12 @@ const DeletePlayerModal: React.FC<IDeletePlayerModalProps> = ({
 }) => {
   return (
     <Modal show={true} onHide={onClose} size="lg" centered>
-      <Modal.Header closeButton>
+      <Modal.Header
+        closeButton
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+        placeholder={undefined}
+      >
         <Modal.Title>Remove Player</Modal.Title>
       </Modal.Header>
       <Modal.Body>

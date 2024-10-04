@@ -1,4 +1,4 @@
-import fs from "fs";
+import * as fs from "fs";
 import { routePaths } from "../src/constants";
 
 export const rootDestinations = Object.values(routePaths)

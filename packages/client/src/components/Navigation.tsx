@@ -2,11 +2,11 @@ import React from "react";
 import { navigate, usePath } from "hookrouter";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import BannerImage from "../img/banner.png";
-import { ReactComponent as BankIcon } from "../img/bank.svg";
-import { ReactComponent as FundsIcon } from "../img/funds.svg";
-import { ReactComponent as ListIcon } from "../img/list.svg";
-import { ReactComponent as SettingsIcon } from "../img/settings.svg";
-import { ReactComponent as HelpIcon } from "../img/help.svg";
+import BankIcon from "../img/bank.svg?react";
+import FundsIcon from "../img/funds.svg?react";
+import ListIcon from "../img/list.svg?react";
+import SettingsIcon from "../img/settings.svg?react";
+import HelpIcon from "../img/help.svg?react";
 import { routePaths } from "../constants";
 import "./Navigation.scss";
 

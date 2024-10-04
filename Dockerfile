@@ -1,6 +1,6 @@
 FROM debian:bullseye as builder
 
-ARG NODE_VERSION=16.13.1
+ARG NODE_VERSION=22.9.0
 
 RUN apt-get update; apt install -y curl
 RUN curl https://get.volta.sh | bash
@@ -20,7 +20,7 @@ COPY . .
 # https://stackoverflow.com/a/72323758
 RUN chown -R root:root .
 
-RUN npm install && npm run build
+RUN npm ci && npm run build
 FROM debian:bullseye
 
 LABEL fly_launch_runtime="nodejs"

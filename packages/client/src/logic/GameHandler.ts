@@ -57,7 +57,7 @@ class GameHandler {
     this.webSocket.onmessage = this.onWebSocketMessage.bind(this);
 
     // Send auth message on websocket open
-    this.webSocket.addEventListener("open", (event) => {
+    this.webSocket.addEventListener("open", (_event) => {
       const message: IAuthMessage = {
         type: "auth",
         gameId: this.gameId,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useModal } from "react-modal-hook";
 import MessageModal, { IMessageModalProps } from "../components/MessageModal";
 

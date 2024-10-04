@@ -2,9 +2,10 @@ name: Deploy Server to fly.io
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
+  # Don't auto-deploy the server (as it will kill any active games)
+  # push:
+  #   branches:
+  #     - master
 
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

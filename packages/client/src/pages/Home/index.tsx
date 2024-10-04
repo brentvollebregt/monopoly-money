@@ -115,7 +115,7 @@ const Home: React.FC<IHomeProps> = ({ onGameSetup }) => {
           className="mt-5"
         >
           <img src={Screenshot1Image} alt="Funds page with game id" className="w-100" />
-          <img src={Screenshot2Image} alt="Transfering funds" className="w-100" />
+          <img src={Screenshot2Image} alt="Transferring funds" className="w-100" />
           <img src={Screenshot3Image} alt="Game history" className="w-100" />
           <img src={Screenshot4Image} alt="Bankers actions page" className="w-100" />
         </div>

@@ -72,8 +72,8 @@ const SecondsSinceLabel = ({ transactionTime }: SecondsSinceLabelProps) => {
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       const secondsSince = -transactionTime.diffNow().as("seconds");
-      setSeconds(Math.floor(secondsSince / 5) * 5);
-    }, 5_000);
+      setSeconds(Math.floor(secondsSince));
+    }, 1_000);
 
     return () => {
       if (intervalRef.current !== undefined) {

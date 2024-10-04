@@ -1,7 +1,7 @@
 {
   "name": "monopoly-money",
   "private": true,
-  "description": "> TODO: description",
+  "description": "A mobile-friendly application that helps you manage your finances in a game of Monopoly from the browser",
   "author": "Brent Vollebregt",
   "homepage": "https://github.com/brentvollebregt/monopoly-money#readme",
   "main": "packages/server/build/index.js",
@@ -17,9 +17,6 @@
   },
   "bugs": {
     "url": "https://github.com/brentvollebregt/monopoly-money/issues"
-  },
-  "devDependencies": {
-    "tslint": "^5.20.0"
   },
   "workspaces": [
     "./packages/*"

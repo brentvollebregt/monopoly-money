@@ -33,7 +33,7 @@ const MetaTags: React.FC<IProps> = ({ route, children }) => {
     ],
     links: [
       { rel: "canonical", href: siteUrl + route },
-      { rel: "icon", type: "image/ico", href: "/favicon.ico" },
+      { rel: "icon", type: "image/png", href: "/logo.png" },
       { rel: "apple-touch-icon", type: "image/png", href: "/logo.png" }
     ],
     openGraph: {

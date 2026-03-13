@@ -6,7 +6,7 @@ import { formatCurrency } from "../../utils";
 interface IPlayerCardProps {
   name: string;
   connected: boolean | null;
-  balance: number;
+  balance: number | null;
   onClick: () => void;
 }
 
@@ -16,7 +16,7 @@ const PlayerCard: React.FC<IPlayerCardProps> = ({ name, connected, balance, onCl
       {connected !== null && <ConnectedStateDot connected={connected} className="m-2" />}
       <Card.Body className="p-3" onClick={onClick}>
         <div>{name}</div>
-        <div>{Number.isFinite(balance) ? formatCurrency(balance) : "∞"}</div>
+        {balance !== null && <div>{Number.isFinite(balance) ? formatCurrency(balance) : "∞"}</div>}
       </Card.Body>
     </Card>
   );

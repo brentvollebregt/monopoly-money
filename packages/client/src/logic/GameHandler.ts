@@ -7,6 +7,7 @@ import {
   IGameState,
   IPlayerDeleteEvent,
   IPlayerNameChangeEvent,
+  IShowOppositionBalancesChangeEvent,
   ITransactionEvent,
   IUseFreeParkingChangeEvent
 } from "@monopoly-money/game-state";
@@ -162,6 +163,17 @@ class GameHandler {
       actionedBy: "", // Will be filled in by the server
       type: "useFreeParkingChange",
       useFreeParking
+    };
+    this.submitEvent(event);
+  }
+
+  // Show / hide opposition balances
+  public proposeShowOppositionBalancesChange(showOppositionBalances: boolean) {
+    const event: IShowOppositionBalancesChangeEvent = {
+      time: "", // Will be filled in by the server
+      actionedBy: "", // Will be filled in by the server
+      type: "showOppositionBalancesChange",
+      showOppositionBalances
     };
     this.submitEvent(event);
   }

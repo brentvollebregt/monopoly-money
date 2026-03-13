@@ -95,14 +95,14 @@ const getEventDetails = (
         event.to === "bank"
           ? bankName
           : event.to === "freeParking"
-          ? freeParkingName
-          : nextState.players.find((p) => p.playerId === event.to)!.name;
+            ? freeParkingName
+            : nextState.players.find((p) => p.playerId === event.to)!.name;
       const playerGiving =
         event.from === "bank"
           ? bankName
           : event.from === "freeParking"
-          ? freeParkingName
-          : nextState.players.find((p) => p.playerId === event.from)!.name;
+            ? freeParkingName
+            : nextState.players.find((p) => p.playerId === event.from)!.name;
       const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
       return {
         ...defaults,
@@ -162,6 +162,17 @@ const getEventDetails = (
         detail: `The Free Parking house rule is now ${
           event.useFreeParking ? "enabled" : "disabled"
         }`,
+        colour: "blue"
+      };
+    }
+
+    case "showOppositionBalancesChange": {
+      const actionedBy = previousState.players.find((p) => p.playerId === event.actionedBy)!;
+      return {
+        ...defaults,
+        title: "Show Opposition Balances State Change",
+        actionedBy: actionedBy.name,
+        detail: `Opposition balances are now ${event.showOppositionBalances ? "shown" : "hidden"}`,
         colour: "blue"
       };
     }

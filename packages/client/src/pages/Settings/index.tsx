@@ -9,7 +9,9 @@ import {
   trackFreeParkingDisabled,
   trackFreeParkingEnabled,
   trackNewPlayersAllowed,
-  trackNewPlayersNotAllowed
+  trackNewPlayersNotAllowed,
+  trackShowOppositionBalancesDisabled,
+  trackShowOppositionBalancesEnabled
 } from "../../utils";
 import DeletePlayerModal from "./DeletePlayerModal";
 import EndGameConfirmDialog from "./EndGameConfirmDialog";
@@ -19,22 +21,26 @@ import "./Settings.scss";
 interface ISettingsProps {
   isGameOpen: boolean;
   useFreeParking: boolean;
+  showOppositionBalances: boolean;
   players: IGameStatePlayer[];
   proposePlayerNameChange: (playerId: string, name: string) => void;
   proposePlayerDelete: (playerId: string) => void;
   proposeGameOpenStateChange: (open: boolean) => void;
   proposeUseFreeParkingChange: (useFreeParking: boolean) => void;
+  proposeShowOppositionBalancesChange: (showOppositionBalances: boolean) => void;
   proposeGameEnd: () => void;
 }
 
 const Settings: React.FC<ISettingsProps> = ({
   isGameOpen,
   useFreeParking,
+  showOppositionBalances,
   players,
   proposePlayerNameChange,
   proposePlayerDelete,
   proposeGameOpenStateChange,
   proposeUseFreeParkingChange,
+  proposeShowOppositionBalancesChange,
   proposeGameEnd
 }) => {
   const [actioningPlayer, setActioningPlayer] = useState<IGameStatePlayer | null>(null);
@@ -74,6 +80,15 @@ const Settings: React.FC<ISettingsProps> = ({
     ),
     [actioningPlayer]
   );
+
+  const toggleShowOppositionBalances = () => {
+    if (showOppositionBalances) {
+      trackShowOppositionBalancesDisabled();
+    } else {
+      trackShowOppositionBalancesEnabled();
+    }
+    proposeShowOppositionBalancesChange(!showOppositionBalances);
+  };
 
   const toggleFreeParking = () => {
     if (useFreeParking) {
@@ -145,6 +160,10 @@ const Settings: React.FC<ISettingsProps> = ({
           ))}
         </tbody>
       </Table>
+
+      <Button block variant="info" onClick={toggleShowOppositionBalances}>
+        {showOppositionBalances ? "Hide" : "Show"} opposition balances
+      </Button>
 
       <Button block variant="info" onClick={toggleFreeParking}>
         {useFreeParking ? "Disable" : "Enable"} the Free Parking House Rule

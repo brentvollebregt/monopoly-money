@@ -112,6 +112,7 @@ const App: React.FC = () => {
                 players={game.players}
                 useFreeParking={game.useFreeParking}
                 freeParkingBalance={game.freeParkingBalance}
+                showOppositionBalances={game.showOppositionBalances}
                 proposeTransaction={game.actions.proposeTransaction}
                 events={game.events}
               />
@@ -145,11 +146,15 @@ const App: React.FC = () => {
               <Settings
                 isGameOpen={game.open}
                 useFreeParking={game.useFreeParking}
+                showOppositionBalances={game.showOppositionBalances}
                 players={game.players}
                 proposePlayerNameChange={game.actions.proposePlayerNameChange}
                 proposePlayerDelete={game.actions.proposePlayerDelete}
                 proposeGameOpenStateChange={game.actions.proposeGameOpenStateChange}
                 proposeUseFreeParkingChange={game.actions.proposeUseFreeParkingChange}
+                proposeShowOppositionBalancesChange={
+                  game.actions.proposeShowOppositionBalancesChange
+                }
                 proposeGameEnd={game.actions.proposeGameEnd}
               />
             )
@@ -157,16 +162,19 @@ const App: React.FC = () => {
     [routePaths.help]: () => wrapRoute(routePaths.help, <Help />)
   };
 
-  const routesWithTrailingSlashes = Object.keys(routes).reduce((acc, route) => {
-    const extendedRoutes = getExtendedRoutes(route);
-    return {
-      ...acc,
-      ...extendedRoutes.reduce(
-        (acc1, extendedRoute) => ({ ...acc1, [extendedRoute]: routes[route] }),
-        {}
-      )
-    };
-  }, {} as { [key: string]: () => JSX.Element });
+  const routesWithTrailingSlashes = Object.keys(routes).reduce(
+    (acc, route) => {
+      const extendedRoutes = getExtendedRoutes(route);
+      return {
+        ...acc,
+        ...extendedRoutes.reduce(
+          (acc1, extendedRoute) => ({ ...acc1, [extendedRoute]: routes[route] }),
+          {}
+        )
+      };
+    },
+    {} as { [key: string]: () => JSX.Element }
+  );
 
   const routeResult = useRoutes(routesWithTrailingSlashes);
 

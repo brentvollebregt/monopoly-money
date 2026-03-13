@@ -3,6 +3,7 @@ import { GameEvent, IGameState } from "./types";
 export const defaultGameState: IGameState = {
   players: [],
   useFreeParking: true,
+  showOppositionBalances: true,
   freeParkingBalance: 0,
   open: true
 };
@@ -127,6 +128,12 @@ export const calculateGameState = (events: GameEvent[], currentState: IGameState
         return {
           ...state,
           useFreeParking: event.useFreeParking
+        };
+
+      case "showOppositionBalancesChange":
+        return {
+          ...state,
+          showOppositionBalances: event.showOppositionBalances
         };
 
       case "playerConnectionChange":

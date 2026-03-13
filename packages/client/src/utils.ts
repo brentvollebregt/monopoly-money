@@ -54,6 +54,12 @@ export const trackFreeParkingDisabled = () => tryToTrackGAEvent("Free parking di
 
 export const trackFreeParkingEnabled = () => tryToTrackGAEvent("Free parking enabled");
 
+export const trackShowOppositionBalancesDisabled = () =>
+  tryToTrackGAEvent("Show opposition balances disabled");
+
+export const trackShowOppositionBalancesEnabled = () =>
+  tryToTrackGAEvent("Show opposition balances enabled");
+
 export const trackNewPlayersNotAllowed = () => tryToTrackGAEvent("New players not allowed");
 
 export const trackNewPlayersAllowed = () => tryToTrackGAEvent("New players allowed");

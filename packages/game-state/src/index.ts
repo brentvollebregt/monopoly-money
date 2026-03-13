@@ -10,6 +10,7 @@ import {
   IPlayerDeleteEvent,
   IPlayerJoinEvent,
   IPlayerNameChangeEvent,
+  IShowOppositionBalancesChangeEvent,
   ITransactionEvent,
   IUseFreeParkingChangeEvent,
   PlayerId
@@ -28,6 +29,7 @@ export {
   IPlayerDeleteEvent,
   IPlayerJoinEvent,
   IPlayerNameChangeEvent,
+  IShowOppositionBalancesChangeEvent,
   ITransactionEvent,
   IUseFreeParkingChangeEvent,
   PlayerId

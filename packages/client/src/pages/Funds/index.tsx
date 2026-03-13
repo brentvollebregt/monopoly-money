@@ -16,6 +16,7 @@ interface IFundsProps {
   isGameOpen: boolean;
   players: IGameStatePlayer[];
   useFreeParking: boolean;
+  showOppositionBalances: boolean;
   freeParkingBalance: number;
   proposeTransaction: (from: GameEntity, to: GameEntity, amount: number) => void;
   events: GameEvent[];
@@ -28,6 +29,7 @@ const Funds: React.FC<IFundsProps> = ({
   players,
   useFreeParking,
   freeParkingBalance,
+  showOppositionBalances,
   proposeTransaction,
   events
 }) => {
@@ -81,7 +83,7 @@ const Funds: React.FC<IFundsProps> = ({
             key={player.playerId}
             name={player.name}
             connected={player.connected}
-            balance={player.balance}
+            balance={showOppositionBalances ? player.balance : null}
             onClick={() => setRecipient(player)}
           />
         ))}
